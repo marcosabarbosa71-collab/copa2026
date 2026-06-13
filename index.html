@@ -379,7 +379,13 @@ const TEAM_FLAGS = {
   'Curacao':'CW','Netherlands':'NL','Japan':'JP','France':'FR',
   'Argentina':'AR','Spain':'ES','Portugal':'PT','England':'GB',
   'Belgium':'BE','Uruguay':'UY','Colombia':'CO','Senegal':'SN',
-  'Norway':'NO','Ecuador':'EC','Ivory Coast':'CI'
+  'Norway':'NO','Ecuador':'EC','Ivory Coast':'CI',
+  'Bosnia-Herzegovina':'BA','Ukraine':'UA','Cape Verde':'CV',
+  'DR Congo':'CD','Iraq':'IQ','Jordan':'JO','Austria':'AT',
+  'Algeria':'DZ','Uzbekistan':'UZ','Croatia':'HR','Ghana':'GH',
+  'Panama':'PA','New Zealand':'NZ','Egypt':'EG','Iran':'IR',
+  'Saudi Arabia':'SA','Tunisia':'TN','Albania':'AL','Poland':'PL',
+  'Sweden':'SE','Ukraine':'UA','RD Congo':'CD','Bosnia':'BA'
 };
 
 const FLAG_EMOJI = {
@@ -457,8 +463,8 @@ function renderGameCard(m) {
   const stage = m.stage || m.group || 'Fase de grupos';
   const area = m.area ? m.area.name : '';
 
-  const timeBR = new Date(utc).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}) + 'h';
-  const dateBR = new Date(utc).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',timeZone:'America/Sao_Paulo'});
+  const timeBR = utc ? new Date(utc).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}) + 'h (Brasilia)' : '';
+  const dateBR = utc ? new Date(utc).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',timeZone:'America/Sao_Paulo'}) : '';
 
   const sh = m.score?.fullTime?.home;
   const sa = m.score?.fullTime?.away;
@@ -520,10 +526,17 @@ async function loadGames(force) {
   container.innerHTML = '';
 
   try {
-    const today = new Date().toISOString().slice(0,10);
-    const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0,10);
+    const now = new Date();
+    // Usa data BR (UTC-3) como referencia
+    const todayBR = new Date(now.getTime() - 3*3600000).toISOString().slice(0,10);
+    const tomorrowBR = new Date(now.getTime() - 3*3600000 + 86400000).toISOString().slice(0,10);
+    // Busca em UTC incluindo margem de 1 dia antes e depois para cobrir fuso
+    const fromUTC = new Date(now.getTime() - 3*3600000).toISOString().slice(0,10);
+    const toUTC = new Date(now.getTime() - 3*3600000 + 2*86400000).toISOString().slice(0,10);
 
-    const url = `${API_BASE}/competitions/WC/matches?dateFrom=${today}&dateTo=${tomorrow}`;
+    const url = `${API_BASE}/competitions/WC/matches?dateFrom=${fromUTC}&dateTo=${toUTC}`;
+    const today = todayBR;
+    const tomorrow = tomorrowBR;
     const r = await fetch(url, {
       headers: { 'X-Auth-Token': API_TOKEN }
     });
@@ -534,31 +547,42 @@ async function loadGames(force) {
 
     spinner.style.display = 'none';
 
-    if (matches.length === 0) {
+    if (matches.length === 0) throw new Error('empty');
+
+    // Agrupa por data BR (UTC-3) BR (UTC-3)
+    const byDate = {};
+    matches.forEach(m => {
+      const d = new Date(m.utcDate);
+      const dBR = new Date(d.getTime() - 3*3600000);
+      const key = dBR.toISOString().slice(0,10);
+      if (!byDate[key]) byDate[key] = [];
+      byDate[key].push(m);
+    });
+
+    // Filtra apenas hoje e amanha (BR)
+    const filtered = {};
+    [today, tomorrow].forEach(k => { if(byDate[k]) filtered[k] = byDate[k]; });
+
+    if(Object.keys(filtered).length === 0) {
       container.innerHTML = '<div class="card" style="text-align:center;color:var(--text3);padding:2rem">Nenhum jogo encontrado para hoje/amanha.</div>';
-      statusEl.innerHTML = '<div class="api-dot" style="background:var(--amber)"></div><span>Sem jogos hoje</span>';
+      statusEl.innerHTML = '<div class="api-dot" style="background:var(--amber)"></div><span>Sem jogos hoje/amanha</span>';
       return;
     }
 
-    // Agrupa por data
-    const byDate = {};
-    matches.forEach(m => {
-      const d = m.utcDate.slice(0,10);
-      if (!byDate[d]) byDate[d] = [];
-      byDate[d].push(m);
-    });
-
     let html = '';
-    Object.keys(byDate).sort().forEach(date => {
+    Object.keys(filtered).sort().forEach(date => {
       const d = new Date(date + 'T12:00:00');
       const isToday = date === today;
+      const isTomorrow = date === tomorrow;
       const label = d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});
-      html += `<div class="day-label">${isToday ? 'HOJE — ' : ''}${label.toUpperCase()}<div class="day-sep"></div></div>`;
-      byDate[date].forEach(m => { html += renderGameCard(m); });
+      const prefix = isToday ? 'HOJE — ' : isTomorrow ? 'AMANHA — ' : '';
+      html += '<div class="day-label">' + prefix + label.toUpperCase() + '<div class="day-sep"></div></div>';
+      filtered[date].forEach(m => { html += renderGameCard(m); });
     });
 
     container.innerHTML = html;
-    statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>Atualizado agora · ${matches.length} jogo(s)</span>`;
+    const total = Object.values(filtered).reduce((a,b)=>a+b.length,0);
+    statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>Atualizado agora · ${total} jogo(s) hoje/amanha</span>`;
 
   } catch(err) {
     spinner.style.display = 'none';
@@ -569,13 +593,44 @@ async function loadGames(force) {
 }
 
 function renderStaticFallback() {
+  // Dados reais dos jogos de hoje (12 jun) e amanha (13 jun) horario Brasilia
   const staticMatches = [
-    {homeTeam:{name:'Canada'},awayTeam:{name:'Italy'},utcDate:'2026-06-12T19:00:00Z',status:'SCHEDULED',stage:'GROUP_STAGE',area:{name:'Toronto'},score:{fullTime:{home:null,away:null}}},
-    {homeTeam:{name:'USA'},awayTeam:{name:'Paraguay'},utcDate:'2026-06-13T01:00:00Z',status:'SCHEDULED',stage:'GROUP_STAGE',area:{name:'Los Angeles'},score:{fullTime:{home:null,away:null}}},
-    {homeTeam:{name:'Brazil'},awayTeam:{name:'Morocco'},utcDate:'2026-06-13T22:00:00Z',status:'SCHEDULED',stage:'GROUP_STAGE',area:{name:'Nova York/NJ'},score:{fullTime:{home:null,away:null}}}
+    // 12 JUN
+    {homeTeam:{name:'Canada'},awayTeam:{name:'Bosnia-Herzegovina'},utcDate:'2026-06-12T19:00:00Z',status:'SCHEDULED',stage:'GRUPO B',area:{name:'Toronto'},score:{fullTime:{home:null,away:null}}},
+    {homeTeam:{name:'United States'},awayTeam:{name:'Paraguay'},utcDate:'2026-06-13T01:00:00Z',status:'SCHEDULED',stage:'GRUPO D',area:{name:'Los Angeles'},score:{fullTime:{home:null,away:null}}},
+    // 13 JUN
+    {homeTeam:{name:'Australia'},awayTeam:{name:'Turkiye'},utcDate:'2026-06-13T04:00:00Z',status:'SCHEDULED',stage:'GRUPO D',area:{name:'Vancouver'},score:{fullTime:{home:null,away:null}}},
+    {homeTeam:{name:'Qatar'},awayTeam:{name:'Switzerland'},utcDate:'2026-06-13T19:00:00Z',status:'SCHEDULED',stage:'GRUPO B',area:{name:'San Francisco'},score:{fullTime:{home:null,away:null}}},
+    {homeTeam:{name:'Brazil'},awayTeam:{name:'Morocco'},utcDate:'2026-06-13T22:00:00Z',status:'SCHEDULED',stage:'GRUPO C',area:{name:'Nova York/NJ'},score:{fullTime:{home:null,away:null}}},
+    {homeTeam:{name:'Haiti'},awayTeam:{name:'Scotland'},utcDate:'2026-06-14T01:00:00Z',status:'SCHEDULED',stage:'GRUPO C',area:{name:'Boston'},score:{fullTime:{home:null,away:null}}}
   ];
-  return '<div style="font-size:12px;color:var(--text3);margin-bottom:.75rem;padding:.5rem .75rem;background:var(--bg3);border-radius:6px">Dados estaticos — reconecte para atualizar</div>'
-    + staticMatches.map(renderGameCard).join('');
+
+  // Agrupa por data BR
+  const hoje = new Date();
+  const hojeStr = hoje.toISOString().slice(0,10);
+  const amanha = new Date(Date.now()+86400000).toISOString().slice(0,10);
+
+  const byDate = {};
+  staticMatches.forEach(m => {
+    // Converte UTC para data BR (UTC-3)
+    const d = new Date(m.utcDate);
+    const dBR = new Date(d.getTime() - 3*3600000);
+    const key = dBR.toISOString().slice(0,10);
+    if(!byDate[key]) byDate[key] = [];
+    byDate[key].push(m);
+  });
+
+  let html = '<div style="font-size:12px;color:var(--amber);margin-bottom:.75rem;padding:.5rem .75rem;background:var(--bg3);border-radius:6px">Dados locais — API sera consultada automaticamente</div>';
+  Object.keys(byDate).sort().forEach(date => {
+    const d = new Date(date + 'T12:00:00');
+    const isToday = date === hojeStr;
+    const isTomorrow = date === amanha;
+    const label = d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});
+    const prefix = isToday ? 'HOJE — ' : isTomorrow ? 'AMANHA — ' : '';
+    html += '<div class="day-label">' + prefix + label.toUpperCase() + '<div class="day-sep"></div></div>';
+    byDate[date].forEach(m => { html += renderGameCard(m); });
+  });
+  return html;
 }
 
 // ===== LOAD GROUPS =====
