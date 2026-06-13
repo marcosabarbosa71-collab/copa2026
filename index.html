@@ -158,9 +158,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 
 <!-- JOGOS -->
 <div id="tab-hoje" class="tab-content active">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
     <div id="api-status" class="api-info"><div class="api-dot" style="background:var(--amber)"></div><span>Carregando jogos...</span></div>
-    <button onclick="loadGames(true)" style="font-size:12px;color:var(--text3);background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer">Atualizar</button>
+    <button onclick="loadGames(true)" style="font-size:12px;color:var(--text3);background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer">&#x21BB; Atualizar</button>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding:.625rem 1rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
+    <div id="countdown" style="font-size:12px;color:var(--text2)">Calculando...</div>
+    <div style="font-size:11px;color:var(--text3)">Placar atualiza a cada 60s</div>
   </div>
   <div id="spinner-games" class="spinner" style="display:flex"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Buscando jogos da Copa 2026...</span></div>
   <div id="games-container"></div>
@@ -337,6 +341,27 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 <!-- IA -->
 <div id="tab-ia" class="tab-content">
   <div class="sec">Analise inteligente por IA</div>
+
+  <!-- API KEY SETUP -->
+  <div id="apikey-setup" class="card" style="border-color:#f59e0b44">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:.75rem">
+      <div style="width:32px;height:32px;background:#f59e0b18;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px">&#x1F511;</div>
+      <div>
+        <div style="font-size:14px;font-weight:600;color:var(--text)">Sua chave da API Anthropic</div>
+        <div style="font-size:12px;color:var(--text3)">Necessaria para analises por IA · salva so no seu navegador</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <input id="apikey-input" type="password" placeholder="sk-ant-api03-..." style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none" />
+      <button onclick="saveApiKey()" style="padding:9px 16px;background:var(--accent);color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">Salvar</button>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:.625rem">
+      Obtenha sua chave em <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a> · A chave fica salva so no seu navegador (localStorage)
+    </div>
+    <div id="apikey-status" style="display:none;margin-top:.625rem;font-size:12px;color:#22c55e">&#x2713; Chave salva! IA pronta para uso.</div>
+  </div>
+
+  <!-- CHAT -->
   <div class="card">
     <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Analise qualquer jogo, mercado ou aposta</div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:.875rem">Escanteios, chutes, cartoes, jogadores, handicap — analise baseada em dados</div>
@@ -347,6 +372,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
     <div id="ai-spin" class="spinner"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Analisando...</span></div>
     <div id="ai-out" class="ai-out"></div>
   </div>
+
   <div class="sec">Analises rapidas</div>
   <div class="qbtns">
     <button class="qbtn" onclick="pre('Analise escanteios Brasil vs Marrocos Copa 2026: medias de cada time, estilo de jogo, qual linha apostar com justificativa.')">Escanteios Brasil vs Marrocos</button>
@@ -466,19 +492,22 @@ function renderGameCard(m) {
   const timeBR = utc ? new Date(utc).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}) + 'h (Brasilia)' : '';
   const dateBR = utc ? new Date(utc).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',timeZone:'America/Sao_Paulo'}) : '';
 
-  const sh = m.score?.fullTime?.home;
-  const sa = m.score?.fullTime?.away;
+  const sh = m.score?.currentScore?.home ?? m.score?.fullTime?.home;
+  const sa = m.score?.currentScore?.away ?? m.score?.fullTime?.away;
   const hasScore = sh !== null && sh !== undefined && sa !== null && sa !== undefined && status !== 'SCHEDULED' && status !== 'TIMED';
+  const isLiveAPI = status === 'IN_PLAY' || status === 'PAUSED' || status === 'FIRST_HALF' || status === 'SECOND_HALF' || status === 'HALFTIME';
+  const isDoneAPI = status === 'FINISHED';
+  const scoreColorAPI = isLiveAPI ? '#22c55e' : 'var(--text)';
 
   const scoreHTML = hasScore
-    ? `<div class="score">${sh} &mdash; ${sa}</div><div class="score-sub">${status === 'FINISHED' ? 'Encerrado' : 'Ao vivo'}</div>`
+    ? `<div class="score" style="color:${scoreColorAPI}">${sh} &mdash; ${sa}</div><div class="score-sub" style="color:${isLiveAPI?'#22c55e':'var(--text3)'}">${isDoneAPI ? 'Encerrado' : isLiveAPI ? '&#x1F534; AO VIVO' : ''}</div>`
     : `<div style="font-size:20px;font-weight:700;color:var(--text3);padding:4px 0">${timeBR}</div><div class="score-sub">${dateBR}</div>`;
 
-  const statusBadge = status === 'IN_PLAY' || status === 'PAUSED'
-    ? '<span class="status-live">&#x1F534; AO VIVO</span>'
-    : status === 'FINISHED'
+  const statusBadge = isLiveAPI
+    ? '<span class="status-live">&#x1F534; AO VIVO — atualizando</span>'
+    : isDoneAPI
     ? '<span class="status-done">&#x2713; Encerrado</span>'
-    : `<span class="status-soon">Hoje ${timeBR}</span>`;
+    : `<span class="status-soon">${timeBR}</span>`;
 
   const p = calcProbs(home, away);
   const bets = genBets(home, away);
@@ -760,11 +789,101 @@ async function pre(prompt) {
 }
 document.getElementById('ai-in').addEventListener('keydown', e => { if(e.key==='Enter') askAI(); });
 
+// ===== LIVE POLLING =====
+let pollInterval = null;
+let isLiveNow = false;
+
+function checkIfLive() {
+  const brOffset = -3 * 60;
+  const now = new Date();
+  const brNow = new Date(now.getTime() + (brOffset - now.getTimezoneOffset()) * 60000);
+  const todayStr = brNow.toISOString().slice(0,10);
+  const tomorrowStr = new Date(brNow.getTime() + 86400000).toISOString().slice(0,10);
+
+  // Verifica se algum jogo de hoje esta potencialmente ao vivo (+-3h da hora do jogo)
+  const active = SCHEDULE.filter(m => {
+    const d = new Date(m.utc);
+    const brD = new Date(d.getTime() + (brOffset - d.getTimezoneOffset()) * 60000);
+    const ds = brD.toISOString().slice(0,10);
+    if (ds !== todayStr) return false;
+    const diff = (brD - brNow) / 60000; // minutos
+    return diff > -120 && diff < 120; // janela de 2h antes/depois
+  });
+  return active.length > 0;
+}
+
+function startPolling() {
+  if (pollInterval) return;
+  pollInterval = setInterval(() => {
+    loadGames(true);
+    updateLiveIndicator();
+  }, 60000); // atualiza a cada 60 segundos
+}
+
+function stopPolling() {
+  if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+}
+
+function updateLiveIndicator() {
+  const live = checkIfLive();
+  const dot = document.querySelector('.live-dot');
+  const badge = document.querySelector('.live-badge');
+  if (live) {
+    dot.style.background = '#22c55e';
+    badge.style.color = '#22c55e';
+    badge.innerHTML = '<div class="live-dot"></div> AO VIVO';
+    if (!pollInterval) startPolling();
+  } else {
+    dot.style.background = '#525e78';
+    badge.style.color = '#525e78';
+    badge.innerHTML = '<div class="live-dot" style="background:#525e78;animation:none"></div> HOJE';
+    stopPolling();
+  }
+}
+
+// Countdown para proximo jogo
+function startCountdown() {
+  const brOffset = -3 * 60;
+  setInterval(() => {
+    const now = new Date();
+    const brNow = new Date(now.getTime() + (brOffset - now.getTimezoneOffset()) * 60000);
+    const todayStr = brNow.toISOString().slice(0,10);
+
+    const nextGame = SCHEDULE
+      .filter(m => {
+        const d = new Date(m.utc);
+        const brD = new Date(d.getTime() + (brOffset - d.getTimezoneOffset()) * 60000);
+        return brD.toISOString().slice(0,10) === todayStr && brD > brNow;
+      })
+      .sort((a,b) => new Date(a.utc) - new Date(b.utc))[0];
+
+    if (!nextGame) return;
+    const d = new Date(nextGame.utc);
+    const brD = new Date(d.getTime() + (brOffset - d.getTimezoneOffset()) * 60000);
+    const diff = brD - brNow;
+    if (diff <= 0) return;
+
+    const h = Math.floor(diff / 3600000);
+    const min = Math.floor((diff % 3600000) / 60000);
+    const sec = Math.floor((diff % 60000) / 1000);
+    const el = document.getElementById('countdown');
+    if (el) {
+      if (h > 0) el.textContent = `Proximo jogo em ${h}h ${min}min`;
+      else if (min > 0) el.textContent = `Proximo jogo em ${min}min ${sec}s`;
+      else el.textContent = `Jogo comecando em ${sec}s!`;
+    }
+  }, 1000);
+}
+
 // ===== INIT =====
 const now = new Date();
 document.getElementById('datestamp').textContent =
   now.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}) + ' · Fase de grupos';
 loadGames();
+updateLiveIndicator();
+startCountdown();
+if (checkIfLive()) startPolling();
+initApiKeyUI();
 </script>
 </body>
 </html>
