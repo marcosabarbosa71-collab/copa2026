@@ -387,7 +387,7 @@ const FLAG_EMOJI = {
   US:'US',PY:'PY',AU:'AU',TR:'TR',QA:'QA',CH:'CH',MA:'MA',
   HT:'HT','GB-SCT':'Scotland',DE:'DE',CW:'CW',NL:'NL',JP:'JP',
   FR:'FR',AR:'AR',ES:'ES',PT:'PT',GB:'GB',BE:'BE',UY:'UY',
-  CO:'CO',SN:'SN',NO:'NO',EC:'EC',CI:'CI'
+  CO:'CO',SN:'SN',NO:'NO',EC:'EC',CI:'CI',BA:'BA',UA:'UA',CV:'CV',CD:'CD',IQ:'IQ',JO:'JO',AT:'AT',DZ:'DZ',UZ:'UZ',HR:'HR',GH:'GH',PA:'PA',NZ:'NZ',EG:'EG',IR:'IR',SA:'SA'
 };
 
 // Retorna emoji de bandeira a partir do codigo ISO
@@ -627,16 +627,16 @@ async function loadGroups(force) {
 function renderStaticGroups() {
   const groups = [
     {name:'GRUPO A',teams:[{n:'Mexico',f:'MX',pts:3,j:1,v:1,e:0,d:0,gd:2},{n:'Korea Republic',f:'KR',pts:3,j:1,v:1,e:0,d:0,gd:1},{n:'Czechia',f:'CZ',pts:0,j:1,v:0,e:0,d:1,gd:-1},{n:'South Africa',f:'ZA',pts:0,j:1,v:0,e:0,d:1,gd:-2}]},
-    {name:'GRUPO B',teams:[{n:'Canada',f:'CA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Italy',f:'IT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Qatar',f:'QA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Switzerland',f:'CH',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
-    {name:'GRUPO C',teams:[{n:'Brazil',f:'BR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Morocco',f:'MA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Haiti',f:'HT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Scotland',f:'GB',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
+    {name:'GRUPO B',teams:[{n:'Canada',f:'CA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Bosnia-Herzegovina',f:'BA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Qatar',f:'QA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Switzerland',f:'CH',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
+    {name:'GRUPO C',teams:[{n:'Brazil',f:'BR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Morocco',f:'MA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Haiti',f:'HT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Scotland',f:'GB-SCT',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
     {name:'GRUPO D',teams:[{n:'United States',f:'US',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Paraguay',f:'PY',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Australia',f:'AU',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Turkiye',f:'TR',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
-    {name:'GRUPO E',teams:[{n:'Germany',f:'DE',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Ecuador',f:'EC',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Ivory Coast',f:'CI',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Curacao',f:'CW',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
-    {name:'GRUPO F',teams:[{n:'Netherlands',f:'NL',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Japan',f:'JP',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Tunisia',f:'TN',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Sweden',f:'SE',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
+    {name:'GRUPO E',teams:[{n:'Germany',f:'DE',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Curacao',f:'CW',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Ivory Coast',f:'CI',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Ecuador',f:'EC',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
+    {name:'GRUPO F',teams:[{n:'Netherlands',f:'NL',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Japan',f:'JP',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Tunisia',f:'TN',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Ukraine',f:'UA',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
     {name:'GRUPO G',teams:[{n:'Belgium',f:'BE',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Egypt',f:'EG',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Iran',f:'IR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'New Zealand',f:'NZ',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
     {name:'GRUPO H',teams:[{n:'Spain',f:'ES',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Uruguay',f:'UY',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Saudi Arabia',f:'SA',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Cape Verde',f:'CV',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
     {name:'GRUPO I',teams:[{n:'France',f:'FR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Senegal',f:'SN',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Norway',f:'NO',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Iraq',f:'IQ',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
-    {name:'GRUPO J',teams:[{n:'Argentina',f:'AR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Austria',f:'AT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Algeria',f:'DZ',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Jordan',f:'JO',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
-    {name:'GRUPO K',teams:[{n:'Portugal',f:'PT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Colombia',f:'CO',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Uzbekistan',f:'UZ',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'DR Congo',f:'CD',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
+    {name:'GRUPO J',teams:[{n:'Argentina',f:'AR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Algeria',f:'DZ',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Austria',f:'AT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Jordan',f:'JO',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
+    {name:'GRUPO K',teams:[{n:'Portugal',f:'PT',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Colombia',f:'CO',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Uzbekistan',f:'UZ',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'RD Congo',f:'CD',pts:0,j:0,v:0,e:0,d:0,gd:0}]},
     {name:'GRUPO L',teams:[{n:'England',f:'GB',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Croatia',f:'HR',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Ghana',f:'GH',pts:0,j:0,v:0,e:0,d:0,gd:0},{n:'Panama',f:'PA',pts:0,j:0,v:0,e:0,d:0,gd:0}]}
   ];
   return '<div style="font-size:11px;color:var(--text3);margin-bottom:.75rem;padding:.5rem .75rem;background:var(--bg3);border-radius:6px">Dados estaticos — Grupo A ja com resultados da rodada 1</div>'
