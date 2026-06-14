@@ -160,6 +160,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+@keyframes toast-in{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
 </head>
 <body>
@@ -753,13 +754,37 @@ async function loadGames() {
   const container = document.getElementById('games-container');
   const spinner   = document.getElementById('spinner-games');
   const statusEl  = document.getElementById('api-status');
-  spinner.style.display = 'flex';
-  container.innerHTML = '';
+  const isFirst   = container.innerHTML === '';
+  if (isFirst) spinner.style.display = 'flex';
 
   const today    = todayBR();
   const tomorrow = tomorrowBR();
 
-  // --- Tenta API football-data ---
+  // === API 1: Copa 2026 open-source (gratuita, sem chave, tempo real) ===
+  try {
+    const r = await fetch('https://worldcup2026.p.rapidapi.com/matches', {
+      headers: {
+        'x-rapidapi-key': 'DEMO',
+        'x-rapidapi-host': 'worldcup2026.p.rapidapi.com'
+      }
+    });
+    if (r.ok) {
+      const data = await r.json();
+      const matches = (Array.isArray(data) ? data : data.matches || [])
+        .filter(m => {
+          const ds = brDateStr(m.date || m.utcDate || m.datetime || '');
+          return ds === today || ds === tomorrow;
+        });
+      if (matches.length > 0) {
+        spinner.style.display = 'none';
+        container.innerHTML = renderWC26Matches(matches, today, tomorrow);
+        statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>&#x1F534; Ao vivo &middot; ${matches.length} jogo(s) &middot; ${hasLiveGame()?'15s':'60s'}</span>`;
+        return;
+      }
+    }
+  } catch(e) {}
+
+  // === API 2: football-data.org (com chave) ===
   try {
     const url = `${API_BASE}/competitions/WC/matches?dateFrom=${today}&dateTo=${tomorrow}`;
     const r   = await fetch(url, { headers: { 'X-Auth-Token': API_TOKEN } });
@@ -771,14 +796,19 @@ async function loadGames() {
     });
     if (matches.length === 0) throw new Error('empty');
 
-    // Agrupa por data BR
+    // Detecta mudanca de placar (gol aconteceu!)
+    const hash = matches.map(m => `${m.id}:${m.score?.fullTime?.home}-${m.score?.fullTime?.away}:${m.status}`).join('|');
+    if (hash !== lastEventHash && lastEventHash !== '') {
+      showEventAlert(matches, lastEventHash);
+    }
+    lastEventHash = hash;
+
     const byDate = {};
     matches.forEach(m => {
       const ds = brDateStr(m.utcDate);
       if (!byDate[ds]) byDate[ds] = [];
       byDate[ds].push(m);
     });
-
     let html = '';
     [today, tomorrow].forEach(ds => {
       if (!byDate[ds]) return;
@@ -786,35 +816,29 @@ async function loadGames() {
       byDate[ds].sort((a,b) => new Date(a.utcDate) - new Date(b.utcDate))
                .forEach(m => { html += renderAPIGame(m); });
     });
-
     spinner.style.display = 'none';
     container.innerHTML = html || '<div class="card" style="text-align:center;color:var(--text3);padding:2rem">Sem jogos hoje e amanha.</div>';
-    statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>Ao vivo &middot; ${matches.length} jogo(s)</span>`;
+    statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>&#x1F4E1; ${matches.length} jogo(s) &middot; ${hasLiveGame()?'15s':'60s'}</span>`;
     return;
-  } catch (e) {
-    // --- Fallback: calendario local ---
-  }
+  } catch (e) {}
 
+  // === FALLBACK: calendario local ===
   const filtered = SCHEDULE.filter(m => {
     const ds = brDateStr(m.utc);
     return ds === today || ds === tomorrow;
   });
-
   spinner.style.display = 'none';
-
   if (filtered.length === 0) {
     container.innerHTML = '<div class="card" style="text-align:center;color:var(--text3);padding:2rem">Sem jogos hoje e amanha.</div>';
-    statusEl.innerHTML = '<div class="api-dot" style="background:var(--amber)"></div><span>Sem jogos hoje/amanha</span>';
+    statusEl.innerHTML = '<div class="api-dot" style="background:var(--amber)"></div><span>Calendario local</span>';
     return;
   }
-
   const byDate = {};
   filtered.forEach(m => {
     const ds = brDateStr(m.utc);
     if (!byDate[ds]) byDate[ds] = [];
     byDate[ds].push(m);
   });
-
   let html = '';
   [today, tomorrow].forEach(ds => {
     if (!byDate[ds]) return;
@@ -822,9 +846,67 @@ async function loadGames() {
     byDate[ds].sort((a,b) => new Date(a.utc) - new Date(b.utc))
               .forEach(m => { html += renderLocalGame(m); });
   });
-
   container.innerHTML = html;
-  statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>${filtered.length} jogo(s) &middot; ${today}</span>`;
+  statusEl.innerHTML = `<div class="api-dot" style="background:var(--amber)"></div><span>${filtered.length} jogo(s) &middot; calendario local</span>`;
+}
+
+// Render de jogos da API Copa 2026 open-source
+function renderWC26Matches(matches, today, tomorrow) {
+  const byDate = {};
+  matches.forEach(m => {
+    const ds = brDateStr(m.date || m.utcDate || m.datetime || new Date().toISOString());
+    if (!byDate[ds]) byDate[ds] = [];
+    byDate[ds].push(m);
+  });
+  let html = '';
+  [today, tomorrow].forEach(ds => {
+    if (!byDate[ds]) return;
+    html += dayLabel(ds, ds === today);
+    byDate[ds].sort((a,b) => new Date(a.date||a.utcDate) - new Date(b.date||b.utcDate))
+      .forEach(m => {
+        const home = m.home_team?.name || m.homeTeam?.name || m.team1 || '?';
+        const away = m.away_team?.name || m.awayTeam?.name || m.team2 || '?';
+        const sh = m.home_score ?? m.score?.home ?? null;
+        const sa = m.away_score ?? m.score?.away ?? null;
+        const st = m.status || (sh !== null ? 'FINISHED' : 'SCHEDULED');
+        html += renderLocalGame({ h: home, a: away, utc: m.date||m.utcDate||m.datetime, grp: m.group||'Fase de Grupos', venue: m.venue||m.stadium||'', sh, sa, st });
+      });
+  });
+  return html;
+}
+
+// Alerta visual quando detecta mudanca de placar
+function showEventAlert(matches, prevHash) {
+  const prevMap = {};
+  prevHash.split('|').forEach(entry => {
+    const [id, score] = entry.split(':');
+    prevMap[id] = score;
+  });
+  matches.forEach(m => {
+    const prev = prevMap[m.id];
+    const curr = `${m.score?.fullTime?.home}-${m.score?.fullTime?.away}`;
+    if (prev && prev !== curr && m.status === 'IN_PLAY') {
+      const home = m.homeTeam?.name || '?';
+      const away = m.awayTeam?.name || '?';
+      const sh = m.score?.fullTime?.home;
+      const sa = m.score?.fullTime?.away;
+      showToast(`GOL! ${home} ${sh} x ${sa} ${away}`);
+    }
+  });
+}
+
+// Toast de notificacao de evento
+function showToast(msg) {
+  let toast = document.getElementById('event-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'event-toast';
+    toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;font-weight:600;font-size:14px;padding:10px 20px;border-radius:8px;z-index:9999;animation:toast-in .3s ease;box-shadow:0 4px 20px rgba(0,0,0,.4)';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = '⚽ ' + msg;
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 5000);
 }
 
 // ==========================================================
@@ -942,6 +1024,35 @@ async function loadGroups() {
   sp.style.display = 'flex';
   el.innerHTML = '';
 
+  // === Tenta API Copa 2026 open-source (github rezarahiminia) ===
+  try {
+    const r = await fetch('https://raw.githubusercontent.com/rezarahiminia/worldcup2026/main/data/standings.json');
+    if (r.ok) {
+      const data = await r.json();
+      const groups = Array.isArray(data) ? data : data.groups || [];
+      if (groups.length > 0) {
+        sp.style.display = 'none';
+        el.innerHTML = groups.map(g => {
+          const name = g.name || g.group || 'Grupo';
+          const teams = (g.teams || g.standings || []).map(t => ({
+            n: t.team || t.name || t.team_name || '?',
+            f: TEAM_ISO[t.team || t.name || ''] || '',
+            pts: t.points || t.pts || 0,
+            j: t.played || t.games || 0,
+            v: t.won || t.wins || 0,
+            e: t.drawn || t.draws || 0,
+            d: t.lost || t.losses || 0,
+            gf: t.goals_for || t.gf || 0,
+            gc: t.goals_against || t.gc || 0
+          }));
+          return renderGroupCard(name, teams);
+        }).join('');
+        return;
+      }
+    }
+  } catch(e) {}
+
+  // === Tenta football-data.org ===
   try {
     const r = await fetch(`${API_BASE}/competitions/WC/standings`, {
       headers: { 'X-Auth-Token': API_TOKEN }
@@ -950,7 +1061,6 @@ async function loadGroups() {
     const data = await r.json();
     const standings = data.standings || [];
     if (!standings.length) throw new Error('empty');
-
     sp.style.display = 'none';
     el.innerHTML = standings.map(g => {
       const groupName = g.group || g.stage || 'Grupo';
@@ -960,10 +1070,12 @@ async function loadGroups() {
         e: t.draw, d: t.lost, gf: t.goalsFor, gc: t.goalsAgainst
       })));
     }).join('');
-  } catch (e) {
-    sp.style.display = 'none';
-    el.innerHTML = STATIC_GROUPS.map(g => renderGroupCard(g.name, g.teams)).join('');
-  }
+    return;
+  } catch (e) {}
+
+  // === Fallback estatico ===
+  sp.style.display = 'none';
+  el.innerHTML = STATIC_GROUPS.map(g => renderGroupCard(g.name, g.teams)).join('');
 }
 
 // ==========================================================
@@ -1157,7 +1269,7 @@ document.getElementById('datestamp').textContent =
   new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}) + ' \u00b7 Fase de grupos';
 
 loadGames();
-updateLiveBadge();
+updateLiveBadge();      // inicia polling inteligente: 15s ao vivo / 60s normal
 startCountdown();
 setInterval(updateLiveBadge, 30000); // reavalia o badge a cada 30s
 initApiKeyUI();
