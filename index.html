@@ -4,442 +4,999 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Copa 2026 — Analise de Apostas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
-:root{
-  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;
-  --border:#252a38;--border2:#2e3448;
-  --text:#e8ecf5;--text2:#8892aa;--text3:#525e78;
-  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;
-  --blue:#3b82f6;--purple:#a855f7;--teal:#14b8a6;
-  --accent:#f59e0b;
+:root {
+  --bg: #06080f;
+  --bg2: #0d1220;
+  --bg3: #111827;
+  --bg4: #1a2238;
+  --border: #1e2d4a;
+  --border2: #263554;
+  --text: #e2e8f8;
+  --text2: #7a8cb0;
+  --text3: #3d5080;
+  --gold: #f5c842;
+  --gold2: #e8a800;
+  --green: #10d988;
+  --green2: #059652;
+  --red: #f04060;
+  --blue: #3b8ef8;
+  --purple: #9b6dff;
+  --teal: #00d4c8;
+  --amber: #ffb020;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
-/* HEADER */
-.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:.875rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text)}
-.logo span{color:var(--accent)}
-.live-badge{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--green);background:#22c55e18;padding:3px 10px;border-radius:20px;border:1px solid #22c55e33}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-/* TABS */
-.tabs{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;gap:2px;overflow-x:auto}
-.tabs::-webkit-scrollbar{display:none}
-.tbtn{padding:11px 16px;font-size:13px;font-weight:500;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s}
-.tbtn:hover{color:var(--text)}.tbtn.active{color:var(--accent);border-bottom-color:var(--accent)}
-/* LAYOUT */
-.main{max-width:880px;margin:0 auto;padding:1.5rem}
-.tab-content{display:none}.tab-content.active{display:block}
-.sec{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:1.5rem 0 .75rem}
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.125rem 1.25rem;margin-bottom:.75rem}
-/* BADGES */
-.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap}
-.bb{background:#3b82f618;color:#93c5fd;border:1px solid #3b82f633}
-.bg{background:#22c55e18;color:#86efac;border:1px solid #22c55e33}
-.ba{background:#f59e0b18;color:#fcd34d;border:1px solid #f59e0b33}
-.br{background:#ef444418;color:#fca5a5;border:1px solid #ef444433}
-.bt{background:#14b8a618;color:#5eead4;border:1px solid #14b8a633}
-.bp{background:#a855f718;color:#d8b4fe;border:1px solid #a855f733}
-/* GAME CARD */
-.game-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:.75rem;overflow:hidden}
-.game-head{padding:.75rem 1.25rem;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
-.game-body{padding:1rem 1.25rem}
-.teams{display:flex;align-items:center;margin-bottom:.875rem}
-.team{flex:1;text-align:center}
-.flag{font-size:26px;display:block;margin-bottom:3px}
-.tname{font-size:14px;font-weight:600;color:var(--text)}
-.score-box{text-align:center;padding:0 12px;min-width:70px}
-.score{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700}
-.score-sub{font-size:11px;color:var(--text3);margin-top:2px}
-.prob-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin-bottom:5px}
-.prob-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:.875rem}
-/* BET ROWS */
-.bet-rows{border-top:1px solid var(--border);padding-top:.75rem;display:flex;flex-direction:column;gap:7px}
-.bet-row{display:flex;align-items:center;gap:8px}
-.bet-pick{flex:1;font-size:13px;color:var(--text2)}
-.bet-odd{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap}
-.stars{font-size:11px;color:var(--amber)}
-.tip-box{background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:.75rem 1rem;margin-top:.875rem;font-size:12px;color:var(--text2);line-height:1.6}
-/* STATUS */
-.status-live{color:var(--green);font-size:11px;font-weight:600;animation:blink 1.5s infinite}
-.status-done{color:var(--text3);font-size:11px}
-.status-soon{color:var(--amber);font-size:11px;font-weight:500}
-/* DAY LABEL */
-.day-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:1.25rem 0 .5rem;display:flex;align-items:center;gap:8px}
-.day-label:first-child{margin-top:0}
-.day-sep{flex:1;height:1px;background:var(--border)}
-/* METRICS */
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1rem}
-.metric{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.75rem;text-align:center}
-.metric-val{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text)}
-.metric-lbl{font-size:11px;color:var(--text3);margin-top:2px}
-/* CORNER BARS */
-.cbar{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
-.cbar:last-child{border-bottom:none}
-.cbar-name{width:130px;font-size:13px;font-weight:500;color:var(--text)}
-.cbar-track{flex:1;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden}
-.cbar-fill{height:100%;border-radius:4px}
-.cbar-val{width:32px;text-align:right;font-size:13px;font-weight:600;color:var(--text)}
-/* MARKET ROWS */
-.mrow{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
-.mrow:last-child{border-bottom:none}
-.mico{width:32px;height:32px;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.minfo{flex:1}
-.mtitle{font-size:13px;font-weight:600;color:var(--text)}
-.mdesc{font-size:12px;color:var(--text3);margin-top:3px;line-height:1.5}
-.mtags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
-.mright{text-align:right;flex-shrink:0}
-.modd{font-size:16px;font-weight:700;color:var(--text)}
-.mlbl2{font-size:11px;color:var(--text3)}
-/* VALUE METER */
-.vm{display:flex;align-items:center;gap:8px;margin-top:6px}
-.vm-track{flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
-.vm-fill{height:100%;border-radius:2px}
-.vm-lbl{font-size:11px;color:var(--text3);width:64px;text-align:right}
-/* PLAYER CARDS */
-.player-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.625rem}
-.player-head{display:flex;align-items:center;gap:10px;margin-bottom:.625rem}
-.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.pname{font-size:14px;font-weight:600;color:var(--text)}
-.psub{font-size:12px;color:var(--text3)}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:.5rem 0}
-.stat-box{background:var(--bg3);border-radius:8px;padding:5px 8px;text-align:center}
-.stat-val{font-size:13px;font-weight:600;color:var(--text)}
-.stat-lbl{font-size:10px;color:var(--text3);margin-top:1px}
-/* GROUPS */
-.group-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.group-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.group-title{background:var(--bg3);padding:.625rem 1rem;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
-.gtable{width:100%;border-collapse:collapse}
-.gtable th{font-size:10px;font-weight:600;color:var(--text3);padding:5px 8px;text-align:right;letter-spacing:.04em}
-.gtable th:first-child{text-align:left}
-.gtable td{font-size:12px;color:var(--text2);padding:6px 8px;text-align:right;border-top:1px solid var(--border)}
-.gtable td:first-child{text-align:left;color:var(--text);font-weight:500}
-.gtable tr.qualify td{color:var(--green)}
-.gtable tr:hover td{background:var(--bg3)}
-/* MULTIPLAS */
-.multi-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.125rem 1.25rem;margin-bottom:.75rem}
-.multi-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.875rem}
-.multi-title{font-size:14px;font-weight:600;color:var(--text)}
-.multi-sub{font-size:12px;color:var(--text3);margin-top:2px}
-.multi-odd{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);text-align:right}
-.multi-odd-lbl{font-size:11px;color:var(--text3);text-align:right}
-.multi-legs{border-top:1px solid var(--border);padding-top:.75rem;display:flex;flex-direction:column;gap:6px}
-.multi-leg{display:flex;align-items:center;gap:8px;font-size:13px}
-.leg-pick{flex:1;color:var(--text2)}
-.leg-odd{font-size:12px;color:var(--text3)}
-/* AI */
-.ai-wrap{display:flex;gap:8px}
-.ai-wrap input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none}
-.ai-wrap input:focus{border-color:var(--accent)}
-.ai-wrap input::placeholder{color:var(--text3)}
-.send-btn{padding:9px 18px;background:var(--accent);color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
-.send-btn:hover{opacity:.85}
-.qbtns{display:flex;flex-wrap:wrap;gap:6px;margin:.75rem 0}
-.qbtn{padding:6px 12px;font-size:12px;border:1px solid var(--border2);background:transparent;color:var(--text2);border-radius:6px;cursor:pointer;transition:all .15s}
-.qbtn:hover{background:var(--bg3);color:var(--text)}
-.ai-out{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-top:.75rem;font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;display:none}
-/* SPINNER */
-.spinner{display:none;align-items:center;gap:8px;padding:.75rem 0;font-size:13px;color:var(--text3)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:ld 1.2s infinite}
-.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
-@keyframes ld{0%,80%,100%{opacity:.2}40%{opacity:1}}
-/* SHOT PANELS */
-.gpill{display:inline-flex;padding:5px 12px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;margin:3px}
-.gpill.active,.gpill:hover{background:var(--bg3);color:var(--text);border-color:var(--border2)}
-.shot-panel{display:none}.shot-panel.active{display:block}
-/* API STATUS */
-.api-info{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)}
-.api-dot{width:6px;height:6px;border-radius:50%}
-/* DISCLAIMER */
-.disclaimer{font-size:11px;color:var(--text3);background:var(--bg3);border-radius:8px;padding:.75rem 1rem;margin-top:1.5rem;line-height:1.6;border-left:3px solid var(--border2)}
-/* RESPONSIVE */
-@media(max-width:600px){.main{padding:1rem}.header{padding:.75rem 1rem}.stat-grid{grid-template-columns:repeat(2,1fr)}}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-@keyframes toast-in{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── HEADER ─────────────────────────────── */
+.header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(6,8,15,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px; font-weight: 800; color: var(--text);
+  text-decoration: none;
+}
+.logo-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.logo-sub { font-size: 11px; color: var(--text2); font-weight: 500; margin-top: 1px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.date-chip {
+  font-size: 12px; color: var(--text2);
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+}
+.live-pill {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  padding: 4px 12px; border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all .3s;
+}
+.live-pill.live { background: #10d98818; border-color: #10d98840; color: var(--green); }
+.live-pill.offline { background: var(--bg3); border-color: var(--border); color: var(--text3); }
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor;
+}
+.live-pill.live .live-dot { animation: pulse-live 1.5s infinite; }
+@keyframes pulse-live { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+/* ─── TABS ────────────────────────────────── */
+.tabs-wrap {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  display: flex; gap: 0;
+  overflow-x: auto;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tbtn {
+  padding: 0 16px; height: 46px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer; white-space: nowrap;
+  display: flex; align-items: center; gap: 7px;
+  transition: all .15s;
+}
+.tbtn:hover { color: var(--text); }
+.tbtn.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 600; }
+.tbtn .tab-icon { font-size: 15px; }
+
+/* ─── LAYOUT ──────────────────────────────── */
+.main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ─── SECTION HEADERS ─────────────────────── */
+.sec-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem; margin-top: 1.75rem;
+}
+.sec-header:first-child { margin-top: 0; }
+.sec-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text3);
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-title::before {
+  content: ''; display: block; width: 3px; height: 14px;
+  background: var(--gold); border-radius: 2px;
+}
+.sec-action {
+  font-size: 12px; color: var(--text2);
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 6px; cursor: pointer;
+  transition: all .15s;
+}
+.sec-action:hover { color: var(--text); border-color: var(--border2); }
+
+/* ─── COUNTDOWN BAR ───────────────────────── */
+.countdown-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, var(--bg3) 0%, var(--bg4) 100%);
+  border: 1px solid var(--border2);
+  border-radius: 12px; padding: .75rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.countdown-left { display: flex; align-items: center; gap: 8px; }
+.countdown-icon { font-size: 18px; }
+.countdown-label { font-size: 11px; color: var(--text3); }
+.countdown-time { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--gold); }
+.api-status { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text3); }
+.api-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* ─── GAME CARD ───────────────────────────── */
+.game-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: .875rem;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+  position: relative;
+}
+.game-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.game-card.brasil { border-color: #10d98828; }
+.game-card.brasil::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(to bottom, var(--green), var(--teal));
+}
+.game-card.live-game { border-color: #f0406030; }
+.game-card.live-game::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(to bottom, var(--red), var(--amber));
+  animation: pulse-border 2s infinite;
+}
+@keyframes pulse-border { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.game-head {
+  padding: .625rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 6px;
+}
+.game-group { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; }
+.game-meta { display: flex; align-items: center; gap: 8px; }
+.status-live { color: var(--red); font-size: 11px; font-weight: 700; animation: pulse-live 1.5s infinite; }
+.status-done { color: var(--text3); font-size: 11px; }
+.status-soon { color: var(--amber); font-size: 11px; font-weight: 600; }
+.game-venue { font-size: 11px; color: var(--text3); }
+
+.game-body { padding: 1.125rem 1.25rem; }
+.teams { display: flex; align-items: center; gap: 0; margin-bottom: 1rem; }
+.team { flex: 1; text-align: center; }
+.flag { font-size: 32px; display: block; margin-bottom: 6px; line-height: 1; }
+.tname { font-size: 13px; font-weight: 600; color: var(--text); }
+.tpower { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+.score-center { text-align: center; padding: 0 16px; min-width: 90px; }
+.score-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 30px; font-weight: 800;
+  line-height: 1; color: var(--text);
+}
+.score-num.live-score { color: var(--red); }
+.score-num.done-score { color: var(--text2); }
+.score-sep { font-size: 18px; color: var(--text3); font-weight: 700; margin: 0 4px; }
+.score-time { font-size: 11px; color: var(--text3); margin-top: 4px; font-weight: 500; }
+
+.prob-section { margin-bottom: 1rem; }
+.prob-bar {
+  display: flex; height: 6px; border-radius: 3px;
+  overflow: hidden; margin-bottom: 6px;
+  background: var(--bg4);
+}
+.pb-home { background: linear-gradient(90deg, var(--blue), #60a5fa); border-radius: 3px 0 0 3px; }
+.pb-draw { background: var(--text3); }
+.pb-away { background: linear-gradient(90deg, #f87171, var(--red)); border-radius: 0 3px 3px 0; }
+.prob-labels {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--text2);
+}
+
+/* ─── BET SECTION ─────────────────────────── */
+.bet-section { border-top: 1px solid var(--border); padding-top: .875rem; }
+.bet-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.bet-row:last-child { border-bottom: none; }
+.bet-cat {
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+.cat-result  { background: #3b8ef818; color: #60acff; border: 1px solid #3b8ef830; }
+.cat-goals   { background: #10d98818; color: #4dffa8; border: 1px solid #10d98830; }
+.cat-corners { background: #9b6dff18; color: #c4a8ff; border: 1px solid #9b6dff30; }
+.cat-shots   { background: #f5c84218; color: #ffd95c; border: 1px solid #f5c84230; }
+.cat-cards   { background: #f0406018; color: #ff8090; border: 1px solid #f0406030; }
+.cat-handicap{ background: #00d4c818; color: #5fffff; border: 1px solid #00d4c830; }
+.cat-player  { background: #ffb02018; color: #ffd080; border: 1px solid #ffb02030; }
+.cat-btts    { background: #1a223880; color: var(--text2); border: 1px solid var(--border); }
+
+.bet-pick { flex: 1; font-size: 12px; color: var(--text2); line-height: 1.4; }
+.bet-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.bet-odd { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); }
+.bet-stars { font-size: 10px; color: var(--gold); }
+
+.tip-box {
+  margin-top: .875rem;
+  background: linear-gradient(135deg, #f5c84210, #f5c84205);
+  border: 1px solid #f5c84225;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: .625rem .875rem;
+  font-size: 12px; color: var(--text2); line-height: 1.6;
+}
+
+/* ─── DAY LABEL ───────────────────────────── */
+.day-label {
+  display: flex; align-items: center; gap: 10px;
+  margin: 1.5rem 0 .875rem;
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.day-label:first-child { margin-top: 0; }
+.day-sep { flex: 1; height: 1px; background: var(--border); }
+.day-today { color: var(--gold); }
+
+/* ─── HERO STATS ──────────────────────────── */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px; margin-bottom: 1.5rem;
+}
+.hero-stat {
+  background: linear-gradient(135deg, var(--bg2), var(--bg3));
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1rem;
+  text-align: center; position: relative; overflow: hidden;
+}
+.hero-stat::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.hero-stat.gold::after { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+.hero-stat.green::after { background: linear-gradient(90deg, var(--green), var(--teal)); }
+.hero-stat.blue::after { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+.hero-stat.red::after { background: linear-gradient(90deg, var(--red), var(--amber)); }
+.stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); }
+.stat-lbl { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+/* ─── GROUPS ──────────────────────────────── */
+.group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.group-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+}
+.group-card.brasil-group { border-color: #10d98828; }
+.group-head {
+  padding: .625rem 1rem;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px; font-weight: 700; color: var(--text2);
+  text-transform: uppercase; letter-spacing: .08em;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.gtable { width: 100%; border-collapse: collapse; }
+.gtable th {
+  font-size: 9px; font-weight: 700; color: var(--text3);
+  padding: 4px 8px; text-align: right; letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.gtable th:first-child { text-align: left; }
+.gtable td {
+  font-size: 12px; color: var(--text2);
+  padding: 7px 8px; text-align: right;
+  border-top: 1px solid var(--border);
+}
+.gtable td:first-child { text-align: left; color: var(--text); font-weight: 500; }
+.gtable tr.qualify td { color: var(--green); }
+.gtable tr:hover td { background: var(--bg3); }
+
+/* ─── CORNER BARS ─────────────────────────── */
+.cbar-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 1.125rem; margin-bottom: .75rem; }
+.cbar-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.cbar-row:last-child { border-bottom: none; }
+.cbar-name { width: 120px; font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+.cbar-track { flex: 1; height: 7px; background: var(--bg4); border-radius: 4px; overflow: hidden; }
+.cbar-fill { height: 100%; border-radius: 4px; }
+.cbar-val { width: 30px; text-align: right; font-size: 13px; font-weight: 700; color: var(--text); }
+
+/* ─── PLAYER CARDS ────────────────────────── */
+.player-grid { display: flex; flex-direction: column; gap: .75rem; }
+.player-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1rem 1.25rem;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 1rem; align-items: start;
+  transition: border-color .2s;
+}
+.player-card:hover { border-color: var(--border2); }
+.player-card.brasil-player { border-color: #10d98820; }
+.player-avatar {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px; font-weight: 800; flex-shrink: 0;
+}
+.player-info .pname { font-size: 14px; font-weight: 700; color: var(--text); }
+.player-info .psub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.player-stats { display: flex; gap: 8px; margin-top: .625rem; flex-wrap: wrap; }
+.pstat {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 4px 8px; text-align: center;
+}
+.pstat-val { font-size: 13px; font-weight: 700; color: var(--text); }
+.pstat-lbl { font-size: 10px; color: var(--text3); }
+.player-bets { display: flex; flex-direction: column; gap: 5px; }
+.pbbet {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px;
+}
+.pbbet-pick { flex: 1; color: var(--text2); }
+.pbbet-odd { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); }
+.pbbet-stars { font-size: 10px; color: var(--gold); }
+
+/* ─── MARKET ROWS ─────────────────────────── */
+.market-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: .75rem; }
+.mrow {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+}
+.mrow:last-child { border-bottom: none; }
+.mico {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--bg3); display: flex; align-items: center;
+  justify-content: center; font-size: 17px; flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.minfo { flex: 1; }
+.mtitle { font-size: 13px; font-weight: 600; color: var(--text); }
+.mdesc { font-size: 12px; color: var(--text3); margin-top: 3px; line-height: 1.5; }
+.mtags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 7px; }
+.mtag {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 8px; border-radius: 5px; white-space: nowrap;
+}
+.vm { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.vm-track { flex: 1; height: 4px; background: var(--bg4); border-radius: 2px; overflow: hidden; }
+.vm-fill { height: 100%; border-radius: 2px; }
+.vm-lbl { font-size: 10px; color: var(--text3); white-space: nowrap; }
+.mright { text-align: right; flex-shrink: 0; }
+.modd { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); }
+.mlbl { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+/* ─── MULTI CARDS ─────────────────────────── */
+.multi-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; margin-bottom: .875rem;
+}
+.multi-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--bg3), var(--bg4));
+}
+.multi-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.multi-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.multi-odd-block { text-align: right; }
+.multi-odd {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px; font-weight: 800;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.multi-odd-lbl { font-size: 10px; color: var(--text3); }
+.multi-legs { padding: .875rem 1.25rem; display: flex; flex-direction: column; gap: 6px; }
+.mleg { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 4px 0; }
+.mleg-pick { flex: 1; color: var(--text2); }
+.mleg-odd { font-size: 11px; color: var(--text3); font-weight: 600; }
+.multi-footer {
+  padding: .625rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ev-meter { display: flex; align-items: center; gap: 8px; flex: 1; }
+.ev-track { flex: 1; height: 5px; background: var(--bg4); border-radius: 3px; overflow: hidden; }
+.ev-fill { height: 100%; border-radius: 3px; }
+.ev-label { font-size: 10px; color: var(--text3); white-space: nowrap; }
+.multi-prob { font-size: 11px; color: var(--text2); }
+
+/* ─── SHOT PANEL ──────────────────────────── */
+.game-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.gpill {
+  padding: 5px 12px; border: 1px solid var(--border);
+  border-radius: 20px; font-size: 12px; font-weight: 500;
+  cursor: pointer; background: transparent; color: var(--text2);
+  transition: all .15s;
+}
+.gpill:hover, .gpill.active {
+  background: var(--bg3); color: var(--text);
+  border-color: var(--border2);
+}
+.gpill.active { border-color: var(--gold); color: var(--gold); }
+.shot-panel { display: none; }
+.shot-panel.active { display: block; }
+
+/* ─── IA TAB ──────────────────────────────── */
+.apikey-card {
+  background: linear-gradient(135deg, var(--bg2), var(--bg3));
+  border: 1px solid var(--border2);
+  border-radius: 16px; padding: 1.125rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.apikey-header { display: flex; align-items: center; gap: 10px; margin-bottom: .875rem; }
+.apikey-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.apikey-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.apikey-sub { font-size: 12px; color: var(--text2); margin-top: 1px; }
+.key-input-row { display: flex; gap: 8px; }
+.key-input {
+  flex: 1; background: var(--bg4);
+  border: 1px solid var(--border2); border-radius: 10px;
+  padding: 10px 14px; font-size: 13px; color: var(--text);
+  font-family: inherit; outline: none; transition: border .15s;
+}
+.key-input:focus { border-color: var(--gold); }
+.key-input::placeholder { color: var(--text3); }
+.save-btn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #000; border: none; border-radius: 10px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: opacity .15s;
+}
+.save-btn:hover { opacity: .85; }
+.key-hint { font-size: 11px; color: var(--text3); margin-top: .5rem; }
+.key-hint a { color: var(--gold); text-decoration: none; }
+.key-status { font-size: 12px; margin-top: .5rem; display: none; }
+
+.ai-chat-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.125rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.ai-chat-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.ai-chat-sub { font-size: 12px; color: var(--text2); margin-bottom: .875rem; }
+.ai-input-row { display: flex; gap: 8px; }
+.ai-input {
+  flex: 1; background: var(--bg4);
+  border: 1px solid var(--border2); border-radius: 10px;
+  padding: 10px 14px; font-size: 13px; color: var(--text);
+  font-family: inherit; outline: none; transition: border .15s;
+}
+.ai-input:focus { border-color: var(--gold); }
+.ai-input::placeholder { color: var(--text3); }
+.ai-send-btn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #000; border: none; border-radius: 10px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: opacity .15s;
+}
+.ai-send-btn:hover { opacity: .85; }
+.spinner {
+  display: none; align-items: center; gap: 8px;
+  padding: .75rem 0; font-size: 13px; color: var(--text3);
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); animation: ld 1.2s infinite; }
+.dot:nth-child(2){animation-delay:.2s} .dot:nth-child(3){animation-delay:.4s}
+@keyframes ld { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+.ai-output {
+  background: var(--bg4); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem; margin-top: .75rem;
+  font-size: 13px; color: var(--text2); line-height: 1.75;
+  white-space: pre-wrap; display: none;
+}
+.quick-btns { display: flex; flex-wrap: wrap; gap: 7px; margin: .75rem 0; }
+.qbtn {
+  padding: 6px 12px; font-size: 12px;
+  border: 1px solid var(--border2); background: var(--bg3);
+  color: var(--text2); border-radius: 8px; cursor: pointer; transition: all .15s;
+}
+.qbtn:hover { border-color: var(--gold); color: var(--text); }
+
+/* ─── DISCLAIMER ──────────────────────────── */
+.disclaimer {
+  font-size: 11px; color: var(--text3);
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: .875rem 1rem;
+  margin-top: 2rem; line-height: 1.6;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.disclaimer-icon { font-size: 14px; flex-shrink: 0; }
+
+/* ─── TOAST ───────────────────────────────── */
+#goal-toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #10d988, #059652);
+  color: #fff; font-weight: 700; font-size: 15px;
+  padding: 12px 24px; border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(16,217,136,.4);
+  z-index: 9999; display: none;
+  animation: toast-in .3s ease;
+  white-space: nowrap;
+}
+@keyframes toast-in { from{opacity:0;transform:translateX(-50%) translateY(16px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+/* ─── BADGES ──────────────────────────────── */
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap;
+}
+.b-gold   { background: #f5c84220; color: #f5c842; border: 1px solid #f5c84230; }
+.b-green  { background: #10d98820; color: #10d988; border: 1px solid #10d98830; }
+.b-blue   { background: #3b8ef820; color: #60acff; border: 1px solid #3b8ef830; }
+.b-red    { background: #f0406020; color: #ff8090; border: 1px solid #f0406030; }
+.b-purple { background: #9b6dff20; color: #c4a8ff; border: 1px solid #9b6dff30; }
+.b-teal   { background: #00d4c820; color: #00d4c8; border: 1px solid #00d4c830; }
+
+/* ─── RESPONSIVE ──────────────────────────── */
+@media(max-width: 600px) {
+  .main { padding: 1rem; }
+  .header { padding: 0 1rem; }
+  .tabs-wrap { padding: 0 1rem; }
+  .player-card { grid-template-columns: auto 1fr; }
+  .player-bets { grid-column: 1 / -1; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .flag { font-size: 26px; }
+  .score-num { font-size: 24px; }
+  .multi-odd { font-size: 20px; }
+  .tbtn { padding: 0 12px; font-size: 12px; }
+}
+@media(max-width: 380px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .group-grid { grid-template-columns: 1fr; }
+}
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="logo">Copa <span>2026</span> Analise</div>
-  <div style="display:flex;align-items:center;gap:10px">
-    <div style="font-size:12px;color:var(--text3)" id="datestamp"></div>
-    <div class="live-badge" id="live-badge"><div class="live-dot" id="live-dot"></div><span id="live-text">HOJE</span></div>
-  </div>
-</div>
-
-<div class="tabs">
-  <button class="tbtn active" onclick="showTab('jogos',this)">Jogos</button>
-  <button class="tbtn" onclick="showTab('grupos',this)">Grupos</button>
-  <button class="tbtn" onclick="showTab('escanteios',this)">Escanteios</button>
-  <button class="tbtn" onclick="showTab('chutes',this)">Chutes e Gols</button>
-  <button class="tbtn" onclick="showTab('jogadores',this)">Jogadores</button>
-  <button class="tbtn" onclick="showTab('mercados',this)">Mercados</button>
-  <button class="tbtn" onclick="showTab('multiplas',this)">Multiplas</button>
-  <button class="tbtn" onclick="showTab('ia',this)">IA</button>
-</div>
-
-<div class="main">
-
-<!-- ===== JOGOS ===== -->
-<div id="tab-jogos" class="tab-content active">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
-    <div id="api-status" class="api-info">
-      <div class="api-dot" style="background:var(--amber)"></div>
-      <span>Carregando...</span>
-    </div>
-    <button onclick="loadGames()" style="font-size:12px;color:var(--text3);background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer">&#8635; Atualizar</button>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding:.625rem 1rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-    <div id="countdown" style="font-size:12px;color:var(--text2)">Calculando...</div>
-    <div style="font-size:11px;color:var(--text3)">Placar atualiza a cada 60s</div>
-  </div>
-  <div id="spinner-games" class="spinner" style="display:flex">
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    <span>Buscando jogos...</span>
-  </div>
-  <div id="games-container"></div>
-</div>
-
-<!-- ===== GRUPOS ===== -->
-<div id="tab-grupos" class="tab-content">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <div class="sec" style="margin-top:.5rem">Tabela de grupos</div>
-    <button onclick="loadGroups()" style="font-size:12px;color:var(--text3);background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer">&#8635; Atualizar</button>
-  </div>
-  <div id="spinner-groups" class="spinner"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Carregando grupos...</span></div>
-  <div id="groups-content" class="group-grid"></div>
-</div>
-
-<!-- ===== ESCANTEIOS ===== -->
-<div id="tab-escanteios" class="tab-content">
-  <div class="sec">Referencia estatistica — Copas anteriores</div>
-  <div class="metrics">
-    <div class="metric"><div class="metric-val">9.4</div><div class="metric-lbl">media/jogo Copa 2022</div></div>
-    <div class="metric"><div class="metric-val">10.1</div><div class="metric-lbl">media elim. 2026</div></div>
-    <div class="metric"><div class="metric-val">5.3</div><div class="metric-lbl">escanteios UEFA media</div></div>
-    <div class="metric"><div class="metric-val">63%</div><div class="metric-lbl">jogos com ate 10</div></div>
-  </div>
-  <div class="sec">Media de escanteios a favor por selecao</div>
-  <div class="card">
-    <div class="cbar"><span class="cbar-name">Brasil</span><div class="cbar-track"><div class="cbar-fill" style="width:74%;background:#14b8a6"></div></div><span class="cbar-val">6.2</span></div>
-    <div class="cbar"><span class="cbar-name">Alemanha</span><div class="cbar-track"><div class="cbar-fill" style="width:70%;background:#3b82f6"></div></div><span class="cbar-val">5.9</span></div>
-    <div class="cbar"><span class="cbar-name">Espanha</span><div class="cbar-track"><div class="cbar-fill" style="width:68%;background:#ef4444"></div></div><span class="cbar-val">5.7</span></div>
-    <div class="cbar"><span class="cbar-name">Franca</span><div class="cbar-track"><div class="cbar-fill" style="width:66%;background:#3b82f6"></div></div><span class="cbar-val">5.6</span></div>
-    <div class="cbar"><span class="cbar-name">Argentina</span><div class="cbar-track"><div class="cbar-fill" style="width:64%;background:#22c55e"></div></div><span class="cbar-val">5.4</span></div>
-    <div class="cbar"><span class="cbar-name">Holanda</span><div class="cbar-track"><div class="cbar-fill" style="width:63%;background:#f59e0b"></div></div><span class="cbar-val">5.3</span></div>
-    <div class="cbar"><span class="cbar-name">Inglaterra</span><div class="cbar-track"><div class="cbar-fill" style="width:62%;background:#ef4444"></div></div><span class="cbar-val">5.2</span></div>
-    <div class="cbar"><span class="cbar-name">Marrocos</span><div class="cbar-track"><div class="cbar-fill" style="width:42%;background:#525e78"></div></div><span class="cbar-val">3.5</span></div>
-    <div class="cbar"><span class="cbar-name">Uruguai</span><div class="cbar-track"><div class="cbar-fill" style="width:46%;background:#525e78"></div></div><span class="cbar-val">3.9</span></div>
-  </div>
-  <div class="sec">Melhores apostas de escanteios — Copa 2026</div>
-  <div class="card">
-    <div class="mrow"><div class="mico">&#x1F6A9;</div><div class="minfo"><div class="mtitle">Brasil vs Marrocos — Brasil +5 escanteios</div><div class="mdesc">Brasil tem media 6.2 a favor. Marrocos defende em bloco baixo, forcando cruzamentos constantes. Estimativa: 6-7 escanteios pro Brasil.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:76%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.85</div><div class="mlbl2">over 5 BRA</div></div></div>
-    <div class="mrow"><div class="mico">&#x1F6A9;</div><div class="minfo"><div class="mtitle">EUA vs Paraguai — EUA +5 escanteios</div><div class="mdesc">EUA em casa em Los Angeles. Paraguai vai defender profundo, gerando muitos cruzamentos e escanteios para os americanos.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.80</div><div class="mlbl2">over 5 EUA</div></div></div>
-    <div class="mrow"><div class="mico">&#x1F6A9;</div><div class="minfo"><div class="mtitle">Alemanha vs Curacao — Alemanha +7 escanteios</div><div class="mdesc">Alemanha pressiona alto com posse. Curacao vai defender em bloco. Favoritos contra times bem inferiores geram escanteios em massa.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:78%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.75</div><div class="mlbl2">over 7 ALE</div></div></div>
-    <div class="mrow"><div class="mico">&#x1F6A9;</div><div class="minfo"><div class="mtitle">Espanha vs Cabo Verde — Espanha +7 escanteios</div><div class="mdesc">Espanha media 5.7. Jogo de posse com cruzamentos constantes. Cabo Verde defende com bloco baixo.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.70</div><div class="mlbl2">over 7 ESP</div></div></div>
-  </div>
-  <div class="tip-box">Estrategia: Favorito forte + time defensivo = over escanteios do favorito quase sempre tem valor. Media Copa 2022 foi 9.4 por jogo — aposte over 8.5 quando ambos os times tem media acima de 4.5 cada.</div>
-</div>
-
-<!-- ===== CHUTES ===== -->
-<div id="tab-chutes" class="tab-content">
-  <div class="sec">Referencia estatistica — finalizacoes</div>
-  <div class="metrics">
-    <div class="metric"><div class="metric-val">5.4</div><div class="metric-lbl">chutes/alvo Copa 2022</div></div>
-    <div class="metric"><div class="metric-val">7.7</div><div class="metric-lbl">chutes/alvo Elim. 2026</div></div>
-    <div class="metric"><div class="metric-val">2.6</div><div class="metric-lbl">gols/jogo Copa 2022</div></div>
-    <div class="metric"><div class="metric-val">63%</div><div class="metric-lbl">jogos menos 3.5 gols</div></div>
-  </div>
-  <div class="sec">Selecione o jogo</div>
-  <div style="margin-bottom:1rem">
-    <button class="gpill active" onclick="showShot(this,'bra')">Brasil vs Marrocos</button>
-    <button class="gpill" onclick="showShot(this,'usa')">EUA vs Paraguai</button>
-    <button class="gpill" onclick="showShot(this,'can')">Canada vs Bosnia</button>
-    <button class="gpill" onclick="showShot(this,'ale')">Alemanha vs Curacao</button>
-  </div>
-  <div id="shot-bra" class="shot-panel active card">
-    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Brasil +6.5 chutes ao gol</div><div class="mdesc">Media 7.7 nas eliminatorias. Vinicius, Rodrygo e Raphinha pressionam. Marrocos defende fechado = chutes de fora da area.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:73%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.75</div><div class="mlbl2">over 6.5</div></div></div>
-    <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Brasil marca no 1 tempo</div><div class="mdesc">Brasil marcou no 1T em 7 dos ultimos 10 jogos das eliminatorias. Altamente motivado na estreia da Copa.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:58%;background:#f59e0b"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.90</div><div class="mlbl2">gol 1T BRA</div></div></div>
-    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Marrocos menos de 3.5 chutes ao gol</div><div class="mdesc">Na semi 2022 vs Franca: apenas 2 chutes. Estilo ultra-defensivo = baixo volume ofensivo contra grandes times.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.65</div><div class="mlbl2">under 3.5</div></div></div>
-    <div class="tip-box">Combinacao de valor: Brasil vence + menos 3.5 gols + Brasil +5 escanteios. Odd combinada ~3.30, probabilidade real estimada ~38%.</div>
-  </div>
-  <div id="shot-usa" class="shot-panel card">
-    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">EUA +5.5 chutes no alvo</div><div class="mdesc">EUA em Los Angeles com enorme pressao de torcida. Balogun (centroavante PL) tem 2+ chutes/jogo. Paraguai vai defender profundo.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.75</div><div class="mlbl2">over 5.5</div></div></div>
-    <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Mais de 2.5 gols no total</div><div class="mdesc">Paraguai sofreu 14 gols em 18 jogos nas eliminatorias. EUA em casa tende a abrir o jogo cedo.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:55%;background:#f59e0b"></div></div><span class="vm-lbl">Valor ++</span></div></div><div class="mright"><div class="modd">x2.30</div><div class="mlbl2">over 2.5</div></div></div>
-  </div>
-  <div id="shot-can" class="shot-panel card">
-    <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Menos de 2.5 gols — jogo fechado</div><div class="mdesc">Bosnia e time muito tatico e organizado. Canada em estreia de Copa tende a ser cauteloso. Probabilidade real ~54%.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:62%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.70</div><div class="mlbl2">under 2.5</div></div></div>
-    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Canada +4.5 chutes no alvo</div><div class="mdesc">Canada anfitriao em Toronto. Jonathan David e finalizado compulsivo. Bosnia vai defender profundamente.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:55%;background:#f59e0b"></div></div><span class="vm-lbl">Valor ++</span></div></div><div class="mright"><div class="modd">x1.85</div><div class="mlbl2">over 4.5</div></div></div>
-  </div>
-  <div id="shot-ale" class="shot-panel card">
-    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Alemanha +7 chutes ao gol</div><div class="mdesc">Curacao nao tem estrutura para segurar a Alemanha. Media da Alemanha: 7.2 chutes ao gol vs times muito inferiores.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.60</div><div class="mlbl2">over 7 ALE</div></div></div>
-    <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Mais de 3.5 gols no total</div><div class="mdesc">Alemanha vs times inferiores: media 4.1 gols. Curacao tem a pior defesa da Copa. Over e a aposta natural.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:72%;background:#22c55e"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.65</div><div class="mlbl2">over 3.5</div></div></div>
-  </div>
-</div>
-
-<!-- ===== JOGADORES ===== -->
-<div id="tab-jogadores" class="tab-content">
-  <div class="sec">Favoritos a chuteira de ouro — Copa 2026</div>
-  <div class="player-card">
-    <div class="player-head"><div class="avatar" style="background:#3b82f618;color:#93c5fd">KM</div><div style="flex:1"><div class="pname">Kylian Mbappe — Franca</div><div class="psub">Grupo I (Senegal, Noruega, Iraque) · artilheiro Copa 2022 (8 gols)</div></div><span class="badge bb">Favorito #1 · x6.00</span></div>
-    <div class="stat-grid"><div class="stat-box"><div class="stat-val">12</div><div class="stat-lbl">gols em Copas</div></div><div class="stat-box"><div class="stat-val">15</div><div class="stat-lbl">gols UCL 25/26</div></div><div class="stat-box"><div class="stat-val">4.8</div><div class="stat-lbl">chutes/jogo</div></div><div class="stat-box"><div class="stat-val">Iraque</div><div class="stat-lbl">no grupo</div></div></div>
-    <div class="bet-rows" style="border-top:1px solid var(--border);padding-top:.75rem">
-      <div class="bet-row"><span class="badge bb">Artilheiro</span><span class="bet-pick">Artilheiro do torneio — Chuteira de Ouro</span><span class="bet-odd">x6.00</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge bb">Por jogo</span><span class="bet-pick">Marca vs Senegal ou Iraque (Grupo I)</span><span class="bet-odd">x1.75</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge bb">Chutes</span><span class="bet-pick">2+ chutes no alvo por jogo</span><span class="bet-odd">x1.70</span><span class="stars">+++</span></div>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">&#x26BD;</div>
+    <div>
+      <div>Copa <span style="color:var(--gold)">2026</span></div>
+      <div class="logo-sub">Analise de Apostas</div>
     </div>
   </div>
-  <div class="player-card" style="border-color:#14b8a644">
-    <div class="player-head"><div class="avatar" style="background:#14b8a618;color:#5eead4">VJ</div><div style="flex:1"><div class="pname">Vinicius Junior — Brasil</div><div class="psub">Grupo C (Marrocos, Haiti, Escocia) · Ballon d Or 2024</div></div><span class="badge bt">x13</span></div>
-    <div class="stat-grid"><div class="stat-box"><div class="stat-val">3.2</div><div class="stat-lbl">chutes/jogo</div></div><div class="stat-box"><div class="stat-val">1.8</div><div class="stat-lbl">dribles/90</div></div><div class="stat-box"><div class="stat-val">Gr. C</div><div class="stat-lbl">Haiti + Escocia</div></div><div class="stat-box"><div class="stat-val">Alta forma</div><div class="stat-lbl">Elim. 2026</div></div></div>
-    <div class="bet-rows" style="border-top:1px solid var(--border);padding-top:.75rem">
-      <div class="bet-row"><span class="badge bt">Por jogo</span><span class="bet-pick">Marca ou assiste vs Marrocos (13 jun)</span><span class="bet-odd">x2.20</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge bt">Chutes</span><span class="bet-pick">2+ chutes no alvo vs Marrocos</span><span class="bet-odd">x2.10</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge bt">Facil</span><span class="bet-pick">Marca anytime vs Haiti (19 jun)</span><span class="bet-odd">x1.55</span><span class="stars">++</span></div>
+  <div class="header-right">
+    <div class="date-chip" id="datestamp"></div>
+    <div class="live-pill offline" id="live-pill">
+      <div class="live-dot"></div>
+      <span id="live-text">HOJE</span>
     </div>
   </div>
-  <div class="player-card">
-    <div class="player-head"><div class="avatar" style="background:#f59e0b18;color:#fcd34d">EH</div><div style="flex:1"><div class="pname">Erling Haaland — Noruega</div><div class="psub">Grupo I · 1 Copa do Mundo · 0.96 gols/90 no clube</div></div><span class="badge ba">x8.00</span></div>
-    <div class="stat-grid"><div class="stat-box"><div class="stat-val">4.1</div><div class="stat-lbl">chutes/jogo PL</div></div><div class="stat-box"><div class="stat-val">0.96</div><div class="stat-lbl">gols/90 clube</div></div><div class="stat-box"><div class="stat-val">Gr. I</div><div class="stat-lbl">vs Franca</div></div><div class="stat-box"><div class="stat-val">1 Copa</div><div class="stat-lbl">estreia</div></div></div>
-    <div class="bet-rows" style="border-top:1px solid var(--border);padding-top:.75rem">
-      <div class="bet-row"><span class="badge ba">Top-3</span><span class="bet-pick">Top-3 artilheiros do torneio</span><span class="bet-odd">x3.50</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge ba">Por jogo</span><span class="bet-pick">Marca anytime vs Iraque ou Senegal</span><span class="bet-odd">x1.80</span><span class="stars">+++</span></div>
-    </div>
-  </div>
-  <div class="player-card">
-    <div class="player-head"><div class="avatar" style="background:#ef444418;color:#fca5a5">LY</div><div style="flex:1"><div class="pname">Lamine Yamal — Espanha</div><div class="psub">18 anos · MVP Euro 2024 · Grupo H</div></div><span class="badge br">Valor · x16</span></div>
-    <div class="stat-grid"><div class="stat-box"><div class="stat-val">2.9</div><div class="stat-lbl">chutes/jogo</div></div><div class="stat-box"><div class="stat-val">Euro24</div><div class="stat-lbl">MVP aos 17</div></div><div class="stat-box"><div class="stat-val">Gr. H</div><div class="stat-lbl">Esp. favorita</div></div><div class="stat-box"><div class="stat-val">18 anos</div><div class="stat-lbl">prodigio</div></div></div>
-    <div class="bet-rows" style="border-top:1px solid var(--border);padding-top:.75rem">
-      <div class="bet-row"><span class="badge br">Valor</span><span class="bet-pick">Yamal marca na fase de grupos</span><span class="bet-odd">x2.80</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge br">Torneio</span><span class="bet-pick">3+ assistencias no torneio</span><span class="bet-odd">x3.80</span><span class="stars">++</span></div>
-    </div>
-  </div>
-  <div class="player-card">
-    <div class="player-head"><div class="avatar" style="background:#14b8a618;color:#5eead4">RA</div><div style="flex:1"><div class="pname">Raphinha — Brasil</div><div class="psub">Capitao · artilheiro das eliminatorias · Barcelona 24/25</div></div><span class="badge bt">x18</span></div>
-    <div class="stat-grid"><div class="stat-box"><div class="stat-val">3.8</div><div class="stat-lbl">chutes/jogo</div></div><div class="stat-box"><div class="stat-val">Capitao</div><div class="stat-lbl">lideranca</div></div><div class="stat-box"><div class="stat-val">Gr. C</div><div class="stat-lbl">favoravel</div></div><div class="stat-box"><div class="stat-val">Alta forma</div><div class="stat-lbl">Barcelona</div></div></div>
-    <div class="bet-rows" style="border-top:1px solid var(--border);padding-top:.75rem">
-      <div class="bet-row"><span class="badge bt">Por jogo</span><span class="bet-pick">Marca ou assiste vs Marrocos</span><span class="bet-odd">x2.40</span><span class="stars">+++</span></div>
-      <div class="bet-row"><span class="badge bt">Chutes</span><span class="bet-pick">3+ chutes totais vs Marrocos</span><span class="bet-odd">x2.20</span><span class="stars">++</span></div>
-    </div>
-  </div>
-</div>
+</header>
 
-<!-- ===== MERCADOS ===== -->
-<div id="tab-mercados" class="tab-content">
-  <div class="sec">Guia completo de mercados alternativos</div>
-  <div class="card">
-    <div class="mrow"><div class="mico">&#x1F7E1;</div><div class="minfo"><div class="mtitle">Cartoes amarelos e vermelhos</div><div class="mdesc">Total de cartoes, qual time leva mais, jogador especifico ser amarelado. Copa 2022 media: 3.8 amarelos/jogo. Jogos fisicos e de rivalidade tendem a mais cartoes.</div><div class="mtags"><span class="badge ba">Over 3.5 amarelos: x1.80</span><span class="badge br">Jogador leva cartao: x3.50+</span></div></div></div>
-    <div class="mrow"><div class="mico">&#x23F1;</div><div class="minfo"><div class="mtitle">Minuto do primeiro gol</div><div class="mdesc">38% dos primeiros gols em Copa caem no 2T antes dos 75min. Favorito dominando: gol tende entre 25-55min.</div><div class="mtags"><span class="badge bb">Gol 46-75min: x2.30</span><span class="badge bt">Sem gol 1T: x2.10</span></div></div></div>
-    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Handicap asiatico — elimina o empate</div><div class="mdesc">Com fracoes (0.25, 0.75) voce nunca perde tudo no empate. Brasil -0.75 vs Haiti: ganha cheio se Brasil vencer por 2+, metade se vencer por 1 gol.</div><div class="mtags"><span class="badge bt">Brasil -0.75 vs Haiti: x1.75</span><span class="badge ba">EUA -0.5 vs Paraguai: x1.90</span></div></div></div>
-    <div class="mrow"><div class="mico">&#x1F504;</div><div class="minfo"><div class="mtitle">Intervalo / Final (HT/FT)</div><div class="mdesc">Aposta combinada: quem lidera no intervalo E quem vence no final. Favorito/Favorito e o cenario mais frequente para times dominantes.</div><div class="mtags"><span class="badge bt">Brasil/Brasil: x2.40</span><span class="badge ba">Empate/Brasil: x3.20</span></div></div></div>
-    <div class="mrow"><div class="mico">&#x1F4CD;</div><div class="minfo"><div class="mtitle">Marcador de gol anytime</div><div class="mdesc">Jogador marca em qualquer momento. Muito mais facil que primeiro a marcar. Atacantes principais em jogos faceis tem excelente valor.</div><div class="mtags"><span class="badge bb">Mbappe vs Iraque: x1.65</span><span class="badge bt">Vini Jr. vs Haiti: x1.55</span></div></div></div>
-    <div class="mrow"><div class="mico">&#x1F3C6;</div><div class="minfo"><div class="mtitle">1 lugar do grupo</div><div class="mdesc">Empilhando liderancas de favoritos fortes em multiplas, voce consegue odds combinadas razoaveis com alta confiabilidade.</div><div class="mtags"><span class="badge bt">Brasil 1 Gr. C: x1.40</span><span class="badge bb">Franca 1 Gr. I: x1.55</span><span class="badge ba">Argentina 1 Gr. J: x1.35</span></div></div></div>
-    <div class="mrow"><div class="mico">&#x1F4CA;</div><div class="minfo"><div class="mtitle">Posse de bola over 55%</div><div class="mdesc">Times de posse como Espanha (65%), Brasil (62%) e Alemanha (60%) superam esse numero contra adversarios menores. Mercado subestimado.</div><div class="mtags"><span class="badge br">Espanha +60% vs Cabo Verde: x1.80</span><span class="badge bt">Brasil +60% vs Haiti: x1.70</span></div></div></div>
-  </div>
-</div>
+<!-- TABS -->
+<nav class="tabs-wrap">
+  <button class="tbtn active" onclick="showTab('jogos',this)"><span class="tab-icon">&#x1F4C5;</span>Jogos</button>
+  <button class="tbtn" onclick="showTab('grupos',this)"><span class="tab-icon">&#x1F4CA;</span>Grupos</button>
+  <button class="tbtn" onclick="showTab('escanteios',this)"><span class="tab-icon">&#x1F6A9;</span>Escanteios</button>
+  <button class="tbtn" onclick="showTab('chutes',this)"><span class="tab-icon">&#x1F3AF;</span>Chutes</button>
+  <button class="tbtn" onclick="showTab('jogadores',this)"><span class="tab-icon">&#x1F3C6;</span>Jogadores</button>
+  <button class="tbtn" onclick="showTab('mercados',this)"><span class="tab-icon">&#x1F3B4;</span>Mercados</button>
+  <button class="tbtn" onclick="showTab('multiplas',this)"><span class="tab-icon">&#x1F517;</span>Multiplas</button>
+  <button class="tbtn" onclick="showTab('ia',this)"><span class="tab-icon">&#x1F916;</span>IA</button>
+</nav>
 
-<!-- ===== MULTIPLAS ===== -->
-<div id="tab-multiplas" class="tab-content">
-  <div class="sec">Multiplas com valor esperado calculado</div>
-  <div class="multi-card">
-    <div class="multi-head"><div><div class="multi-title">Multipla estatistica — volume independe de resultado</div><div class="multi-sub">3 pernas · mercados de volume · baixo risco individual</div></div><div><div class="multi-odd">x6.16</div><div class="multi-odd-lbl">odd combinada</div></div></div>
-    <div class="multi-legs">
-      <div class="multi-leg"><span class="badge bp">Escanteios</span><span class="leg-pick">Brasil +5 escanteios vs Marrocos</span><span class="leg-odd">x1.85</span></div>
-      <div class="multi-leg"><span class="badge ba">Chutes</span><span class="leg-pick">EUA +5.5 chutes vs Paraguai</span><span class="leg-odd">x1.75</span></div>
-      <div class="multi-leg"><span class="badge br">Cartoes</span><span class="leg-pick">EUA vs Paraguai over 3.5 amarelos</span><span class="leg-odd">x1.90</span></div>
-    </div>
-    <div style="font-size:11px;color:var(--text3);margin-top:.75rem">Prob. real ~27% · odd implica 16% · edge positivo estimado</div>
-  </div>
-  <div class="multi-card">
-    <div class="multi-head"><div><div class="multi-title">Multipla de jogadores</div><div class="multi-sub">3 pernas · anytime scorer</div></div><div><div class="multi-odd">x6.39</div><div class="multi-odd-lbl">odd combinada</div></div></div>
-    <div class="multi-legs">
-      <div class="multi-leg"><span class="badge bt">Vini Jr.</span><span class="leg-pick">Marca ou assiste vs Marrocos</span><span class="leg-odd">x2.20</span></div>
-      <div class="multi-leg"><span class="badge bb">Mbappe</span><span class="leg-pick">2+ chutes no alvo (1 jogo Franca)</span><span class="leg-odd">x1.70</span></div>
-      <div class="multi-leg"><span class="badge ba">Haaland</span><span class="leg-pick">Marca anytime vs Iraque</span><span class="leg-odd">x1.70</span></div>
-    </div>
-  </div>
-  <div class="multi-card">
-    <div class="multi-head"><div><div class="multi-title">Multipla lideres de grupo</div><div class="multi-sub">4 pernas · alta confiabilidade</div></div><div><div class="multi-odd">x4.63</div><div class="multi-odd-lbl">odd combinada</div></div></div>
-    <div class="multi-legs">
-      <div class="multi-leg"><span class="badge bt">Grupo C</span><span class="leg-pick">Brasil lidera o Grupo C</span><span class="leg-odd">x1.40</span></div>
-      <div class="multi-leg"><span class="badge bb">Grupo I</span><span class="leg-pick">Franca lidera o Grupo I</span><span class="leg-odd">x1.55</span></div>
-      <div class="multi-leg"><span class="badge ba">Grupo J</span><span class="leg-pick">Argentina lidera o Grupo J</span><span class="leg-odd">x1.35</span></div>
-      <div class="multi-leg"><span class="badge bp">Grupo K</span><span class="leg-pick">Portugal lidera o Grupo K</span><span class="leg-odd">x1.60</span></div>
-    </div>
-    <div style="font-size:11px;color:var(--text3);margin-top:.75rem">Prob. real ~35% · odd implica 22% · edge positivo</div>
-  </div>
-  <div class="multi-card">
-    <div class="multi-head"><div><div class="multi-title">Multipla mista — resultado + alternativo</div><div class="multi-sub">4 pernas · risco moderado</div></div><div><div class="multi-odd">x9.17</div><div class="multi-odd-lbl">odd combinada</div></div></div>
-    <div class="multi-legs">
-      <div class="multi-leg"><span class="badge bb">Resultado</span><span class="leg-pick">EUA vence Paraguai</span><span class="leg-odd">x1.55</span></div>
-      <div class="multi-leg"><span class="badge bt">U/O</span><span class="leg-pick">Brasil vs Marrocos menos 3.5 gols</span><span class="leg-odd">x1.45</span></div>
-      <div class="multi-leg"><span class="badge bp">Escanteios</span><span class="leg-pick">Brasil +5 escanteios vs Marrocos</span><span class="leg-odd">x1.85</span></div>
-      <div class="multi-leg"><span class="badge br">Cartoes</span><span class="leg-pick">Canada vs Bosnia over 2.5 amarelos</span><span class="leg-odd">x2.00</span></div>
-    </div>
-  </div>
-  <div class="disclaimer">Gestao de banca: Nunca aposte mais de 5% da banca em uma aposta. Multiplas conservadoras (x3-x6): ate 3%. Alto risco (x12+): maximo 1%.</div>
-</div>
+<main class="main">
 
-<!-- ===== IA ===== -->
-<div id="tab-ia" class="tab-content">
-  <div class="sec">Analise inteligente por IA</div>
-  <div id="apikey-setup" class="card" style="border-color:#f59e0b44">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:.75rem">
-      <div style="width:32px;height:32px;background:#f59e0b18;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px">&#x1F511;</div>
+<!-- ═══════════════════════════════ JOGOS ═══ -->
+<section id="tab-jogos" class="tab-content active">
+  <div class="countdown-bar">
+    <div class="countdown-left">
+      <span class="countdown-icon">&#x23F1;</span>
       <div>
-        <div style="font-size:14px;font-weight:600;color:var(--text)">Chave da API Anthropic</div>
-        <div style="font-size:12px;color:var(--text3)">Necessaria para analises por IA · salva so no seu navegador</div>
+        <div class="countdown-label">Proximo jogo</div>
+        <div class="countdown-time" id="countdown">Calculando...</div>
       </div>
     </div>
-    <div style="display:flex;gap:8px">
-      <input id="apikey-input" type="password" placeholder="sk-ant-api03-..." style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none" />
-      <button onclick="saveApiKey()" style="padding:9px 16px;background:var(--accent);color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Salvar</button>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="api-status" id="api-status">
+        <div class="api-dot" style="background:var(--amber)"></div>
+        <span>Carregando...</span>
+      </div>
+      <button class="sec-action" onclick="loadGames()">&#8635; Atualizar</button>
     </div>
-    <div style="font-size:11px;color:var(--text3);margin-top:.625rem">Obtenha em <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a> — Chaves de API — Criar chave</div>
-    <div id="apikey-status" style="display:none;margin-top:.625rem;font-size:12px"></div>
   </div>
-  <div class="card">
-    <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Analise qualquer jogo, mercado ou aposta</div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:.875rem">Escanteios, chutes, cartoes, jogadores, handicap — analise baseada em dados</div>
-    <div class="ai-wrap">
-      <input id="ai-in" type="text" placeholder="Ex: Vale over 9 escanteios no Brasil vs Marrocos?" />
-      <button class="send-btn" onclick="askAI()">Analisar</button>
+  <div class="spinner" id="spinner-games" style="display:flex">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <span>Buscando jogos da Copa 2026...</span>
+  </div>
+  <div id="games-container"></div>
+</section>
+
+<!-- ══════════════════════════════ GRUPOS ═══ -->
+<section id="tab-grupos" class="tab-content">
+  <div class="sec-header">
+    <div class="sec-title">Tabela de grupos</div>
+    <button class="sec-action" onclick="loadGroups()">&#8635; Atualizar</button>
+  </div>
+  <div class="spinner" id="spinner-groups">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <span>Carregando grupos...</span>
+  </div>
+  <div id="groups-content" class="group-grid"></div>
+</section>
+
+<!-- ══════════════════════════ ESCANTEIOS ═══ -->
+<section id="tab-escanteios" class="tab-content">
+  <div class="hero-stats">
+    <div class="hero-stat gold"><div class="stat-val">9.4</div><div class="stat-lbl">Media/jogo Copa 2022</div></div>
+    <div class="hero-stat green"><div class="stat-val">10.1</div><div class="stat-lbl">Media Eliminatorias 2026</div></div>
+    <div class="hero-stat blue"><div class="stat-val">5.3</div><div class="stat-lbl">Media times UEFA</div></div>
+    <div class="hero-stat red"><div class="stat-val">63%</div><div class="stat-lbl">Jogos com ate 10 escanteios</div></div>
+  </div>
+  <div class="sec-header"><div class="sec-title">Media de escanteios a favor</div></div>
+  <div class="cbar-card">
+    <div class="cbar-row"><span class="cbar-name">&#x1F1E7;&#x1F1F7; Brasil</span><div class="cbar-track"><div class="cbar-fill" style="width:74%;background:linear-gradient(90deg,#10d988,#00d4c8)"></div></div><span class="cbar-val">6.2</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1E9;&#x1F1EA; Alemanha</span><div class="cbar-track"><div class="cbar-fill" style="width:70%;background:linear-gradient(90deg,#3b8ef8,#9b6dff)"></div></div><span class="cbar-val">5.9</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1EA;&#x1F1F8; Espanha</span><div class="cbar-track"><div class="cbar-fill" style="width:68%;background:linear-gradient(90deg,#f04060,#f5c842)"></div></div><span class="cbar-val">5.7</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1EB;&#x1F1F7; Franca</span><div class="cbar-track"><div class="cbar-fill" style="width:66%;background:linear-gradient(90deg,#3b8ef8,#60a5fa)"></div></div><span class="cbar-val">5.6</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1E6;&#x1F1F7; Argentina</span><div class="cbar-track"><div class="cbar-fill" style="width:64%;background:linear-gradient(90deg,#00d4c8,#3b8ef8)"></div></div><span class="cbar-val">5.4</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1F3;&#x1F1F1; Holanda</span><div class="cbar-track"><div class="cbar-fill" style="width:63%;background:linear-gradient(90deg,#f5c842,#f04060)"></div></div><span class="cbar-val">5.3</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F3F4; Inglaterra</span><div class="cbar-track"><div class="cbar-fill" style="width:62%;background:linear-gradient(90deg,#f04060,#f87171)"></div></div><span class="cbar-val">5.2</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1F2;&#x1F1E6; Marrocos</span><div class="cbar-track"><div class="cbar-fill" style="width:42%;background:var(--border2)"></div></div><span class="cbar-val">3.5</span></div>
+    <div class="cbar-row"><span class="cbar-name">&#x1F1FA;&#x1F1FE; Uruguai</span><div class="cbar-track"><div class="cbar-fill" style="width:46%;background:var(--border2)"></div></div><span class="cbar-val">3.9</span></div>
+  </div>
+  <div class="sec-header"><div class="sec-title">Melhores apostas de escanteios</div></div>
+  <div class="market-card">
+    <div class="mrow">
+      <div class="mico">&#x1F6A9;</div>
+      <div class="minfo">
+        <div class="mtitle">Brasil vs Marrocos — Brasil +5 escanteios</div>
+        <div class="mdesc">Brasil tem media 6.2 a favor. Marrocos defende em bloco baixo, forcando cruzamentos constantes. Estimativa: 6-7 escanteios pro Brasil.</div>
+        <div class="vm"><div class="vm-track"><div class="vm-fill" style="width:76%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div>
+      </div>
+      <div class="mright"><div class="modd">x1.85</div><div class="mlbl">over 5 BRA</div></div>
+    </div>
+    <div class="mrow">
+      <div class="mico">&#x1F6A9;</div>
+      <div class="minfo">
+        <div class="mtitle">EUA vs Paraguai — EUA +5 escanteios</div>
+        <div class="mdesc">EUA em casa em Los Angeles. Paraguai vai defender profundo gerando muitos cruzamentos para os americanos.</div>
+        <div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div>
+      </div>
+      <div class="mright"><div class="modd">x1.80</div><div class="mlbl">over 5 EUA</div></div>
+    </div>
+    <div class="mrow">
+      <div class="mico">&#x1F6A9;</div>
+      <div class="minfo">
+        <div class="mtitle">Alemanha vs Curacao — Alemanha +7 escanteios</div>
+        <div class="mdesc">Alemanha pressiona alto com posse. Curacao vai defender em bloco. Favoritos absolutos vs times muito inferiores geram escanteios em massa.</div>
+        <div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div>
+      </div>
+      <div class="mright"><div class="modd">x1.75</div><div class="mlbl">over 7 ALE</div></div>
+    </div>
+    <div class="mrow">
+      <div class="mico">&#x1F6A9;</div>
+      <div class="minfo">
+        <div class="mtitle">Espanha vs Cabo Verde — Espanha +7 escanteios</div>
+        <div class="mdesc">Espanha media 5.7. Jogo de posse com cruzamentos constantes. Cabo Verde defende com bloco baixo durante 90 minutos.</div>
+        <div class="vm"><div class="vm-track"><div class="vm-fill" style="width:78%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div>
+      </div>
+      <div class="mright"><div class="modd">x1.70</div><div class="mlbl">over 7 ESP</div></div>
+    </div>
+  </div>
+  <div class="tip-box">&#x1F4CA; <strong>Estrategia:</strong> Favorito forte + time defensivo = over escanteios do favorito quase sempre tem valor. Media Copa 2022: 9.4 por jogo. Aposte over 8.5 quando ambos os times tem media acima de 4.5.</div>
+</section>
+
+<!-- ════════════════════════════ CHUTES ═══ -->
+<section id="tab-chutes" class="tab-content">
+  <div class="hero-stats">
+    <div class="hero-stat gold"><div class="stat-val">5.4</div><div class="stat-lbl">Chutes/alvo Copa 2022</div></div>
+    <div class="hero-stat green"><div class="stat-val">7.7</div><div class="stat-lbl">Chutes/alvo Elim. 2026</div></div>
+    <div class="hero-stat blue"><div class="stat-val">2.6</div><div class="stat-lbl">Gols/jogo Copa 2022</div></div>
+    <div class="hero-stat red"><div class="stat-val">63%</div><div class="stat-lbl">Jogos menos 3.5 gols</div></div>
+  </div>
+  <div class="sec-header"><div class="sec-title">Selecione o jogo</div></div>
+  <div class="game-pills">
+    <button class="gpill active" onclick="showShot(this,'bra')">&#x1F1E7;&#x1F1F7; Brasil vs Marrocos</button>
+    <button class="gpill" onclick="showShot(this,'usa')">&#x1F1FA;&#x1F1F8; EUA vs Paraguai</button>
+    <button class="gpill" onclick="showShot(this,'can')">&#x1F1E8;&#x1F1E6; Canada vs Bosnia</button>
+    <button class="gpill" onclick="showShot(this,'ale')">&#x1F1E9;&#x1F1EA; Alemanha vs Curacao</button>
+  </div>
+  <div id="shot-bra" class="shot-panel active">
+    <div class="market-card">
+      <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Brasil +6.5 chutes ao gol</div><div class="mdesc">Media 7.7 nas eliminatorias. Vinicius, Rodrygo e Raphinha pressionam. Marrocos defende fechado = chutes de fora.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:73%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.75</div><div class="mlbl">over 6.5</div></div></div>
+      <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Brasil marca no 1 tempo</div><div class="mdesc">Brasil marcou no 1T em 7 dos ultimos 10 jogos das eliminatorias. Altamente motivado na estreia da Copa.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:60%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.90</div><div class="mlbl">gol 1T BRA</div></div></div>
+      <div class="mrow"><div class="mico">&#x1F6E1;</div><div class="minfo"><div class="mtitle">Marrocos menos de 3.5 chutes ao gol</div><div class="mdesc">Na semi 2022 vs Franca: apenas 2 chutes. Estilo ultra-defensivo = baixo volume ofensivo contra grandes times.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.65</div><div class="mlbl">under 3.5</div></div></div>
+    </div>
+    <div class="tip-box">&#x1F4A1; <strong>Combinacao de valor:</strong> Brasil vence + menos 3.5 gols + Brasil +5 escanteios. Odd combinada ~3.30, probabilidade real estimada ~38%.</div>
+  </div>
+  <div id="shot-usa" class="shot-panel">
+    <div class="market-card">
+      <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">EUA +5.5 chutes no alvo</div><div class="mdesc">EUA em Los Angeles com enorme pressao de torcida. Balogun (PL) tem 2+ chutes/jogo. Paraguai vai defender profundo.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.75</div><div class="mlbl">over 5.5</div></div></div>
+      <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Mais de 2.5 gols no total</div><div class="mdesc">Paraguai sofreu 14 gols em 18 jogos nas eliminatorias. EUA em casa tende a abrir o jogo cedo.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:55%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div><span class="vm-lbl">Valor ++</span></div></div><div class="mright"><div class="modd">x2.30</div><div class="mlbl">over 2.5</div></div></div>
+    </div>
+  </div>
+  <div id="shot-can" class="shot-panel">
+    <div class="market-card">
+      <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Menos de 2.5 gols — jogo fechado</div><div class="mdesc">Bosnia e time muito tatico e organizado. Canada em estreia de Copa tende a ser cauteloso. Probabilidade real ~54%.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:62%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.70</div><div class="mlbl">under 2.5</div></div></div>
+      <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Canada +4.5 chutes no alvo</div><div class="mdesc">Jonathan David e finalizador compulsivo. Bosnia vai defender profundo. Canada anfitriao em Toronto com torcida.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:55%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div><span class="vm-lbl">Valor ++</span></div></div><div class="mright"><div class="modd">x1.85</div><div class="mlbl">over 4.5</div></div></div>
+    </div>
+  </div>
+  <div id="shot-ale" class="shot-panel">
+    <div class="market-card">
+      <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Alemanha +7 chutes ao gol</div><div class="mdesc">Curacao nao tem estrutura para segurar a Alemanha. Media da Alemanha: 7.2 chutes ao gol vs times muito inferiores.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.60</div><div class="mlbl">over 7 ALE</div></div></div>
+      <div class="mrow"><div class="mico">&#x26BD;</div><div class="minfo"><div class="mtitle">Mais de 3.5 gols no total</div><div class="mdesc">Alemanha vs times muito inferiores: media 4.1 gols. Curacao tem a pior defesa da Copa. Over e a aposta natural.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:72%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mright"><div class="modd">x1.65</div><div class="mlbl">over 3.5</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ JOGADORES ═══ -->
+<section id="tab-jogadores" class="tab-content">
+  <div class="sec-header"><div class="sec-title">Favoritos a chuteira de ouro</div></div>
+  <div class="player-grid">
+    <div class="player-card">
+      <div class="player-avatar" style="background:linear-gradient(135deg,#3b8ef8,#9b6dff)">KM</div>
+      <div class="player-info">
+        <div class="pname">Kylian Mbappe &#x1F1EB;&#x1F1F7;</div>
+        <div class="psub">Franca &middot; Grupo I &middot; artilheiro Copa 2022 (8 gols)</div>
+        <div class="player-stats">
+          <div class="pstat"><div class="pstat-val">12</div><div class="pstat-lbl">gols Copas</div></div>
+          <div class="pstat"><div class="pstat-val">4.8</div><div class="pstat-lbl">chutes/jogo</div></div>
+          <div class="pstat"><div class="pstat-val">Iraque</div><div class="pstat-lbl">no grupo</div></div>
+        </div>
+      </div>
+      <div class="player-bets">
+        <span class="badge b-gold">Odd ~6.00</span>
+        <div class="pbbet"><span class="pbbet-pick">Artilheiro torneio</span><span class="pbbet-odd">x6.00</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">Marca vs Iraque</span><span class="pbbet-odd">x1.65</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">2+ chutes/jogo</span><span class="pbbet-odd">x1.70</span><span class="pbbet-stars">+++</span></div>
+      </div>
+    </div>
+    <div class="player-card brasil-player">
+      <div class="player-avatar" style="background:linear-gradient(135deg,#10d988,#00d4c8)">VJ</div>
+      <div class="player-info">
+        <div class="pname">Vinicius Junior &#x1F1E7;&#x1F1F7;</div>
+        <div class="psub">Brasil &middot; Grupo C &middot; Ballon d Or 2024</div>
+        <div class="player-stats">
+          <div class="pstat"><div class="pstat-val">3.2</div><div class="pstat-lbl">chutes/jogo</div></div>
+          <div class="pstat"><div class="pstat-val">1.8</div><div class="pstat-lbl">dribles/90</div></div>
+          <div class="pstat"><div class="pstat-val">Haiti</div><div class="pstat-lbl">no grupo</div></div>
+        </div>
+      </div>
+      <div class="player-bets">
+        <span class="badge b-green">Odd ~13</span>
+        <div class="pbbet"><span class="pbbet-pick">Marca/assiste vs Mar.</span><span class="pbbet-odd">x2.20</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">2+ chutes vs Mar.</span><span class="pbbet-odd">x2.10</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">Marca vs Haiti</span><span class="pbbet-odd">x1.55</span><span class="pbbet-stars">++</span></div>
+      </div>
+    </div>
+    <div class="player-card">
+      <div class="player-avatar" style="background:linear-gradient(135deg,#f5c842,#f04060)">EH</div>
+      <div class="player-info">
+        <div class="pname">Erling Haaland &#x1F1F3;&#x1F1F4;</div>
+        <div class="psub">Noruega &middot; Grupo I &middot; 1 Copa &middot; 0.96 gols/90</div>
+        <div class="player-stats">
+          <div class="pstat"><div class="pstat-val">4.1</div><div class="pstat-lbl">chutes/jogo PL</div></div>
+          <div class="pstat"><div class="pstat-val">0.96</div><div class="pstat-lbl">gols/90</div></div>
+          <div class="pstat"><div class="pstat-val">Iraque</div><div class="pstat-lbl">no grupo</div></div>
+        </div>
+      </div>
+      <div class="player-bets">
+        <span class="badge b-gold">Odd ~8.00</span>
+        <div class="pbbet"><span class="pbbet-pick">Top-3 artilheiros</span><span class="pbbet-odd">x3.50</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">Marca vs Iraque</span><span class="pbbet-odd">x1.80</span><span class="pbbet-stars">+++</span></div>
+      </div>
+    </div>
+    <div class="player-card">
+      <div class="player-avatar" style="background:linear-gradient(135deg,#f04060,#9b6dff)">LY</div>
+      <div class="player-info">
+        <div class="pname">Lamine Yamal &#x1F1EA;&#x1F1F8;</div>
+        <div class="psub">Espanha &middot; 18 anos &middot; MVP Euro 2024 &middot; Grupo H</div>
+        <div class="player-stats">
+          <div class="pstat"><div class="pstat-val">2.9</div><div class="pstat-lbl">chutes/jogo</div></div>
+          <div class="pstat"><div class="pstat-val">Euro24</div><div class="pstat-lbl">MVP aos 17</div></div>
+          <div class="pstat"><div class="pstat-val">Gr. H</div><div class="pstat-lbl">favoravel</div></div>
+        </div>
+      </div>
+      <div class="player-bets">
+        <span class="badge b-red">Valor x16</span>
+        <div class="pbbet"><span class="pbbet-pick">Marca na fase grupos</span><span class="pbbet-odd">x2.80</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">3+ assistencias</span><span class="pbbet-odd">x3.80</span><span class="pbbet-stars">++</span></div>
+      </div>
+    </div>
+    <div class="player-card brasil-player">
+      <div class="player-avatar" style="background:linear-gradient(135deg,#10d988,#059652)">RA</div>
+      <div class="player-info">
+        <div class="pname">Raphinha &#x1F1E7;&#x1F1F7;</div>
+        <div class="psub">Brasil &middot; Capitao &middot; Artilheiro eliminatorias</div>
+        <div class="player-stats">
+          <div class="pstat"><div class="pstat-val">3.8</div><div class="pstat-lbl">chutes/jogo</div></div>
+          <div class="pstat"><div class="pstat-val">Capitao</div><div class="pstat-lbl">lideranca</div></div>
+          <div class="pstat"><div class="pstat-val">Gr. C</div><div class="pstat-lbl">favoravel</div></div>
+        </div>
+      </div>
+      <div class="player-bets">
+        <span class="badge b-green">Odd ~18</span>
+        <div class="pbbet"><span class="pbbet-pick">Marca/assiste vs Mar.</span><span class="pbbet-odd">x2.40</span><span class="pbbet-stars">+++</span></div>
+        <div class="pbbet"><span class="pbbet-pick">3+ chutes vs Mar.</span><span class="pbbet-odd">x2.20</span><span class="pbbet-stars">++</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ MERCADOS ═══ -->
+<section id="tab-mercados" class="tab-content">
+  <div class="sec-header"><div class="sec-title">Guia de mercados alternativos</div></div>
+  <div class="market-card">
+    <div class="mrow"><div class="mico">&#x1F7E1;</div><div class="minfo"><div class="mtitle">Cartoes amarelos e vermelhos</div><div class="mdesc">Total de cartoes, qual time leva mais, jogador especifico amarelado. Copa 2022 media: 3.8 amarelos/jogo. Jogos fisicos tendem a mais cartoes.</div><div class="mtags"><span class="mtag" style="background:#f5c84220;color:#f5c842;border:1px solid #f5c84230">Over 3.5 amarelos: x1.80</span><span class="mtag" style="background:#f0406020;color:#ff8090;border:1px solid #f0406030">Jogador leva cartao: x3.50+</span></div></div></div>
+    <div class="mrow"><div class="mico">&#x23F1;</div><div class="minfo"><div class="mtitle">Minuto do primeiro gol</div><div class="mdesc">38% dos primeiros gols em Copa caem no 2T antes dos 75min. Favorito dominando: gol tende entre 25-55min.</div><div class="mtags"><span class="mtag" style="background:#3b8ef820;color:#60acff;border:1px solid #3b8ef830">Gol 46-75min: x2.30</span><span class="mtag" style="background:#10d98820;color:#10d988;border:1px solid #10d98830">Sem gol 1T: x2.10</span></div></div></div>
+    <div class="mrow"><div class="mico">&#x1F3AF;</div><div class="minfo"><div class="mtitle">Handicap asiatico — elimina o empate</div><div class="mdesc">Com fracoes (0.25, 0.75) voce nunca perde tudo no empate. Brasil -0.75 vs Haiti: ganha cheio se vencer por 2+, metade se vencer por 1.</div><div class="mtags"><span class="mtag" style="background:#10d98820;color:#10d988;border:1px solid #10d98830">Brasil -0.75 vs Haiti: x1.75</span><span class="mtag" style="background:#f5c84220;color:#f5c842;border:1px solid #f5c84230">EUA -0.5 vs Par.: x1.90</span></div></div></div>
+    <div class="mrow"><div class="mico">&#x1F504;</div><div class="minfo"><div class="mtitle">Intervalo / Final (HT/FT)</div><div class="mdesc">Aposta combinada: quem lidera no intervalo E quem vence. Favorito/Favorito e o cenario mais frequente para times dominantes.</div><div class="mtags"><span class="mtag" style="background:#10d98820;color:#10d988;border:1px solid #10d98830">Brasil/Brasil: x2.40</span><span class="mtag" style="background:#f5c84220;color:#f5c842;border:1px solid #f5c84230">Empate/Brasil: x3.20</span></div></div></div>
+    <div class="mrow"><div class="mico">&#x1F4CD;</div><div class="minfo"><div class="mtitle">Marcador de gol anytime</div><div class="mdesc">Jogador marca em qualquer momento. Muito mais facil que primeiro a marcar. Atacantes principais em jogos faceis tem excelente valor.</div><div class="mtags"><span class="mtag" style="background:#3b8ef820;color:#60acff;border:1px solid #3b8ef830">Mbappe vs Iraque: x1.65</span><span class="mtag" style="background:#10d98820;color:#10d988;border:1px solid #10d98830">Vini Jr. vs Haiti: x1.55</span></div></div></div>
+    <div class="mrow"><div class="mico">&#x1F3C6;</div><div class="minfo"><div class="mtitle">1 lugar do grupo</div><div class="mdesc">Empilhando liderancas de favoritos fortes em multiplas, voce consegue odds combinadas razoaveis com alta confiabilidade.</div><div class="mtags"><span class="mtag" style="background:#10d98820;color:#10d988;border:1px solid #10d98830">Brasil 1 Gr.C: x1.40</span><span class="mtag" style="background:#3b8ef820;color:#60acff;border:1px solid #3b8ef830">Franca 1 Gr.I: x1.55</span><span class="mtag" style="background:#f5c84220;color:#f5c842;border:1px solid #f5c84230">Argentina 1 Gr.J: x1.35</span></div></div></div>
+    <div class="mrow"><div class="mico">&#x1F4CA;</div><div class="minfo"><div class="mtitle">Posse de bola over 55%</div><div class="mdesc">Times de posse como Espanha (65%), Brasil (62%) e Alemanha (60%) superam esse numero contra adversarios menores. Mercado subestimado.</div><div class="mtags"><span class="mtag" style="background:#f04060 20;color:#ff8090;border:1px solid #f0406030">ESP +60% vs Cabo Verde: x1.80</span><span class="mtag" style="background:#10d98820;color:#10d988;border:1px solid #10d98830">BRA +60% vs Haiti: x1.70</span></div></div></div>
+  </div>
+</section>
+
+<!-- ════════════════════════ MULTIPLAS ═══ -->
+<section id="tab-multiplas" class="tab-content">
+  <div class="sec-header"><div class="sec-title">Multiplas com valor esperado</div></div>
+
+  <div class="multi-card">
+    <div class="multi-head">
+      <div><div class="multi-title">Multipla estatistica — volume independe de resultado</div><div class="multi-sub">3 pernas &middot; mercados alternativos &middot; baixo risco</div></div>
+      <div class="multi-odd-block"><div class="multi-odd">x6.16</div><div class="multi-odd-lbl">odd combinada</div></div>
+    </div>
+    <div class="multi-legs">
+      <div class="mleg"><span class="badge b-purple">Escanteios</span><span class="mleg-pick">Brasil +5 escanteios vs Marrocos</span><span class="mleg-odd">x1.85</span></div>
+      <div class="mleg"><span class="badge b-gold">Chutes</span><span class="mleg-pick">EUA +5.5 chutes vs Paraguai</span><span class="mleg-odd">x1.75</span></div>
+      <div class="mleg"><span class="badge b-red">Cartoes</span><span class="mleg-pick">EUA vs Paraguai over 3.5 amarelos</span><span class="mleg-odd">x1.90</span></div>
+    </div>
+    <div class="multi-footer">
+      <div class="ev-meter"><div class="ev-track"><div class="ev-fill" style="width:73%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="ev-label">Valor +++</span></div>
+      <div class="multi-prob">Prob. real ~27% &middot; edge positivo</div>
+    </div>
+  </div>
+
+  <div class="multi-card">
+    <div class="multi-head">
+      <div><div class="multi-title">Multipla de jogadores — artilheiros</div><div class="multi-sub">3 pernas &middot; anytime scorer</div></div>
+      <div class="multi-odd-block"><div class="multi-odd">x6.39</div><div class="multi-odd-lbl">odd combinada</div></div>
+    </div>
+    <div class="multi-legs">
+      <div class="mleg"><span class="badge b-green">Vini Jr.</span><span class="mleg-pick">Marca ou assiste vs Marrocos</span><span class="mleg-odd">x2.20</span></div>
+      <div class="mleg"><span class="badge b-blue">Mbappe</span><span class="mleg-pick">2+ chutes no alvo (1 jogo Franca)</span><span class="mleg-odd">x1.70</span></div>
+      <div class="mleg"><span class="badge b-gold">Haaland</span><span class="mleg-pick">Marca anytime vs Iraque</span><span class="mleg-odd">x1.70</span></div>
+    </div>
+    <div class="multi-footer">
+      <div class="ev-meter"><div class="ev-track"><div class="ev-fill" style="width:60%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div><span class="ev-label">Valor ++</span></div>
+      <div class="multi-prob">Prob. real ~24%</div>
+    </div>
+  </div>
+
+  <div class="multi-card">
+    <div class="multi-head">
+      <div><div class="multi-title">Multipla lideres de grupo</div><div class="multi-sub">4 pernas &middot; alta confiabilidade</div></div>
+      <div class="multi-odd-block"><div class="multi-odd">x4.63</div><div class="multi-odd-lbl">odd combinada</div></div>
+    </div>
+    <div class="multi-legs">
+      <div class="mleg"><span class="badge b-green">Grupo C</span><span class="mleg-pick">Brasil lidera o Grupo C</span><span class="mleg-odd">x1.40</span></div>
+      <div class="mleg"><span class="badge b-blue">Grupo I</span><span class="mleg-pick">Franca lidera o Grupo I</span><span class="mleg-odd">x1.55</span></div>
+      <div class="mleg"><span class="badge b-gold">Grupo J</span><span class="mleg-pick">Argentina lidera o Grupo J</span><span class="mleg-odd">x1.35</span></div>
+      <div class="mleg"><span class="badge b-purple">Grupo K</span><span class="mleg-pick">Portugal lidera o Grupo K</span><span class="mleg-odd">x1.60</span></div>
+    </div>
+    <div class="multi-footer">
+      <div class="ev-meter"><div class="ev-track"><div class="ev-fill" style="width:68%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="ev-label">Valor +++</span></div>
+      <div class="multi-prob">Prob. real ~35% &middot; edge positivo</div>
+    </div>
+  </div>
+
+  <div class="multi-card">
+    <div class="multi-head">
+      <div><div class="multi-title">Multipla mista — resultado + alternativo</div><div class="multi-sub">4 pernas &middot; risco moderado</div></div>
+      <div class="multi-odd-block"><div class="multi-odd">x9.17</div><div class="multi-odd-lbl">odd combinada</div></div>
+    </div>
+    <div class="multi-legs">
+      <div class="mleg"><span class="badge b-blue">Resultado</span><span class="mleg-pick">EUA vence Paraguai</span><span class="mleg-odd">x1.55</span></div>
+      <div class="mleg"><span class="badge b-green">U/O</span><span class="mleg-pick">Brasil vs Marrocos menos 3.5 gols</span><span class="mleg-odd">x1.45</span></div>
+      <div class="mleg"><span class="badge b-purple">Escanteios</span><span class="mleg-pick">Brasil +5 escanteios vs Marrocos</span><span class="mleg-odd">x1.85</span></div>
+      <div class="mleg"><span class="badge b-red">Cartoes</span><span class="mleg-pick">Canada vs Bosnia over 2.5 amarelos</span><span class="mleg-odd">x2.00</span></div>
+    </div>
+    <div class="multi-footer">
+      <div class="ev-meter"><div class="ev-track"><div class="ev-fill" style="width:52%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div><span class="ev-label">Valor ++</span></div>
+      <div class="multi-prob">Prob. real ~18%</div>
+    </div>
+  </div>
+  <div class="disclaimer"><span class="disclaimer-icon">&#x26A0;</span>Gestao de banca: Nunca aposte mais de 5% da banca em uma aposta. Multiplas conservadoras (x3-x6): ate 3%. Alto risco (x12+): maximo 1%. Aposte com responsabilidade.</div>
+</section>
+
+<!-- ══════════════════════════════ IA ═══ -->
+<section id="tab-ia" class="tab-content">
+  <div class="apikey-card">
+    <div class="apikey-header">
+      <div class="apikey-icon">&#x1F511;</div>
+      <div><div class="apikey-title">Chave da API Anthropic</div><div class="apikey-sub">Necessaria para analises por IA &middot; salva so no seu navegador</div></div>
+    </div>
+    <div class="key-input-row">
+      <input id="apikey-input" class="key-input" type="password" placeholder="sk-ant-api03-..." />
+      <button class="save-btn" onclick="saveApiKey()">Salvar</button>
+    </div>
+    <div class="key-hint">Obtenha em <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> — Chaves de API — Criar chave</div>
+    <div id="apikey-status" class="key-status"></div>
+  </div>
+  <div class="ai-chat-card">
+    <div class="ai-chat-title">Analise qualquer jogo, mercado ou aposta</div>
+    <div class="ai-chat-sub">Escanteios, chutes, cartoes, jogadores, handicap — analise baseada em dados em tempo real</div>
+    <div class="ai-input-row">
+      <input id="ai-in" class="ai-input" type="text" placeholder="Ex: Vale over 9 escanteios no Brasil vs Marrocos?" />
+      <button class="ai-send-btn" onclick="askAI()">Analisar</button>
     </div>
     <div id="ai-spin" class="spinner"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Analisando...</span></div>
-    <div id="ai-out" class="ai-out"></div>
+    <div id="ai-out" class="ai-output"></div>
   </div>
-  <div class="sec">Analises rapidas</div>
-  <div class="qbtns">
-    <button class="qbtn" onclick="pre('Analise escanteios Brasil vs Marrocos Copa 2026: medias, estilo de jogo, qual linha apostar.')">Escanteios Brasil vs Marrocos</button>
-    <button class="qbtn" onclick="pre('Mbappe sera artilheiro da Copa 2026? Analise odds (x6.00), probabilidade real, Grupo I com Senegal, Noruega e Iraque.')">Mbappe artilheiro</button>
-    <button class="qbtn" onclick="pre('Melhor mercado para Brasil vs Marrocos Copa 2026? Analise resultado, escanteios, gols, chutes, cartoes e jogadores.')">Brasil vs Marrocos completo</button>
-    <button class="qbtn" onclick="pre('Quais jogos fase grupos Copa 2026 tem maior probabilidade de mais de 3.5 gols? Liste os 5 melhores.')">Jogos com mais gols</button>
-    <button class="qbtn" onclick="pre('Compare Vinicius Jr., Mbappe e Haaland para artilharia Copa 2026. Probabilidade real, grupo, adversarios.')">Vini vs Mbappe vs Haaland</button>
-    <button class="qbtn" onclick="pre('Explique handicap asiatico Copa 2026: diferenca -0.5, -0.75, -1.0 para o Brasil com exemplos praticos.')">Handicap asiatico</button>
-    <button class="qbtn" onclick="pre('Quais os 3 maiores favoritos ao titulo Copa 2026? Analise Brasil, Argentina, Franca e Espanha.')">Favoritos ao titulo</button>
-    <button class="qbtn" onclick="pre('Melhores apostas de cartoes Copa 2026: quais confrontos tendem a mais cartoes na fase de grupos?')">Apostas de cartoes</button>
+  <div class="sec-header"><div class="sec-title">Analises rapidas</div></div>
+  <div class="quick-btns">
+    <button class="qbtn" onclick="pre('Analise escanteios Brasil vs Marrocos Copa 2026: medias, estilo de jogo, qual linha apostar.')">&#x1F6A9; Escanteios Brasil</button>
+    <button class="qbtn" onclick="pre('Mbappe sera artilheiro da Copa 2026? Analise odds x6.00, probabilidade real, Grupo I.')">&#x26BD; Mbappe artilheiro</button>
+    <button class="qbtn" onclick="pre('Melhor mercado para Brasil vs Marrocos Copa 2026? Analise todos os mercados disponiveis.')">&#x1F1E7;&#x1F1F7; Brasil vs Marrocos</button>
+    <button class="qbtn" onclick="pre('Quais jogos fase grupos Copa 2026 tem maior probabilidade de mais de 3.5 gols? Liste 5.')">&#x26BD; Jogos com mais gols</button>
+    <button class="qbtn" onclick="pre('Compare Vinicius Jr., Mbappe e Haaland para artilharia Copa 2026. Recomende qual apostar.')">&#x1F3C6; Vini vs Mbappe vs Haaland</button>
+    <button class="qbtn" onclick="pre('Explique handicap asiatico Copa 2026 com exemplos praticos -0.5, -0.75, -1.0 para o Brasil.')">&#x1F3AF; Handicap asiatico</button>
+    <button class="qbtn" onclick="pre('Quais os 3 maiores favoritos ao titulo Copa 2026? Analise Brasil, Argentina, Franca, Espanha.')">&#x1F3C6; Favoritos ao titulo</button>
+    <button class="qbtn" onclick="pre('Melhores apostas de cartoes Copa 2026: quais confrontos tendem a mais cartoes?')">&#x1F7E1; Apostas de cartoes</button>
   </div>
   <div id="pre-spin" class="spinner"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Consultando IA...</span></div>
-  <div id="pre-out" class="ai-out"></div>
-  <div class="disclaimer">Painel educacional e informativo. Probabilidades estimadas com base em ranking FIFA, medias Sofascore, historico Copa 2022. Odds sao ilustrativas — confirme sempre na plataforma. Aposte com responsabilidade.</div>
-</div>
+  <div id="pre-out" class="ai-output"></div>
+  <div class="disclaimer"><span class="disclaimer-icon">&#x26A0;</span>Painel educacional e informativo. Probabilidades estimadas com base em ranking FIFA, medias Sofascore e historico Copa 2022. Odds sao ilustrativas — confirme sempre na plataforma antes de apostar. Aposte com responsabilidade.</div>
+</section>
 
-</div><!-- /main -->
+</main>
+
+<!-- GOAL TOAST -->
+<div id="goal-toast"></div>
 
 <script>
-// ==========================================================
-// CONSTANTES
-// ==========================================================
+// ═══════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════
 const API_TOKEN = '14364ba10f754cf6bf11ec0779d82740';
 const API_BASE  = 'https://api.football-data.org/v4';
+let   pollTimer = null;
+let   lastHash  = '';
 
-// Mapeamento nome do time -> codigo ISO de 2 letras
+// ═══════════════════════════════════════════════════════
+// FLAGS & TEAMS
+// ═══════════════════════════════════════════════════════
 const TEAM_ISO = {
   'Mexico':'MX','Brazil':'BR','South Africa':'ZA','Korea Republic':'KR',
   'Czechia':'CZ','Canada':'CA','Bosnia-Herzegovina':'BA','Qatar':'QA',
@@ -454,563 +1011,381 @@ const TEAM_ISO = {
   'Portugal':'PT','Colombia':'CO','Uzbekistan':'UZ','DR Congo':'CD',
   'England':'GB','Croatia':'HR','Ghana':'GH','Panama':'PA'
 };
-
-// Converte ISO 2 letras em emoji de bandeira
-function isoToFlag(iso) {
+function isoToEmoji(iso) {
   if (!iso) return '&#x1F3F3;';
   if (iso === 'GB-SCT') return '&#x1F3F4;';
-  if (iso.length !== 2) return '&#x1F3F3;';
-  const cp = [...iso.toUpperCase()].map(c => 0x1F1E6 + c.charCodeAt(0) - 65);
-  return String.fromCodePoint(...cp);
+  const pts = [...iso.toUpperCase()].map(c => 0x1F1E6 + c.charCodeAt(0) - 65);
+  return String.fromCodePoint(...pts);
 }
-function getFlag(teamName) {
-  return isoToFlag(TEAM_ISO[teamName] || '');
-}
+function getFlag(name) { return isoToEmoji(TEAM_ISO[name] || ''); }
 
-// ==========================================================
-// PODER DE CADA SELECAO (base para probabilidades)
-// ==========================================================
+// ═══════════════════════════════════════════════════════
+// POWER MAP
+// ═══════════════════════════════════════════════════════
 const POWER = {
-  'France':90,'Brazil':88,'Argentina':87,'Spain':86,'England':84,
-  'Germany':83,'Portugal':82,'Netherlands':81,'Belgium':78,'Uruguay':75,
-  'Croatia':74,'United States':72,'Mexico':70,'Morocco':70,'Japan':68,
-  'Denmark':67,'Korea Republic':66,'Senegal':65,'Ecuador':63,'Colombia':62,
-  'Switzerland':61,'Australia':59,'Canada':58,'Norway':57,'Sweden':55,
-  'Turkiye':54,'Austria':53,'Ukraine':52,'Tunisia':50,'Egypt':49,
-  'Qatar':46,'Saudi Arabia':45,'South Africa':43,'Paraguay':42,
-  'Ghana':40,'Iran':39,'Algeria':38,'Ivory Coast':37,'Iraq':34,
-  'Uzbekistan':32,'New Zealand':30,'Jordan':29,'Cape Verde':27,
-  'Haiti':24,'Panama':23,'DR Congo':22,'Curacao':18,'Bosnia-Herzegovina':60,
-  'Czechia':62,'Scotland':48
+  'France':90,'Brazil':88,'Argentina':87,'Spain':86,'England':84,'Germany':83,
+  'Portugal':82,'Netherlands':81,'Belgium':78,'Uruguay':75,'Croatia':74,
+  'United States':72,'Mexico':70,'Morocco':70,'Japan':68,'Korea Republic':66,
+  'Senegal':65,'Ecuador':63,'Colombia':62,'Switzerland':61,'Australia':59,
+  'Canada':58,'Norway':57,'Turkiye':54,'Austria':53,'Ukraine':52,'Tunisia':50,
+  'Egypt':49,'Qatar':46,'Saudi Arabia':45,'South Africa':43,'Paraguay':42,
+  'Ghana':40,'Iran':39,'Algeria':38,'Ivory Coast':37,'Iraq':34,'Uzbekistan':32,
+  'New Zealand':30,'Jordan':29,'Cape Verde':27,'Haiti':24,'Panama':23,
+  'DR Congo':22,'Curacao':18,'Bosnia-Herzegovina':60,'Czechia':62,'Scotland':48
 };
-
-function calcProbs(home, away) {
-  const ph = POWER[home] || 50;
-  const pa = POWER[away] || 50;
-  const diff = ph - pa;
-  let hw = Math.max(0.10, Math.min(0.75, 0.38 + diff * 0.006));
-  let aw = Math.max(0.05, Math.min(0.65, 0.28 - diff * 0.005));
-  let dr = 1 - hw - aw;
-  if (dr < 0.10) { dr = 0.10; const s = hw + aw; hw = hw/s*0.90; aw = aw/s*0.90; }
-  const tot = hw + dr + aw;
-  return { h: Math.round(hw/tot*100), d: Math.round(dr/tot*100), a: Math.round(aw/tot*100) };
+function calcProbs(h, a) {
+  const ph = POWER[h]||50, pa = POWER[a]||50, diff = ph - pa;
+  let hw = Math.max(0.10, Math.min(0.75, 0.38 + diff*0.006));
+  let aw = Math.max(0.05, Math.min(0.65, 0.28 - diff*0.005));
+  let dr = Math.max(0.10, Math.min(0.35, 1 - hw - aw));
+  const t = hw+dr+aw;
+  return { h:Math.round(hw/t*100), d:Math.round(dr/t*100), a:Math.round(aw/t*100) };
 }
-
 function genBets(home, away) {
   const p = calcProbs(home, away);
   const diff = Math.abs(p.h - p.a);
   const fav = p.h >= p.a ? home : away;
   const und = p.h >= p.a ? away  : home;
-  if (diff > 25) {
-    return [
-      {cat:'bt', lbl:'Resultado',  pick:`${fav} vence`,             odd:'x'+(1.15+diff*0.005).toFixed(2), stars:'+++'},
-      {cat:'ba', lbl:'Gols',       pick:'Mais de 2.5 gols',         odd:'x1.65', stars:'++'},
-      {cat:'bp', lbl:'Escanteios', pick:`${fav} +6 escanteios`,     odd:'x1.75', stars:'+++'},
-      {cat:'bb', lbl:'Handicap',   pick:`${fav} -1.5 handicap`,     odd:'x1.90', stars:'++'}
-    ];
-  } else if (diff > 12) {
-    return [
-      {cat:'bt', lbl:'Resultado',  pick:`${fav} vence`,             odd:'x'+(1.55+diff*0.008).toFixed(2), stars:'+++'},
-      {cat:'ba', lbl:'U/O',        pick:'Menos de 2.5 gols',        odd:'x1.65', stars:'+++'},
-      {cat:'bp', lbl:'Escanteios', pick:`${fav} +5 escanteios`,     odd:'x1.85', stars:'+++'},
-      {cat:'br', lbl:'Cartoes',    pick:`${und} 2+ amarelos`,       odd:'x2.10', stars:'++'}
-    ];
-  } else {
-    return [
-      {cat:'bb', lbl:'1X2',        pick:'Empate — equilibrio real', odd:'x'+(2.40+diff*0.02).toFixed(2), stars:'+++'},
-      {cat:'bt', lbl:'BTTS',       pick:'Ambas marcam — Nao',       odd:'x1.65', stars:'++'},
-      {cat:'bp', lbl:'Escanteios', pick:'Menos de 9.5 total',       odd:'x1.78', stars:'++'},
-      {cat:'ba', lbl:'Handicap',   pick:`${fav} -0.5 handicap`,    odd:'x1.90', stars:'++'}
-    ];
-  }
+  if (diff > 25) return [
+    {cat:'cat-result',  lbl:'RESULTADO',  pick:`${fav} vence`,           odd:'x'+(1.15+diff*.005).toFixed(2), stars:'+++'},
+    {cat:'cat-goals',   lbl:'GOLS',       pick:'Mais de 2.5 gols',       odd:'x1.65', stars:'++'},
+    {cat:'cat-corners', lbl:'ESCANTEIOS', pick:`${fav} +6 escanteios`,   odd:'x1.75', stars:'+++'},
+    {cat:'cat-shots',   lbl:'CHUTES',     pick:`${fav} +6.5 chutes`,     odd:'x1.70', stars:'+++'},
+  ];
+  if (diff > 12) return [
+    {cat:'cat-result',  lbl:'RESULTADO',  pick:`${fav} vence`,           odd:'x'+(1.55+diff*.008).toFixed(2), stars:'+++'},
+    {cat:'cat-goals',   lbl:'U/O',        pick:'Menos de 2.5 gols',      odd:'x1.65', stars:'+++'},
+    {cat:'cat-corners', lbl:'ESCANTEIOS', pick:`${fav} +5 escanteios`,   odd:'x1.85', stars:'+++'},
+    {cat:'cat-cards',   lbl:'CARTOES',    pick:`${und} 2+ amarelos`,     odd:'x2.10', stars:'++'},
+  ];
+  return [
+    {cat:'cat-result',  lbl:'1X2',        pick:'Empate — equilibrio real', odd:'x'+(2.40+diff*.02).toFixed(2), stars:'+++'},
+    {cat:'cat-btts',    lbl:'BTTS',       pick:'Ambas marcam — Nao',     odd:'x1.65', stars:'++'},
+    {cat:'cat-corners', lbl:'ESCANTEIOS', pick:'Menos de 9.5 total',     odd:'x1.78', stars:'++'},
+    {cat:'cat-handicap',lbl:'HANDICAP',   pick:`${fav} -0.5 handicap`,  odd:'x1.90', stars:'++'},
+  ];
 }
 
-// ==========================================================
-// CALENDARIO COMPLETO DA COPA 2026 (UTC)
-// ==========================================================
+// ═══════════════════════════════════════════════════════
+// SCHEDULE
+// ═══════════════════════════════════════════════════════
 const SCHEDULE = [
-  // Rodada 1
-  {h:'Mexico',          a:'South Africa',      utc:'2026-06-11T19:00:00Z', grp:'Grupo A', venue:'Cidade do Mexico',    sh:2,  sa:0,  st:'FINISHED'},
-  {h:'Korea Republic',  a:'Czechia',           utc:'2026-06-12T02:00:00Z', grp:'Grupo A', venue:'Guadalajara',         sh:2,  sa:1,  st:'FINISHED'},
-  {h:'Canada',          a:'Bosnia-Herzegovina',utc:'2026-06-12T19:00:00Z', grp:'Grupo B', venue:'Toronto',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'United States',   a:'Paraguay',          utc:'2026-06-13T01:00:00Z', grp:'Grupo D', venue:'Los Angeles',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Australia',       a:'Turkiye',           utc:'2026-06-13T04:00:00Z', grp:'Grupo D', venue:'Vancouver',           sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Qatar',           a:'Switzerland',       utc:'2026-06-13T19:00:00Z', grp:'Grupo B', venue:'San Francisco',       sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Brazil',          a:'Morocco',           utc:'2026-06-13T22:00:00Z', grp:'Grupo C', venue:'Nova York/NJ',        sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Haiti',           a:'Scotland',          utc:'2026-06-14T01:00:00Z', grp:'Grupo C', venue:'Boston',              sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Germany',         a:'Curacao',           utc:'2026-06-14T17:00:00Z', grp:'Grupo E', venue:'Houston',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Netherlands',     a:'Japan',             utc:'2026-06-14T20:00:00Z', grp:'Grupo F', venue:'Dallas',              sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Ivory Coast',     a:'Ecuador',           utc:'2026-06-14T23:00:00Z', grp:'Grupo E', venue:'Filadelfia',          sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Tunisia',         a:'Ukraine',           utc:'2026-06-15T02:00:00Z', grp:'Grupo F', venue:'Monterrey',           sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Spain',           a:'Cape Verde',        utc:'2026-06-15T16:00:00Z', grp:'Grupo H', venue:'Atlanta',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Belgium',         a:'Egypt',             utc:'2026-06-15T19:00:00Z', grp:'Grupo G', venue:'Kansas City',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Iran',            a:'New Zealand',       utc:'2026-06-15T22:00:00Z', grp:'Grupo G', venue:'Seattle',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Uruguay',         a:'Saudi Arabia',      utc:'2026-06-16T01:00:00Z', grp:'Grupo H', venue:'Miami',               sh:null,sa:null,st:'SCHEDULED'},
-  {h:'France',          a:'Senegal',           utc:'2026-06-16T16:00:00Z', grp:'Grupo I', venue:'Los Angeles',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Argentina',       a:'Algeria',           utc:'2026-06-16T19:00:00Z', grp:'Grupo J', venue:'Houston',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Austria',         a:'Jordan',            utc:'2026-06-16T22:00:00Z', grp:'Grupo J', venue:'Kansas City',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Norway',          a:'Iraq',              utc:'2026-06-17T01:00:00Z', grp:'Grupo I', venue:'San Francisco',       sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Portugal',        a:'DR Congo',          utc:'2026-06-17T19:00:00Z', grp:'Grupo K', venue:'Houston',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'England',         a:'Croatia',           utc:'2026-06-17T22:00:00Z', grp:'Grupo L', venue:'Dallas',              sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Colombia',        a:'Uzbekistan',        utc:'2026-06-18T01:00:00Z', grp:'Grupo K', venue:'Miami',               sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Ghana',           a:'Panama',            utc:'2026-06-18T04:00:00Z', grp:'Grupo L', venue:'Seattle',             sh:null,sa:null,st:'SCHEDULED'},
-  // Rodada 2
-  {h:'South Africa',    a:'Czechia',           utc:'2026-06-18T17:00:00Z', grp:'Grupo A', venue:'Guadalajara',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Mexico',          a:'Korea Republic',    utc:'2026-06-18T20:00:00Z', grp:'Grupo A', venue:'Monterrey',           sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Switzerland',     a:'Bosnia-Herzegovina',utc:'2026-06-19T01:00:00Z', grp:'Grupo B', venue:'Los Angeles',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Canada',          a:'Qatar',             utc:'2026-06-19T04:00:00Z', grp:'Grupo B', venue:'Vancouver',           sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Brazil',          a:'Haiti',             utc:'2026-06-19T22:00:00Z', grp:'Grupo C', venue:'Miami',               sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Morocco',         a:'Scotland',          utc:'2026-06-20T01:00:00Z', grp:'Grupo C', venue:'Filadelfia',          sh:null,sa:null,st:'SCHEDULED'},
-  {h:'United States',   a:'Australia',         utc:'2026-06-20T19:00:00Z', grp:'Grupo D', venue:'Dallas',              sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Turkiye',         a:'Paraguay',          utc:'2026-06-20T22:00:00Z', grp:'Grupo D', venue:'Houston',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Germany',         a:'Ivory Coast',       utc:'2026-06-21T17:00:00Z', grp:'Grupo E', venue:'Atlanta',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Ecuador',         a:'Curacao',           utc:'2026-06-21T20:00:00Z', grp:'Grupo E', venue:'Filadelfia',          sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Netherlands',     a:'Ukraine',           utc:'2026-06-21T23:00:00Z', grp:'Grupo F', venue:'Los Angeles',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Japan',           a:'Tunisia',           utc:'2026-06-22T02:00:00Z', grp:'Grupo F', venue:'Dallas',              sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Belgium',         a:'Iran',              utc:'2026-06-22T17:00:00Z', grp:'Grupo G', venue:'Kansas City',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'New Zealand',     a:'Egypt',             utc:'2026-06-22T20:00:00Z', grp:'Grupo G', venue:'Seattle',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Spain',           a:'Uruguay',           utc:'2026-06-22T23:00:00Z', grp:'Grupo H', venue:'Miami',               sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Saudi Arabia',    a:'Cape Verde',        utc:'2026-06-23T02:00:00Z', grp:'Grupo H', venue:'Atlanta',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'France',          a:'Norway',            utc:'2026-06-23T17:00:00Z', grp:'Grupo I', venue:'San Francisco',       sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Iraq',            a:'Senegal',           utc:'2026-06-23T20:00:00Z', grp:'Grupo I', venue:'Los Angeles',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Argentina',       a:'Austria',           utc:'2026-06-23T23:00:00Z', grp:'Grupo J', venue:'Dallas',              sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Jordan',          a:'Algeria',           utc:'2026-06-24T02:00:00Z', grp:'Grupo J', venue:'Houston',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Portugal',        a:'Uzbekistan',        utc:'2026-06-24T17:00:00Z', grp:'Grupo K', venue:'Kansas City',         sh:null,sa:null,st:'SCHEDULED'},
-  {h:'DR Congo',        a:'Colombia',          utc:'2026-06-24T20:00:00Z', grp:'Grupo K', venue:'Seattle',             sh:null,sa:null,st:'SCHEDULED'},
-  {h:'England',         a:'Ghana',             utc:'2026-06-24T23:00:00Z', grp:'Grupo L', venue:'Miami',               sh:null,sa:null,st:'SCHEDULED'},
-  {h:'Panama',          a:'Croatia',           utc:'2026-06-25T02:00:00Z', grp:'Grupo L', venue:'Atlanta',             sh:null,sa:null,st:'SCHEDULED'}
+  {h:'Mexico',a:'South Africa',utc:'2026-06-11T19:00:00Z',grp:'Grupo A',venue:'Cidade do Mexico',sh:2,sa:0,st:'FINISHED'},
+  {h:'Korea Republic',a:'Czechia',utc:'2026-06-12T02:00:00Z',grp:'Grupo A',venue:'Guadalajara',sh:2,sa:1,st:'FINISHED'},
+  {h:'Canada',a:'Bosnia-Herzegovina',utc:'2026-06-12T19:00:00Z',grp:'Grupo B',venue:'Toronto',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'United States',a:'Paraguay',utc:'2026-06-13T01:00:00Z',grp:'Grupo D',venue:'Los Angeles',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Australia',a:'Turkiye',utc:'2026-06-13T04:00:00Z',grp:'Grupo D',venue:'Vancouver',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Qatar',a:'Switzerland',utc:'2026-06-13T19:00:00Z',grp:'Grupo B',venue:'San Francisco',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Brazil',a:'Morocco',utc:'2026-06-13T22:00:00Z',grp:'Grupo C',venue:'Nova York/NJ',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Haiti',a:'Scotland',utc:'2026-06-14T01:00:00Z',grp:'Grupo C',venue:'Boston',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Germany',a:'Curacao',utc:'2026-06-14T17:00:00Z',grp:'Grupo E',venue:'Houston',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Netherlands',a:'Japan',utc:'2026-06-14T20:00:00Z',grp:'Grupo F',venue:'Dallas',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Ivory Coast',a:'Ecuador',utc:'2026-06-14T23:00:00Z',grp:'Grupo E',venue:'Filadelfia',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Tunisia',a:'Ukraine',utc:'2026-06-15T02:00:00Z',grp:'Grupo F',venue:'Monterrey',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Spain',a:'Cape Verde',utc:'2026-06-15T16:00:00Z',grp:'Grupo H',venue:'Atlanta',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Belgium',a:'Egypt',utc:'2026-06-15T19:00:00Z',grp:'Grupo G',venue:'Kansas City',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Iran',a:'New Zealand',utc:'2026-06-15T22:00:00Z',grp:'Grupo G',venue:'Seattle',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Uruguay',a:'Saudi Arabia',utc:'2026-06-16T01:00:00Z',grp:'Grupo H',venue:'Miami',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'France',a:'Senegal',utc:'2026-06-16T16:00:00Z',grp:'Grupo I',venue:'Los Angeles',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Argentina',a:'Algeria',utc:'2026-06-16T19:00:00Z',grp:'Grupo J',venue:'Houston',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Austria',a:'Jordan',utc:'2026-06-16T22:00:00Z',grp:'Grupo J',venue:'Kansas City',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Norway',a:'Iraq',utc:'2026-06-17T01:00:00Z',grp:'Grupo I',venue:'San Francisco',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Portugal',a:'DR Congo',utc:'2026-06-17T19:00:00Z',grp:'Grupo K',venue:'Houston',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'England',a:'Croatia',utc:'2026-06-17T22:00:00Z',grp:'Grupo L',venue:'Dallas',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Colombia',a:'Uzbekistan',utc:'2026-06-18T01:00:00Z',grp:'Grupo K',venue:'Miami',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Ghana',a:'Panama',utc:'2026-06-18T04:00:00Z',grp:'Grupo L',venue:'Seattle',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'South Africa',a:'Czechia',utc:'2026-06-18T17:00:00Z',grp:'Grupo A',venue:'Guadalajara',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Mexico',a:'Korea Republic',utc:'2026-06-18T20:00:00Z',grp:'Grupo A',venue:'Monterrey',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Switzerland',a:'Bosnia-Herzegovina',utc:'2026-06-19T01:00:00Z',grp:'Grupo B',venue:'Los Angeles',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Canada',a:'Qatar',utc:'2026-06-19T04:00:00Z',grp:'Grupo B',venue:'Vancouver',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Brazil',a:'Haiti',utc:'2026-06-19T22:00:00Z',grp:'Grupo C',venue:'Miami',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Morocco',a:'Scotland',utc:'2026-06-20T01:00:00Z',grp:'Grupo C',venue:'Filadelfia',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'United States',a:'Australia',utc:'2026-06-20T19:00:00Z',grp:'Grupo D',venue:'Dallas',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Turkiye',a:'Paraguay',utc:'2026-06-20T22:00:00Z',grp:'Grupo D',venue:'Houston',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Germany',a:'Ivory Coast',utc:'2026-06-21T17:00:00Z',grp:'Grupo E',venue:'Atlanta',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Ecuador',a:'Curacao',utc:'2026-06-21T20:00:00Z',grp:'Grupo E',venue:'Filadelfia',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Netherlands',a:'Ukraine',utc:'2026-06-21T23:00:00Z',grp:'Grupo F',venue:'Los Angeles',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Japan',a:'Tunisia',utc:'2026-06-22T02:00:00Z',grp:'Grupo F',venue:'Dallas',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Belgium',a:'Iran',utc:'2026-06-22T17:00:00Z',grp:'Grupo G',venue:'Kansas City',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'New Zealand',a:'Egypt',utc:'2026-06-22T20:00:00Z',grp:'Grupo G',venue:'Seattle',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Spain',a:'Uruguay',utc:'2026-06-22T23:00:00Z',grp:'Grupo H',venue:'Miami',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Saudi Arabia',a:'Cape Verde',utc:'2026-06-23T02:00:00Z',grp:'Grupo H',venue:'Atlanta',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'France',a:'Norway',utc:'2026-06-23T17:00:00Z',grp:'Grupo I',venue:'San Francisco',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Iraq',a:'Senegal',utc:'2026-06-23T20:00:00Z',grp:'Grupo I',venue:'Los Angeles',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Argentina',a:'Austria',utc:'2026-06-23T23:00:00Z',grp:'Grupo J',venue:'Dallas',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Jordan',a:'Algeria',utc:'2026-06-24T02:00:00Z',grp:'Grupo J',venue:'Houston',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Portugal',a:'Uzbekistan',utc:'2026-06-24T17:00:00Z',grp:'Grupo K',venue:'Kansas City',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'DR Congo',a:'Colombia',utc:'2026-06-24T20:00:00Z',grp:'Grupo K',venue:'Seattle',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'England',a:'Ghana',utc:'2026-06-24T23:00:00Z',grp:'Grupo L',venue:'Miami',sh:null,sa:null,st:'SCHEDULED'},
+  {h:'Panama',a:'Croatia',utc:'2026-06-25T02:00:00Z',grp:'Grupo L',venue:'Atlanta',sh:null,sa:null,st:'SCHEDULED'}
 ];
 
-// ==========================================================
-// RENDER DE UM JOGO LOCAL (do SCHEDULE)
-// ==========================================================
-function renderLocalGame(m) {
-  const BR_OFFSET_MS = -3 * 3600 * 1000;
-  const d = new Date(m.utc);
-  const brTime = new Date(d.getTime() - d.getTimezoneOffset() * 60000 + BR_OFFSET_MS);
-  const timeBR = brTime.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) + 'h';
-
-  const hasScore = m.sh !== null && m.sh !== undefined;
-  const isLive   = m.st === 'IN_PLAY' || m.st === 'PAUSED' || m.st === 'HALFTIME';
-  const isDone   = m.st === 'FINISHED';
-
-  const scoreColor = isLive ? 'var(--green)' : 'var(--text)';
-  const scoreHTML = hasScore
-    ? `<div class="score" style="color:${scoreColor}">${m.sh} &mdash; ${m.sa}</div>
-       <div class="score-sub">${isDone ? 'Encerrado' : isLive ? '&#x1F534; AO VIVO' : ''}</div>`
-    : `<div style="font-size:20px;font-weight:700;color:var(--text3)">${timeBR}</div>
-       <div class="score-sub">${m.grp}</div>`;
-
-  const statusBadge = isDone
-    ? '<span class="status-done">&#x2713; Encerrado</span>'
-    : isLive
-    ? '<span class="status-live">&#x1F534; AO VIVO</span>'
-    : `<span class="status-soon">${timeBR}</span>`;
-
-  const p    = calcProbs(m.h, m.a);
-  const bets = genBets(m.h, m.a);
-  const betsHTML = bets.map(b =>
-    `<div class="bet-row"><span class="badge ${b.cat}">${b.lbl}</span><span class="bet-pick">${b.pick}</span><span class="bet-odd">${b.odd}</span><span class="stars">${b.stars}</span></div>`
-  ).join('');
-
-  const isBrasil = m.h === 'Brazil' || m.a === 'Brazil';
-  const border   = isBrasil ? 'border-color:#14b8a644' : '';
-
-  return `
-  <div class="game-card" style="${border}">
-    <div class="game-head">
-      <span class="badge ba">${m.grp}</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        ${statusBadge}
-        <span style="font-size:12px;color:var(--text3)">${m.venue}</span>
-      </div>
-    </div>
-    <div class="game-body">
-      <div class="teams">
-        <div class="team">
-          <span class="flag">${getFlag(m.h)}</span>
-          <div class="tname">${m.h}</div>
-        </div>
-        <div class="score-box">${scoreHTML}</div>
-        <div class="team">
-          <span class="flag">${getFlag(m.a)}</span>
-          <div class="tname">${m.a}</div>
-        </div>
-      </div>
-      <div class="prob-bar">
-        <div style="width:${p.h}%;background:#3b82f6"></div>
-        <div style="width:${p.d}%;background:#525e78"></div>
-        <div style="width:${p.a}%;background:#ef4444"></div>
-      </div>
-      <div class="prob-labels">
-        <span>${m.h.split(' ')[0]} ${p.h}%</span>
-        <span>Empate ${p.d}%</span>
-        <span>${m.a.split(' ')[0]} ${p.a}%</span>
-      </div>
-      <div class="bet-rows">${betsHTML}</div>
-    </div>
-  </div>`;
+// ═══════════════════════════════════════════════════════
+// DATE HELPERS
+// ═══════════════════════════════════════════════════════
+const BR = -3*3600*1000;
+function brDate(utcStr) {
+  const d = new Date(utcStr);
+  return new Date(d.getTime() - d.getTimezoneOffset()*60000 + BR).toISOString().slice(0,10);
+}
+function todayBR()    { return brDate(new Date().toISOString()); }
+function tomorrowBR() { const d=new Date(); d.setDate(d.getDate()+1); return brDate(d.toISOString()); }
+function brTime(utcStr) {
+  const d = new Date(utcStr);
+  return new Date(d.getTime() - d.getTimezoneOffset()*60000 + BR)
+    .toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) + 'h';
+}
+function brDayLabel(ds, isToday) {
+  const d   = new Date(ds+'T12:00:00');
+  const lbl = d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'}).toUpperCase();
+  return `<div class="day-label"><div class="day-sep"></div><span class="${isToday?'day-today':''}">${isToday?'HOJE &mdash; ':'AMANHA &mdash; '}${lbl}</span><div class="day-sep"></div></div>`;
 }
 
-// Render de jogo vindo da API football-data
-function renderAPIGame(m) {
-  const BR_OFFSET_MS = -3 * 3600 * 1000;
-  const d    = new Date(m.utcDate);
-  const brD  = new Date(d.getTime() - d.getTimezoneOffset() * 60000 + BR_OFFSET_MS);
-  const timeBR = brD.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) + 'h';
-  const dateBR = brD.toLocaleDateString('pt-BR', {day:'2-digit', month:'short'});
-
-  const home   = m.homeTeam?.name || '?';
-  const away   = m.awayTeam?.name || '?';
-  const status = m.status || 'SCHEDULED';
-  const sh = m.score?.fullTime?.home ?? m.score?.halfTime?.home ?? null;
-  const sa = m.score?.fullTime?.away ?? m.score?.halfTime?.away ?? null;
-  const hasScore = sh !== null && status !== 'SCHEDULED' && status !== 'TIMED';
+// ═══════════════════════════════════════════════════════
+// RENDER GAME CARD
+// ═══════════════════════════════════════════════════════
+function renderCard(home, away, sh, sa, status, grp, venue, utcStr) {
   const isLive = ['IN_PLAY','PAUSED','FIRST_HALF','SECOND_HALF','HALFTIME'].includes(status);
   const isDone = status === 'FINISHED';
+  const hasScore = sh !== null && sh !== undefined && !['SCHEDULED','TIMED'].includes(status);
+  const time = brTime(utcStr);
+  const p    = calcProbs(home, away);
+  const bets = genBets(home, away);
+  const isBR = home==='Brazil'||away==='Brazil';
 
-  const scoreColor = isLive ? 'var(--green)' : 'var(--text)';
   const scoreHTML = hasScore
-    ? `<div class="score" style="color:${scoreColor}">${sh} &mdash; ${sa}</div>
-       <div class="score-sub">${isDone ? 'Encerrado' : '&#x1F534; AO VIVO'}</div>`
-    : `<div style="font-size:20px;font-weight:700;color:var(--text3)">${timeBR}</div>
-       <div class="score-sub">${dateBR}</div>`;
+    ? `<div class="score-num ${isLive?'live-score':isDone?'done-score':''}">${sh}<span class="score-sep">—</span>${sa}</div>
+       <div class="score-time">${isDone?'Encerrado':isLive?'&#x1F534; AO VIVO':''}</div>`
+    : `<div class="score-num" style="color:var(--text3);font-size:22px">${time}</div>
+       <div class="score-time">${grp}</div>`;
 
   const statusBadge = isLive
-    ? '<span class="status-live">&#x1F534; AO VIVO</span>'
-    : isDone
-    ? '<span class="status-done">&#x2713; Encerrado</span>'
-    : `<span class="status-soon">${timeBR}</span>`;
+    ? `<span class="status-live">&#x1F534; AO VIVO</span>`
+    : isDone ? `<span class="status-done">&#x2713; Encerrado</span>`
+    : `<span class="status-soon">${time}</span>`;
 
-  const stage = (m.stage || '').replace('GROUP_STAGE','Fase de Grupos');
-  const p     = calcProbs(home, away);
-  const bets  = genBets(home, away);
   const betsHTML = bets.map(b =>
-    `<div class="bet-row"><span class="badge ${b.cat}">${b.lbl}</span><span class="bet-pick">${b.pick}</span><span class="bet-odd">${b.odd}</span><span class="stars">${b.stars}</span></div>`
+    `<div class="bet-row">
+      <span class="bet-cat ${b.cat}">${b.lbl}</span>
+      <span class="bet-pick">${b.pick}</span>
+      <div class="bet-right">
+        <span class="bet-odd">${b.odd}</span>
+        <span class="bet-stars">${b.stars}</span>
+      </div>
+    </div>`
   ).join('');
 
-  const isBrasil = home === 'Brazil' || away === 'Brazil';
-  const border   = isBrasil ? 'border-color:#14b8a644' : '';
-
   return `
-  <div class="game-card" style="${border}">
+  <div class="game-card ${isBR?'brasil':''} ${isLive?'live-game':''}">
     <div class="game-head">
-      <span class="badge ba">${stage}</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        ${statusBadge}
-        <span style="font-size:12px;color:var(--text3)">${m.area?.name || ''}</span>
-      </div>
+      <span class="game-group">${grp}</span>
+      <div class="game-meta">${statusBadge}<span class="game-venue">${venue}</span></div>
     </div>
     <div class="game-body">
       <div class="teams">
-        <div class="team"><span class="flag">${getFlag(home)}</span><div class="tname">${home}</div></div>
-        <div class="score-box">${scoreHTML}</div>
-        <div class="team"><span class="flag">${getFlag(away)}</span><div class="tname">${away}</div></div>
+        <div class="team">
+          <span class="flag">${getFlag(home)}</span>
+          <div class="tname">${home}</div>
+          <div class="tpower">Poder ${POWER[home]||'?'}</div>
+        </div>
+        <div class="score-center">${scoreHTML}</div>
+        <div class="team">
+          <span class="flag">${getFlag(away)}</span>
+          <div class="tname">${away}</div>
+          <div class="tpower">Poder ${POWER[away]||'?'}</div>
+        </div>
       </div>
-      <div class="prob-bar">
-        <div style="width:${p.h}%;background:#3b82f6"></div>
-        <div style="width:${p.d}%;background:#525e78"></div>
-        <div style="width:${p.a}%;background:#ef4444"></div>
+      <div class="prob-section">
+        <div class="prob-bar">
+          <div class="pb-home" style="width:${p.h}%"></div>
+          <div class="pb-draw" style="width:${p.d}%"></div>
+          <div class="pb-away" style="width:${p.a}%"></div>
+        </div>
+        <div class="prob-labels">
+          <span>${home.split(' ')[0]} ${p.h}%</span>
+          <span>Empate ${p.d}%</span>
+          <span>${p.a}% ${away.split(' ').slice(-1)[0]}</span>
+        </div>
       </div>
-      <div class="prob-labels">
-        <span>${home.split(' ')[0]} ${p.h}%</span>
-        <span>Empate ${p.d}%</span>
-        <span>${away.split(' ')[0]} ${p.a}%</span>
-      </div>
-      <div class="bet-rows">${betsHTML}</div>
+      <div class="bet-section">${betsHTML}</div>
     </div>
   </div>`;
 }
 
-// ==========================================================
-// DATA HELPERS
-// ==========================================================
-function brDateStr(utcStr) {
-  const BR_OFFSET_MS = -3 * 3600 * 1000;
-  const d = new Date(utcStr);
-  const br = new Date(d.getTime() - d.getTimezoneOffset() * 60000 + BR_OFFSET_MS);
-  return br.toISOString().slice(0, 10);
-}
-function todayBR() {
-  return brDateStr(new Date().toISOString());
-}
-function tomorrowBR() {
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  return brDateStr(d.toISOString());
-}
-function dayLabel(dateStr, isToday) {
-  const d = new Date(dateStr + 'T12:00:00');
-  const label = d.toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit', month:'long'}).toUpperCase();
-  return `<div class="day-label">${isToday ? 'HOJE &mdash; ' : 'AMANHA &mdash; '}${label}<div class="day-sep"></div></div>`;
-}
-
-// ==========================================================
-// LOAD GAMES — tenta API, cai no calendario local
-// ==========================================================
-let pollInterval = null;
-
+// ═══════════════════════════════════════════════════════
+// LOAD GAMES — 3 fontes em cascata
+// ═══════════════════════════════════════════════════════
 async function loadGames() {
-  const container = document.getElementById('games-container');
-  const spinner   = document.getElementById('spinner-games');
-  const statusEl  = document.getElementById('api-status');
-  const isFirst   = container.innerHTML === '';
-  if (isFirst) spinner.style.display = 'flex';
+  const box  = document.getElementById('games-container');
+  const spin = document.getElementById('spinner-games');
+  const stat = document.getElementById('api-status');
+  const empty = box.innerHTML === '';
+  if (empty) spin.style.display = 'flex';
 
-  const today    = todayBR();
-  const tomorrow = tomorrowBR();
+  const today = todayBR(), tmw = tomorrowBR();
 
-  // === API 1: Copa 2026 open-source (gratuita, sem chave, tempo real) ===
+  // FONTE 1 — football-data.org
   try {
-    const r = await fetch('https://worldcup2026.p.rapidapi.com/matches', {
-      headers: {
-        'x-rapidapi-key': 'DEMO',
-        'x-rapidapi-host': 'worldcup2026.p.rapidapi.com'
-      }
+    const r = await fetch(`${API_BASE}/competitions/WC/matches?dateFrom=${today}&dateTo=${tmw}`,
+      { headers: { 'X-Auth-Token': API_TOKEN } });
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    const ms = (data.matches||[]).filter(m => { const d=brDate(m.utcDate); return d===today||d===tmw; });
+    if (!ms.length) throw new Error('empty');
+
+    // Detecta gols
+    const hash = ms.map(m=>`${m.id}:${m.score?.fullTime?.home}-${m.score?.fullTime?.away}:${m.status}`).join('|');
+    if (lastHash && hash !== lastHash) detectGoals(ms, lastHash);
+    lastHash = hash;
+
+    const byD = groupByDate(ms, m=>brDate(m.utcDate));
+    let html = '';
+    [today,tmw].forEach(d => {
+      if (!byD[d]) return;
+      html += brDayLabel(d, d===today);
+      byD[d].sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate)).forEach(m => {
+        const sh = m.score?.fullTime?.home ?? m.score?.halfTime?.home ?? null;
+        const sa = m.score?.fullTime?.away ?? m.score?.halfTime?.away ?? null;
+        html += renderCard(m.homeTeam.name, m.awayTeam.name, sh, sa, m.status,
+          (m.stage||'').replace('GROUP_STAGE','Fase de Grupos'), m.area?.name||'', m.utcDate);
+      });
     });
-    if (r.ok) {
-      const data = await r.json();
-      const matches = (Array.isArray(data) ? data : data.matches || [])
-        .filter(m => {
-          const ds = brDateStr(m.date || m.utcDate || m.datetime || '');
-          return ds === today || ds === tomorrow;
-        });
-      if (matches.length > 0) {
-        spinner.style.display = 'none';
-        container.innerHTML = renderWC26Matches(matches, today, tomorrow);
-        statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>&#x1F534; Ao vivo &middot; ${matches.length} jogo(s) &middot; ${hasLiveGame()?'15s':'60s'}</span>`;
-        return;
-      }
-    }
+    spin.style.display='none'; box.innerHTML=html||'<div style="text-align:center;color:var(--text3);padding:3rem">Sem jogos hoje e amanha.</div>';
+    stat.innerHTML=`<div class="api-dot" style="background:var(--green)"></div><span>&#x1F4E1; ${ms.length} jogo(s) &middot; ${isLiveWindow()?'15s':'60s'}</span>`;
+    return;
   } catch(e) {}
 
-  // === API 2: football-data.org (com chave) ===
-  try {
-    const url = `${API_BASE}/competitions/WC/matches?dateFrom=${today}&dateTo=${tomorrow}`;
-    const r   = await fetch(url, { headers: { 'X-Auth-Token': API_TOKEN } });
-    if (!r.ok) throw new Error('API ' + r.status);
-    const data    = await r.json();
-    const matches = (data.matches || []).filter(m => {
-      const ds = brDateStr(m.utcDate);
-      return ds === today || ds === tomorrow;
-    });
-    if (matches.length === 0) throw new Error('empty');
-
-    // Detecta mudanca de placar (gol aconteceu!)
-    const hash = matches.map(m => `${m.id}:${m.score?.fullTime?.home}-${m.score?.fullTime?.away}:${m.status}`).join('|');
-    if (hash !== lastEventHash && lastEventHash !== '') {
-      showEventAlert(matches, lastEventHash);
-    }
-    lastEventHash = hash;
-
-    const byDate = {};
-    matches.forEach(m => {
-      const ds = brDateStr(m.utcDate);
-      if (!byDate[ds]) byDate[ds] = [];
-      byDate[ds].push(m);
-    });
-    let html = '';
-    [today, tomorrow].forEach(ds => {
-      if (!byDate[ds]) return;
-      html += dayLabel(ds, ds === today);
-      byDate[ds].sort((a,b) => new Date(a.utcDate) - new Date(b.utcDate))
-               .forEach(m => { html += renderAPIGame(m); });
-    });
-    spinner.style.display = 'none';
-    container.innerHTML = html || '<div class="card" style="text-align:center;color:var(--text3);padding:2rem">Sem jogos hoje e amanha.</div>';
-    statusEl.innerHTML = `<div class="api-dot" style="background:#22c55e"></div><span>&#x1F4E1; ${matches.length} jogo(s) &middot; ${hasLiveGame()?'15s':'60s'}</span>`;
-    return;
-  } catch (e) {}
-
-  // === FALLBACK: calendario local ===
-  const filtered = SCHEDULE.filter(m => {
-    const ds = brDateStr(m.utc);
-    return ds === today || ds === tomorrow;
-  });
-  spinner.style.display = 'none';
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="card" style="text-align:center;color:var(--text3);padding:2rem">Sem jogos hoje e amanha.</div>';
-    statusEl.innerHTML = '<div class="api-dot" style="background:var(--amber)"></div><span>Calendario local</span>';
+  // FONTE 2 — calendario local
+  const ms = SCHEDULE.filter(m => { const d=brDate(m.utc); return d===today||d===tmw; });
+  spin.style.display='none';
+  if (!ms.length) {
+    box.innerHTML='<div style="text-align:center;color:var(--text3);padding:3rem">Sem jogos hoje e amanha.</div>';
+    stat.innerHTML=`<div class="api-dot" style="background:var(--amber)"></div><span>Calendario local</span>`;
     return;
   }
-  const byDate = {};
-  filtered.forEach(m => {
-    const ds = brDateStr(m.utc);
-    if (!byDate[ds]) byDate[ds] = [];
-    byDate[ds].push(m);
-  });
+  const byD = groupByDate(ms, m=>brDate(m.utc));
   let html = '';
-  [today, tomorrow].forEach(ds => {
-    if (!byDate[ds]) return;
-    html += dayLabel(ds, ds === today);
-    byDate[ds].sort((a,b) => new Date(a.utc) - new Date(b.utc))
-              .forEach(m => { html += renderLocalGame(m); });
+  [today,tmw].forEach(d => {
+    if (!byD[d]) return;
+    html += brDayLabel(d, d===today);
+    byD[d].sort((a,b)=>new Date(a.utc)-new Date(b.utc)).forEach(m => {
+      html += renderCard(m.h, m.a, m.sh, m.sa, m.st, m.grp, m.venue, m.utc);
+    });
   });
-  container.innerHTML = html;
-  statusEl.innerHTML = `<div class="api-dot" style="background:var(--amber)"></div><span>${filtered.length} jogo(s) &middot; calendario local</span>`;
+  box.innerHTML=html;
+  stat.innerHTML=`<div class="api-dot" style="background:var(--amber)"></div><span>${ms.length} jogo(s) &middot; local</span>`;
 }
 
-// Render de jogos da API Copa 2026 open-source
-function renderWC26Matches(matches, today, tomorrow) {
-  const byDate = {};
-  matches.forEach(m => {
-    const ds = brDateStr(m.date || m.utcDate || m.datetime || new Date().toISOString());
-    if (!byDate[ds]) byDate[ds] = [];
-    byDate[ds].push(m);
-  });
-  let html = '';
-  [today, tomorrow].forEach(ds => {
-    if (!byDate[ds]) return;
-    html += dayLabel(ds, ds === today);
-    byDate[ds].sort((a,b) => new Date(a.date||a.utcDate) - new Date(b.date||b.utcDate))
-      .forEach(m => {
-        const home = m.home_team?.name || m.homeTeam?.name || m.team1 || '?';
-        const away = m.away_team?.name || m.awayTeam?.name || m.team2 || '?';
-        const sh = m.home_score ?? m.score?.home ?? null;
-        const sa = m.away_score ?? m.score?.away ?? null;
-        const st = m.status || (sh !== null ? 'FINISHED' : 'SCHEDULED');
-        html += renderLocalGame({ h: home, a: away, utc: m.date||m.utcDate||m.datetime, grp: m.group||'Fase de Grupos', venue: m.venue||m.stadium||'', sh, sa, st });
-      });
-  });
-  return html;
+function groupByDate(arr, fn) {
+  return arr.reduce((acc, item) => { const k=fn(item); (acc[k]||(acc[k]=[])).push(item); return acc; }, {});
 }
 
-// Alerta visual quando detecta mudanca de placar
-function showEventAlert(matches, prevHash) {
-  const prevMap = {};
-  prevHash.split('|').forEach(entry => {
-    const [id, score] = entry.split(':');
-    prevMap[id] = score;
-  });
+// ═══════════════════════════════════════════════════════
+// GOAL DETECTION & TOAST
+// ═══════════════════════════════════════════════════════
+function detectGoals(matches, prevHash) {
+  const prev = {};
+  prevHash.split('|').forEach(e => { const [id,...rest]=e.split(':'); prev[id]=rest.join(':'); });
   matches.forEach(m => {
-    const prev = prevMap[m.id];
-    const curr = `${m.score?.fullTime?.home}-${m.score?.fullTime?.away}`;
-    if (prev && prev !== curr && m.status === 'IN_PLAY') {
-      const home = m.homeTeam?.name || '?';
-      const away = m.awayTeam?.name || '?';
-      const sh = m.score?.fullTime?.home;
-      const sa = m.score?.fullTime?.away;
-      showToast(`GOL! ${home} ${sh} x ${sa} ${away}`);
+    const k = `${m.score?.fullTime?.home}-${m.score?.fullTime?.away}:${m.status}`;
+    if (prev[m.id] && prev[m.id]!==k && m.status==='IN_PLAY') {
+      showToast(`&#x26BD; GOL! ${m.homeTeam?.name} ${m.score?.fullTime?.home} x ${m.score?.fullTime?.away} ${m.awayTeam?.name}`);
     }
   });
 }
-
-// Toast de notificacao de evento
 function showToast(msg) {
-  let toast = document.getElementById('event-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'event-toast';
-    toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;font-weight:600;font-size:14px;padding:10px 20px;border-radius:8px;z-index:9999;animation:toast-in .3s ease;box-shadow:0 4px 20px rgba(0,0,0,.4)';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = '⚽ ' + msg;
-  toast.style.display = 'block';
-  setTimeout(() => { toast.style.display = 'none'; }, 5000);
+  const t = document.getElementById('goal-toast');
+  t.innerHTML = msg; t.style.display='block';
+  setTimeout(() => t.style.display='none', 5000);
 }
 
-// ==========================================================
-// LOAD GROUPS
-// ==========================================================
+// ═══════════════════════════════════════════════════════
+// LIVE POLLING — 15s ao vivo, 60s normal
+// ═══════════════════════════════════════════════════════
+function isLiveWindow() {
+  const now = Date.now();
+  return SCHEDULE.some(m => {
+    const t = new Date(m.utc).getTime();
+    return now >= t-600000 && now <= t+7200000;
+  });
+}
+function getInterval() { return isLiveWindow() ? 15000 : 60000; }
+
+function restartPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(() => {
+    loadGames();
+    // Reajusta intervalo se estado mudou
+    const want = getInterval();
+    if ((isLiveWindow() && want===60000) || (!isLiveWindow() && want===15000)) restartPolling();
+  }, getInterval());
+}
+
+function updateLivePill() {
+  const live  = isLiveWindow();
+  const pill  = document.getElementById('live-pill');
+  const text  = document.getElementById('live-text');
+  pill.className = 'live-pill ' + (live?'live':'offline');
+  text.textContent = live ? 'AO VIVO' : 'HOJE';
+  if (live) restartPolling();
+}
+
+// ═══════════════════════════════════════════════════════
+// COUNTDOWN
+// ═══════════════════════════════════════════════════════
+function startCountdown() {
+  function tick() {
+    const el  = document.getElementById('countdown');
+    if (!el) return;
+    const now = Date.now(), today = todayBR();
+    const next = SCHEDULE
+      .filter(m => brDate(m.utc)===today && new Date(m.utc).getTime()>now)
+      .sort((a,b)=>new Date(a.utc)-new Date(b.utc))[0];
+    if (!next) { el.textContent='Sem mais jogos hoje'; return; }
+    const diff=new Date(next.utc).getTime()-now;
+    const h=Math.floor(diff/3600000), min=Math.floor((diff%3600000)/60000), sec=Math.floor((diff%60000)/1000);
+    el.textContent = h>0 ? `${h}h ${min}min para ${next.h} vs ${next.a}`
+      : min>0 ? `${min}min ${sec}s para ${next.h} vs ${next.a}`
+      : `Jogo comecando!`;
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+// ═══════════════════════════════════════════════════════
+// GROUPS
+// ═══════════════════════════════════════════════════════
 const STATIC_GROUPS = [
-  {name:'GRUPO A', teams:[
-    {n:'Mexico',            f:'MX', pts:3,j:1,v:1,e:0,d:0,gf:2,gc:0},
-    {n:'Korea Republic',    f:'KR', pts:3,j:1,v:1,e:0,d:0,gf:2,gc:1},
-    {n:'Czechia',           f:'CZ', pts:0,j:1,v:0,e:0,d:1,gf:1,gc:2},
-    {n:'South Africa',      f:'ZA', pts:0,j:1,v:0,e:0,d:1,gf:0,gc:2}
-  ]},
-  {name:'GRUPO B', teams:[
-    {n:'Canada',            f:'CA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Bosnia-Herzegovina',f:'BA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Qatar',             f:'QA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Switzerland',       f:'CH', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO C', teams:[
-    {n:'Brazil',            f:'BR', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Morocco',           f:'MA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Haiti',             f:'HT', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Scotland',          f:'GB-SCT',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO D', teams:[
-    {n:'United States',     f:'US', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Paraguay',          f:'PY', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Australia',         f:'AU', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Turkiye',           f:'TR', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO E', teams:[
-    {n:'Germany',           f:'DE', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Curacao',           f:'CW', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Ivory Coast',       f:'CI', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Ecuador',           f:'EC', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO F', teams:[
-    {n:'Netherlands',       f:'NL', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Japan',             f:'JP', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Ukraine',           f:'UA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Tunisia',           f:'TN', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO G', teams:[
-    {n:'Belgium',           f:'BE', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Egypt',             f:'EG', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Iran',              f:'IR', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'New Zealand',       f:'NZ', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO H', teams:[
-    {n:'Spain',             f:'ES', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Uruguay',           f:'UY', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Saudi Arabia',      f:'SA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Cape Verde',        f:'CV', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO I', teams:[
-    {n:'France',            f:'FR', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Senegal',           f:'SN', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Norway',            f:'NO', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Iraq',              f:'IQ', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO J', teams:[
-    {n:'Argentina',         f:'AR', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Algeria',           f:'DZ', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Austria',           f:'AT', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Jordan',            f:'JO', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO K', teams:[
-    {n:'Portugal',          f:'PT', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Colombia',          f:'CO', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Uzbekistan',        f:'UZ', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'DR Congo',          f:'CD', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]},
-  {name:'GRUPO L', teams:[
-    {n:'England',           f:'GB', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Croatia',           f:'HR', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Ghana',             f:'GH', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},
-    {n:'Panama',            f:'PA', pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}
-  ]}
+  {name:'GRUPO A',teams:[{n:'Mexico',f:'MX',pts:3,j:1,v:1,e:0,d:0,gf:2,gc:0},{n:'Korea Republic',f:'KR',pts:3,j:1,v:1,e:0,d:0,gf:2,gc:1},{n:'Czechia',f:'CZ',pts:0,j:1,v:0,e:0,d:1,gf:1,gc:2},{n:'South Africa',f:'ZA',pts:0,j:1,v:0,e:0,d:1,gf:0,gc:2}]},
+  {name:'GRUPO B',teams:[{n:'Canada',f:'CA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Bosnia-Herzegovina',f:'BA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Qatar',f:'QA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Switzerland',f:'CH',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO C',teams:[{n:'Brazil',f:'BR',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Morocco',f:'MA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Haiti',f:'HT',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Scotland',f:'GB-SCT',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO D',teams:[{n:'United States',f:'US',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Paraguay',f:'PY',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Australia',f:'AU',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Turkiye',f:'TR',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO E',teams:[{n:'Germany',f:'DE',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Curacao',f:'CW',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Ivory Coast',f:'CI',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Ecuador',f:'EC',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO F',teams:[{n:'Netherlands',f:'NL',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Japan',f:'JP',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Ukraine',f:'UA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Tunisia',f:'TN',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO G',teams:[{n:'Belgium',f:'BE',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Egypt',f:'EG',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Iran',f:'IR',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'New Zealand',f:'NZ',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO H',teams:[{n:'Spain',f:'ES',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Uruguay',f:'UY',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Saudi Arabia',f:'SA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Cape Verde',f:'CV',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO I',teams:[{n:'France',f:'FR',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Senegal',f:'SN',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Norway',f:'NO',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Iraq',f:'IQ',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO J',teams:[{n:'Argentina',f:'AR',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Algeria',f:'DZ',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Austria',f:'AT',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Jordan',f:'JO',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO K',teams:[{n:'Portugal',f:'PT',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Colombia',f:'CO',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Uzbekistan',f:'UZ',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'DR Congo',f:'CD',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
+  {name:'GRUPO L',teams:[{n:'England',f:'GB',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Croatia',f:'HR',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Ghana',f:'GH',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Panama',f:'PA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]}
 ];
 
-function renderGroupCard(g, teams) {
-  const sorted = [...teams].sort((a,b) => {
-    if (b.pts !== a.pts) return b.pts - a.pts;
-    const gdA = (a.gf||0) - (a.gc||0);
-    const gdB = (b.gf||0) - (b.gc||0);
-    if (gdB !== gdA) return gdB - gdA;
-    return (b.gf||0) - (a.gf||0);
-  });
-  const rows = sorted.map((t, i) => {
-    const name = t.n || t.team?.name || '?';
-    const iso  = t.f || TEAM_ISO[name] || '';
-    const gd   = (t.gf||0) - (t.gc||0);
-    return `<tr class="${i < 2 ? 'qualify' : ''}">
-      <td>${isoToFlag(iso)} ${name}</td>
-      <td>${t.j||t.playedGames||0}</td>
-      <td>${t.v||t.won||0}</td>
-      <td>${t.e||t.draw||0}</td>
-      <td>${t.d||t.lost||0}</td>
-      <td>${gd > 0 ? '+'+gd : gd}</td>
-      <td><strong>${t.pts||t.points||0}</strong></td>
+function renderGroupCard(name, teams) {
+  const sorted = [...teams].sort((a,b) => b.pts!==a.pts ? b.pts-a.pts : (b.gf-b.gc)-(a.gf-a.gc) || b.gf-a.gf);
+  const rows = sorted.map((t,i) => {
+    const n = t.n||t.team?.name||'?', iso = t.f||TEAM_ISO[n]||'';
+    const gd = (t.gf||0)-(t.gc||0);
+    return `<tr class="${i<2?'qualify':''}">
+      <td>${isoToEmoji(iso)} ${n}</td>
+      <td>${t.j||0}</td><td>${t.v||0}</td><td>${t.e||0}</td><td>${t.d||0}</td>
+      <td>${gd>0?'+'+gd:gd}</td><td><strong>${t.pts||0}</strong></td>
     </tr>`;
   }).join('');
-  return `<div class="group-card">
-    <div class="group-title">${g}</div>
+  const isBR = name.includes('C');
+  return `<div class="group-card ${isBR?'brasil-group':''}">
+    <div class="group-head">
+      <span>${name}</span>
+      ${isBR ? '<span class="badge b-green">&#x1F1E7;&#x1F1F7;</span>' : ''}
+    </div>
     <table class="gtable">
       <thead><tr><th>Time</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th><th>Pts</th></tr></thead>
       <tbody>${rows}</tbody>
@@ -1021,258 +1396,111 @@ function renderGroupCard(g, teams) {
 async function loadGroups() {
   const el = document.getElementById('groups-content');
   const sp = document.getElementById('spinner-groups');
-  sp.style.display = 'flex';
-  el.innerHTML = '';
-
-  // === Tenta API Copa 2026 open-source (github rezarahiminia) ===
+  sp.style.display = 'flex'; el.innerHTML = '';
   try {
-    const r = await fetch('https://raw.githubusercontent.com/rezarahiminia/worldcup2026/main/data/standings.json');
-    if (r.ok) {
-      const data = await r.json();
-      const groups = Array.isArray(data) ? data : data.groups || [];
-      if (groups.length > 0) {
-        sp.style.display = 'none';
-        el.innerHTML = groups.map(g => {
-          const name = g.name || g.group || 'Grupo';
-          const teams = (g.teams || g.standings || []).map(t => ({
-            n: t.team || t.name || t.team_name || '?',
-            f: TEAM_ISO[t.team || t.name || ''] || '',
-            pts: t.points || t.pts || 0,
-            j: t.played || t.games || 0,
-            v: t.won || t.wins || 0,
-            e: t.drawn || t.draws || 0,
-            d: t.lost || t.losses || 0,
-            gf: t.goals_for || t.gf || 0,
-            gc: t.goals_against || t.gc || 0
-          }));
-          return renderGroupCard(name, teams);
-        }).join('');
-        return;
-      }
-    }
-  } catch(e) {}
-
-  // === Tenta football-data.org ===
-  try {
-    const r = await fetch(`${API_BASE}/competitions/WC/standings`, {
-      headers: { 'X-Auth-Token': API_TOKEN }
-    });
-    if (!r.ok) throw new Error('API ' + r.status);
+    const r = await fetch(`${API_BASE}/competitions/WC/standings`, { headers: { 'X-Auth-Token': API_TOKEN } });
+    if (!r.ok) throw new Error(r.status);
     const data = await r.json();
-    const standings = data.standings || [];
+    const standings = data.standings||[];
     if (!standings.length) throw new Error('empty');
     sp.style.display = 'none';
-    el.innerHTML = standings.map(g => {
-      const groupName = g.group || g.stage || 'Grupo';
-      return renderGroupCard(groupName, g.table.map(t => ({
-        n: t.team.name, f: TEAM_ISO[t.team.name] || '',
-        pts: t.points, j: t.playedGames, v: t.won,
-        e: t.draw, d: t.lost, gf: t.goalsFor, gc: t.goalsAgainst
-      })));
-    }).join('');
-    return;
-  } catch (e) {}
-
-  // === Fallback estatico ===
-  sp.style.display = 'none';
-  el.innerHTML = STATIC_GROUPS.map(g => renderGroupCard(g.name, g.teams)).join('');
-}
-
-// ==========================================================
-// LIVE POLLING — atualiza a cada 60s quando ha jogo ao vivo
-// ==========================================================
-function hasLiveGame() {
-  const now   = Date.now();
-  const two_h = 2 * 3600 * 1000;
-  return SCHEDULE.some(m => {
-    const t = new Date(m.utc).getTime();
-    return now >= t - two_h && now <= t + two_h;
-  });
-}
-
-function startPolling() {
-  if (pollInterval) return;
-  pollInterval = setInterval(loadGames, 60000);
-}
-function stopPolling() {
-  if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
-}
-
-function updateLiveBadge() {
-  const live = hasLiveGame();
-  const dot  = document.getElementById('live-dot');
-  const text = document.getElementById('live-text');
-  const badge = document.getElementById('live-badge');
-  if (live) {
-    dot.style.background   = 'var(--green)';
-    dot.style.animation    = 'blink 2s infinite';
-    badge.style.color      = 'var(--green)';
-    text.textContent       = 'AO VIVO';
-    startPolling();
-  } else {
-    dot.style.background   = 'var(--text3)';
-    dot.style.animation    = 'none';
-    badge.style.color      = 'var(--text3)';
-    text.textContent       = 'HOJE';
-    stopPolling();
+    el.innerHTML = standings.map(g => renderGroupCard(
+      g.group||g.stage||'Grupo',
+      g.table.map(t => ({ n:t.team.name, f:TEAM_ISO[t.team.name]||'', pts:t.points, j:t.playedGames, v:t.won, e:t.draw, d:t.lost, gf:t.goalsFor, gc:t.goalsAgainst }))
+    )).join('');
+  } catch(e) {
+    sp.style.display = 'none';
+    el.innerHTML = STATIC_GROUPS.map(g => renderGroupCard(g.name, g.teams)).join('');
   }
 }
 
-// ==========================================================
-// COUNTDOWN — proximo jogo hoje
-// ==========================================================
-function startCountdown() {
-  function tick() {
-    const el  = document.getElementById('countdown');
-    if (!el) return;
-    const now = Date.now();
-    const today = todayBR();
-    const next  = SCHEDULE
-      .filter(m => brDateStr(m.utc) === today && new Date(m.utc).getTime() > now)
-      .sort((a,b) => new Date(a.utc) - new Date(b.utc))[0];
-    if (!next) {
-      el.textContent = 'Sem mais jogos hoje';
-      return;
-    }
-    const diff = new Date(next.utc).getTime() - now;
-    const h    = Math.floor(diff / 3600000);
-    const min  = Math.floor((diff % 3600000) / 60000);
-    const sec  = Math.floor((diff % 60000) / 1000);
-    if (h > 0)        el.textContent = `Proximo jogo em ${h}h ${min}min`;
-    else if (min > 0) el.textContent = `Proximo jogo em ${min}min ${sec}s`;
-    else              el.textContent = `Jogo comecando!`;
-  }
-  tick();
-  setInterval(tick, 1000);
-}
-
-// ==========================================================
-// TABS & SHOT PANELS
-// ==========================================================
+// ═══════════════════════════════════════════════════════
+// TABS & SHOT
+// ═══════════════════════════════════════════════════════
 function showTab(name, btn) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'grupos') loadGroups();
+  if (name==='grupos') loadGroups();
 }
-
-function showShot(btn, game) {
+function showShot(btn, id) {
   document.querySelectorAll('.gpill').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.shot-panel').forEach(p => {
-    p.style.display = 'none';
-    p.classList.remove('active');
-  });
-  const el = document.getElementById('shot-' + game);
-  if (el) { el.style.display = 'block'; el.classList.add('active'); }
+  document.querySelectorAll('.shot-panel').forEach(p => { p.style.display='none'; p.classList.remove('active'); });
+  const el = document.getElementById('shot-'+id);
+  if (el) { el.style.display='block'; el.classList.add('active'); }
 }
 
-// ==========================================================
-// API KEY & IA
-// ==========================================================
-function getApiKey() {
-  return localStorage.getItem('copa2026_apikey') || '';
-}
-
+// ═══════════════════════════════════════════════════════
+// API KEY & AI
+// ═══════════════════════════════════════════════════════
+function getApiKey() { return localStorage.getItem('copa2026_apikey')||''; }
 function saveApiKey() {
-  const key = document.getElementById('apikey-input').value.trim();
-  const st  = document.getElementById('apikey-status');
-  if (!key.startsWith('sk-ant-')) {
-    st.style.display = 'block';
-    st.style.color   = 'var(--red)';
-    st.textContent   = 'Chave invalida. Deve comecar com sk-ant-';
-    return;
+  const k = document.getElementById('apikey-input').value.trim();
+  const s = document.getElementById('apikey-status');
+  if (!k.startsWith('sk-ant-')) {
+    s.style.display='block'; s.style.color='var(--red)';
+    s.textContent='Chave invalida. Deve comecar com sk-ant-'; return;
   }
-  localStorage.setItem('copa2026_apikey', key);
-  document.getElementById('apikey-input').value = '';
-  st.style.display = 'block';
-  st.style.color   = 'var(--green)';
-  st.textContent   = '\u2713 Chave salva! IA pronta para uso.';
-  document.getElementById('apikey-setup').style.borderColor = '#22c55e44';
+  localStorage.setItem('copa2026_apikey', k);
+  document.getElementById('apikey-input').value='';
+  s.style.display='block'; s.style.color='var(--green)';
+  s.textContent='\u2713 Chave salva! IA pronta.';
+  document.getElementById('apikey-card')||document.querySelector('.apikey-card').style.borderColor='#10d98828';
 }
-
-function initApiKeyUI() {
+function initApiKey() {
   if (!getApiKey()) return;
-  const st = document.getElementById('apikey-status');
-  if (!st) return;
-  st.style.display = 'block';
-  st.style.color   = 'var(--green)';
-  st.textContent   = '\u2713 Chave configurada! IA pronta.';
-  document.getElementById('apikey-setup').style.borderColor = '#22c55e44';
+  const s = document.getElementById('apikey-status');
+  s.style.display='block'; s.style.color='var(--green)';
+  s.textContent='\u2713 Chave configurada! IA pronta.';
 }
-
 async function callClaude(prompt) {
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    return 'Configure sua chave da API Anthropic no campo acima. Acesse console.anthropic.com para obter sua chave.';
-  }
-  const sys = 'Voce e especialista em analise estatistica de futebol e probabilidades esportivas para Copa do Mundo 2026. Responda em portugues brasileiro, de forma clara e objetiva. Para cada aposta forneca: probabilidade estimada (%), fair value odd, se ha valor vs mercado, recomendacao direta. Maximo 300 palavras. Finalize com lembrete de responsabilidade.';
+  const key = getApiKey();
+  if (!key) return 'Configure sua chave da API Anthropic no campo acima.';
+  const sys = 'Voce e especialista em analise estatistica de futebol e probabilidades esportivas para Copa do Mundo 2026. Responda em portugues brasileiro, objetivo e claro. Para cada aposta forneca: probabilidade (%), fair value odd, se ha valor, recomendacao direta. Max 300 palavras. Finalize com lembrete de responsabilidade.';
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 1024,
-        system: sys,
-        messages: [{ role: 'user', content: prompt + '\n\nContexto: Copa 2026, fase de grupos. Resultados rodada 1: Mexico 2-0 Africa do Sul, Coreia do Sul 2-1 Republica Tcheca. Hoje (13 jun): Australia vs Turquia 4h, Catar vs Suica 16h, Brasil vs Marrocos 19h, Haiti vs Escocia 22h.' }]
-      })
+      method:'POST',
+      headers:{ 'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
+      body: JSON.stringify({ model:'claude-haiku-4-5', max_tokens:1024, system:sys,
+        messages:[{role:'user',content:prompt+'\n\nContexto: Copa 2026, fase de grupos. Resultados r1: Mexico 2-0 Africa do Sul, Coreia 2-1 Rep.Tcheca. Hoje: Canada vs Bosnia, EUA vs Paraguai. Amanha: Brasil vs Marrocos 19h.'}] })
     });
     if (!r.ok) {
-      const err = await r.json().catch(() => ({}));
-      if (r.status === 401) return 'Chave invalida ou expirada. Salve uma nova chave no campo acima.';
-      if (r.status === 429) return 'Muitas requisicoes. Aguarde alguns segundos e tente novamente.';
-      return 'Erro ' + r.status + ': ' + (err.error?.message || 'tente novamente');
+      if (r.status===401) return 'Chave invalida. Salve uma nova no campo acima.';
+      if (r.status===429) return 'Muitas requisicoes. Aguarde alguns segundos.';
+      return 'Erro '+r.status+'. Tente novamente.';
     }
     const d = await r.json();
-    return d.content.map(c => c.text || '').join('');
-  } catch (e) {
-    return 'Erro de conexao: ' + e.message;
-  }
+    return d.content.map(c=>c.text||'').join('');
+  } catch(e) { return 'Erro de conexao: '+e.message; }
 }
-
 async function askAI() {
-  const inp = document.getElementById('ai-in');
-  const q   = inp.value.trim();
-  if (!q) return;
-  const sp  = document.getElementById('ai-spin');
-  const out = document.getElementById('ai-out');
-  sp.style.display = 'flex'; out.style.display = 'none'; out.textContent = '';
+  const inp=document.getElementById('ai-in'), q=inp.value.trim(); if(!q)return;
+  const sp=document.getElementById('ai-spin'), out=document.getElementById('ai-out');
+  sp.style.display='flex'; out.style.display='none';
   out.textContent = await callClaude(q);
-  sp.style.display = 'none'; out.style.display = 'block';
-  inp.value = '';
+  sp.style.display='none'; out.style.display='block'; inp.value='';
 }
-
 async function pre(prompt) {
-  const sp  = document.getElementById('pre-spin');
-  const out = document.getElementById('pre-out');
-  sp.style.display = 'flex'; out.style.display = 'none'; out.textContent = '';
+  const sp=document.getElementById('pre-spin'), out=document.getElementById('pre-out');
+  sp.style.display='flex'; out.style.display='none';
   out.textContent = await callClaude(prompt);
-  sp.style.display = 'none'; out.style.display = 'block';
-  out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  sp.style.display='none'; out.style.display='block';
+  out.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
+document.getElementById('ai-in').addEventListener('keydown', e => { if(e.key==='Enter') askAI(); });
 
-document.getElementById('ai-in').addEventListener('keydown', e => {
-  if (e.key === 'Enter') askAI();
-});
-
-// ==========================================================
+// ═══════════════════════════════════════════════════════
 // INIT
-// ==========================================================
+// ═══════════════════════════════════════════════════════
 document.getElementById('datestamp').textContent =
-  new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}) + ' \u00b7 Fase de grupos';
-
+  new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'});
 loadGames();
-updateLiveBadge();      // inicia polling inteligente: 15s ao vivo / 60s normal
+updateLivePill();
 startCountdown();
-setInterval(updateLiveBadge, 30000); // reavalia o badge a cada 30s
-initApiKeyUI();
+setInterval(updateLivePill, 30000);
+initApiKey();
 </script>
 </body>
 </html>
