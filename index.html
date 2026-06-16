@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Copa 2026 — Analise de Apostas</title>
+<title>Copa 2026 â€” Analise de Apostas</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -19,7 +19,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;overflow-x:hidden}
 
-/* ── HEADER ── */
+/* â”€â”€ HEADER â”€â”€ */
 .hdr{
   position:sticky;top:0;z-index:300;
   background:rgba(7,9,15,.95);backdrop-filter:blur(20px);
@@ -48,7 +48,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .live-pill.on .live-dot{animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ── NAV TABS ── */
+/* â”€â”€ NAV TABS â”€â”€ */
 .nav{
   background:var(--bg2);border-bottom:1px solid var(--border);
   padding:0 1.25rem;display:flex;gap:0;overflow-x:auto;
@@ -65,11 +65,11 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .ntab.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
 .ntab-icon{font-size:15px}
 
-/* ── MAIN ── */
+/* â”€â”€ MAIN â”€â”€ */
 .main{max-width:920px;margin:0 auto;padding:1.25rem}
 .tab{display:none}.tab.active{display:block}
 
-/* ── SECTION TITLE ── */
+/* â”€â”€ SECTION TITLE â”€â”€ */
 .stitle{
   font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
   color:var(--text3);margin:1.5rem 0 .875rem;
@@ -78,7 +78,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .stitle::before{content:'';width:3px;height:13px;background:var(--gold);border-radius:2px;display:block}
 .stitle:first-child{margin-top:0}
 
-/* ── STATUS BAR ── */
+/* â”€â”€ STATUS BAR â”€â”€ */
 .statusbar{
   display:flex;align-items:center;justify-content:space-between;
   background:var(--bg3);border:1px solid var(--border);border-radius:12px;
@@ -98,7 +98,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 }
 .btn-refresh:hover{color:var(--text);border-color:var(--gold)}
 
-/* ── DAY SEPARATOR ── */
+/* â”€â”€ DAY SEPARATOR â”€â”€ */
 .daylabel{
   display:flex;align-items:center;gap:10px;
   margin:1.25rem 0 .75rem;font-size:11px;font-weight:700;
@@ -109,7 +109,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .daylabel-text{color:var(--text3);white-space:nowrap}
 .daylabel-text.today{color:var(--gold)}
 
-/* ── GAME CARD ── */
+/* â”€â”€ GAME CARD â”€â”€ */
 .gc{
   background:var(--bg2);border:1px solid var(--border);
   border-radius:16px;margin-bottom:.875rem;overflow:hidden;
@@ -122,7 +122,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .gc.gc-live::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--live);animation:livebar 2s infinite}
 @keyframes livebar{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* cabeçalho do card */
+/* cabeÃ§alho do card */
 .gc-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:.5rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);
@@ -138,7 +138,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 /* body do card */
 .gc-body{padding:1rem}
 
-/* ── MATCH ROW (bandeiras + placar) ── */
+/* â”€â”€ MATCH ROW (bandeiras + placar) â”€â”€ */
 .match-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .team-block{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
 .team-flag-img{
@@ -151,7 +151,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .team-name{font-size:13px;font-weight:700;color:var(--text)}
 .team-power{font-size:10px;color:var(--text3)}
 
-/* ── SCORE CENTER ── */
+/* â”€â”€ SCORE CENTER â”€â”€ */
 .score-center{
   display:flex;flex-direction:column;align-items:center;
   padding:0 1rem;min-width:100px;
@@ -177,7 +177,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .score-status.done{color:var(--text3)}
 .score-status.sched{color:var(--amber)}
 
-/* ── LIVE PULSE RING ── */
+/* â”€â”€ LIVE PULSE RING â”€â”€ */
 .score-live-wrap{position:relative;display:inline-flex;align-items:center}
 .score-live-wrap::before{
   content:'';position:absolute;inset:-8px;border-radius:12px;
@@ -185,15 +185,16 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 }
 @keyframes pulsering{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.04);opacity:.1}}
 
-/* ── PROB BAR ── */
+/* â”€â”€ PROB BAR â”€â”€ */
 .prob-section{margin-bottom:.875rem}
 .prob-bar{display:flex;height:5px;border-radius:3px;overflow:hidden;background:var(--bg4);margin-bottom:5px}
 .pb-h{background:linear-gradient(90deg,var(--blue),#60acff);border-radius:3px 0 0 3px}
 .pb-d{background:var(--text3)}
 .pb-a{background:linear-gradient(90deg,#f87171,var(--red));border-radius:0 3px 3px 0}
 .prob-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text2)}
+.prob-meta{font-size:10px;color:var(--text3);margin-top:5px;text-align:center}
 
-/* ── BET ROWS ── */
+/* â”€â”€ BET ROWS â”€â”€ */
 .bet-section{border-top:1px solid var(--border);padding-top:.75rem}
 .bet-row{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--border)}
 .bet-row:last-child{border-bottom:none}
@@ -218,7 +219,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   font-size:12px;color:var(--text2);line-height:1.6;
 }
 
-/* ── GROUPS GRID ── */
+/* â”€â”€ GROUPS GRID â”€â”€ */
 .grp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .grp-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .grp-card.grp-br{border-color:#0fd97a25}
@@ -239,13 +240,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .team-cell{display:flex;align-items:center;gap:6px}
 .team-flag-sm{font-size:16px;line-height:1}
 
-/* ── SPINNER ── */
+/* â”€â”€ SPINNER â”€â”€ */
 .spinner{display:none;align-items:center;gap:8px;padding:.875rem 0;font-size:13px;color:var(--text3)}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:ld 1.2s infinite}
 .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
 @keyframes ld{0%,80%,100%{opacity:.2}40%{opacity:1}}
 
-/* ── STAT GRID ── */
+/* â”€â”€ STAT GRID â”€â”€ */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:1.25rem}
 .stat-card{
   background:var(--bg2);border:1px solid var(--border);border-radius:12px;
@@ -259,7 +260,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .stat-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text)}
 .stat-lbl{font-size:11px;color:var(--text3);margin-top:3px}
 
-/* ── CORNER BARS ── */
+/* â”€â”€ CORNER BARS â”€â”€ */
 .cbar-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:.875rem}
 .cbar-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)}
 .cbar-row:last-child{border-bottom:none}
@@ -268,7 +269,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .cbar-fill{height:100%;border-radius:4px}
 .cbar-val{width:32px;text-align:right;font-size:13px;font-weight:700;color:var(--text)}
 
-/* ── MARKET CARD ── */
+/* â”€â”€ MARKET CARD â”€â”€ */
 .mkt-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:.75rem}
 .mkt-row{display:flex;align-items:flex-start;gap:12px;padding:1rem;border-bottom:1px solid var(--border)}
 .mkt-row:last-child{border-bottom:none}
@@ -286,7 +287,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .mkt-odd{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
 .mkt-lbl{font-size:10px;color:var(--text3)}
 
-/* ── PLAYER CARD ── */
+/* â”€â”€ PLAYER CARD â”€â”€ */
 .plr-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:.75rem}
 .plr-card.br-plr{border-color:#0fd97a20}
 .plr-head{display:flex;align-items:center;gap:12px;margin-bottom:.75rem}
@@ -304,7 +305,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .pstat-v{font-size:13px;font-weight:700;color:var(--text)}
 .pstat-l{font-size:10px;color:var(--text3)}
 
-/* ── MULTI CARD ── */
+/* â”€â”€ MULTI CARD â”€â”€ */
 .multi-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:.875rem}
 .multi-head{display:flex;align-items:center;justify-content:space-between;padding:1rem;background:linear-gradient(135deg,var(--bg3),var(--bg4));border-bottom:1px solid var(--border)}
 .multi-title{font-size:14px;font-weight:700;color:var(--text)}
@@ -322,7 +323,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .evbar-lbl{font-size:10px;color:var(--text3)}
 .multi-prob{font-size:11px;color:var(--text2)}
 
-/* ── IA ── */
+/* â”€â”€ IA â”€â”€ */
 .ia-key-card{background:var(--bg2);border:1px solid var(--gold2)44;border-radius:16px;padding:1.125rem;margin-bottom:1.125rem}
 .ia-key-head{display:flex;align-items:center;gap:10px;margin-bottom:.875rem}
 .ia-key-ico{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:18px}
@@ -351,13 +352,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .qbtn{padding:6px 12px;font-size:12px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:8px;cursor:pointer;transition:all .15s}
 .qbtn:hover{border-color:var(--gold);color:var(--text)}
 
-/* ── SHOT PILLS ── */
+/* â”€â”€ SHOT PILLS â”€â”€ */
 .shot-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1rem}
 .spill{padding:5px 13px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s}
 .spill:hover,.spill.active{background:var(--bg3);color:var(--text);border-color:var(--gold)}
 .spanel{display:none}.spanel.active{display:block}
 
-/* ── BADGE ── */
+/* â”€â”€ BADGE â”€â”€ */
 .badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap}
 .b-gold{background:#f5c84220;color:#f5c842;border:1px solid #f5c84230}
 .b-green{background:#0fd97a20;color:#0fd97a;border:1px solid #0fd97a30}
@@ -366,7 +367,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .b-purple{background:#9b6dff20;color:#c4a8ff;border:1px solid #9b6dff30}
 .b-teal{background:#00d8c820;color:#00d8c8;border:1px solid #00d8c830}
 
-/* ── TOAST ── */
+/* â”€â”€ TOAST â”€â”€ */
 #gtost{
   position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
   background:linear-gradient(135deg,var(--green),var(--green2));
@@ -376,10 +377,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   z-index:9999;display:none;white-space:nowrap;
 }
 
-/* ── DISCLAIMER ── */
+/* â”€â”€ DISCLAIMER â”€â”€ */
 .disc{font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.875rem 1rem;margin-top:1.5rem;line-height:1.6}
 
-/* ── RESPONSIVE ── */
+/* â”€â”€ RESPONSIVE â”€â”€ */
 @media(max-width:600px){
   .main{padding:1rem}.hdr{padding:0 1rem}.nav{padding:0 1rem}
   .team-flag-img{width:50px;height:36px;font-size:36px}
@@ -426,7 +427,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 
 <main class="main">
 
-<!-- ══ JOGOS ══ -->
+<!-- â•â• JOGOS â•â• -->
 <section id="tab-jogos" class="tab active">
   <div class="statusbar">
     <div class="statusbar-left">
@@ -445,17 +446,17 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   <div id="games-box"></div>
 </section>
 
-<!-- ══ GRUPOS ══ -->
+<!-- â•â• GRUPOS â•â• -->
 <section id="tab-grupos" class="tab">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem">
-    <div class="stitle" style="margin:0">Tabela de grupos — ao vivo</div>
+    <div class="stitle" style="margin:0">Tabela de grupos â€” ao vivo</div>
     <button class="btn-refresh" onclick="loadGroups()">&#8635; Atualizar</button>
   </div>
   <div class="spinner" id="sp-groups"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Carregando grupos...</span></div>
   <div id="groups-box" class="grp-grid"></div>
 </section>
 
-<!-- ══ ESCANTEIOS ══ -->
+<!-- â•â• ESCANTEIOS â•â• -->
 <section id="tab-escanteios" class="tab">
   <div class="stat-grid">
     <div class="stat-card gold"><div class="stat-val">9.4</div><div class="stat-lbl">Media/jogo Copa 2022</div></div>
@@ -477,14 +478,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   </div>
   <div class="stitle">Melhores apostas de escanteios</div>
   <div class="mkt-card">
-    <div class="mkt-row"><div class="mico">&#x1F6A9;</div><div class="mkt-info"><div class="mkt-title">Brasil vs Marrocos — Brasil +5 escanteios</div><div class="mkt-desc">Brasil media 6.2. Marrocos defende em bloco baixo = cruzamentos constantes. Estimativa 6-7 escanteios pro Brasil.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:76%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.85</div><div class="mkt-lbl">over 5 BRA</div></div></div>
-    <div class="mkt-row"><div class="mico">&#x1F6A9;</div><div class="mkt-info"><div class="mkt-title">EUA vs Paraguai — EUA +5 escanteios</div><div class="mkt-desc">EUA em casa em Los Angeles. Paraguai defende profundo gerando muitos cruzamentos para os americanos.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.80</div><div class="mkt-lbl">over 5 EUA</div></div></div>
-    <div class="mkt-row"><div class="mico">&#x1F6A9;</div><div class="mkt-info"><div class="mkt-title">Alemanha vs Curacao — Alemanha +7 escanteios</div><div class="mkt-desc">Alemanha pressiona alto com posse. Curacao defende em bloco. Favorito absoluto vs time inferior = escanteios em massa.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.75</div><div class="mkt-lbl">over 7 ALE</div></div></div>
+    <div class="mkt-row"><div class="mico">&#x1F6A9;</div><div class="mkt-info"><div class="mkt-title">Brasil vs Marrocos â€” Brasil +5 escanteios</div><div class="mkt-desc">Brasil media 6.2. Marrocos defende em bloco baixo = cruzamentos constantes. Estimativa 6-7 escanteios pro Brasil.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:76%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.85</div><div class="mkt-lbl">over 5 BRA</div></div></div>
+    <div class="mkt-row"><div class="mico">&#x1F6A9;</div><div class="mkt-info"><div class="mkt-title">EUA vs Paraguai â€” EUA +5 escanteios</div><div class="mkt-desc">EUA em casa em Los Angeles. Paraguai defende profundo gerando muitos cruzamentos para os americanos.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:70%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.80</div><div class="mkt-lbl">over 5 EUA</div></div></div>
+    <div class="mkt-row"><div class="mico">&#x1F6A9;</div><div class="mkt-info"><div class="mkt-title">Alemanha vs Curacao â€” Alemanha +7 escanteios</div><div class="mkt-desc">Alemanha pressiona alto com posse. Curacao defende em bloco. Favorito absoluto vs time inferior = escanteios em massa.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.75</div><div class="mkt-lbl">over 7 ALE</div></div></div>
   </div>
   <div class="tipbox">&#x1F4CA; <strong>Estrategia:</strong> Favorito forte + time defensivo = over escanteios do favorito quase sempre tem valor. Media Copa 2022: 9.4/jogo. Aposte over 8.5 quando ambos tem media acima de 4.5.</div>
 </section>
 
-<!-- ══ CHUTES ══ -->
+<!-- â•â• CHUTES â•â• -->
 <section id="tab-chutes" class="tab">
   <div class="stat-grid">
     <div class="stat-card gold"><div class="stat-val">5.4</div><div class="stat-lbl">Chutes/alvo Copa 2022</div></div>
@@ -514,19 +515,19 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   </div>
   <div id="spanel-can" class="spanel">
     <div class="mkt-card">
-      <div class="mkt-row"><div class="mico">&#x26BD;</div><div class="mkt-info"><div class="mkt-title">Menos de 2.5 gols — jogo fechado</div><div class="mkt-desc">Bosnia e time tatico e organizado. Canada em estreia de Copa tende a ser cauteloso. Prob. real ~54%.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:62%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.70</div><div class="mkt-lbl">under 2.5</div></div></div>
+      <div class="mkt-row"><div class="mico">&#x26BD;</div><div class="mkt-info"><div class="mkt-title">Menos de 2.5 gols â€” jogo fechado</div><div class="mkt-desc">Bosnia e time tatico e organizado. Canada em estreia de Copa tende a ser cauteloso. Prob. real ~54%.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:62%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.70</div><div class="mkt-lbl">under 2.5</div></div></div>
       <div class="mkt-row"><div class="mico">&#x1F3AF;</div><div class="mkt-info"><div class="mkt-title">Canada +4.5 chutes no alvo</div><div class="mkt-desc">Jonathan David e finalizador compulsivo. Bosnia vai defender profundo. Canada anfitriao em Toronto.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:55%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div><span class="vm-lbl">Valor ++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.85</div><div class="mkt-lbl">over 4.5</div></div></div>
     </div>
   </div>
   <div id="spanel-ale" class="spanel">
     <div class="mkt-card">
-      <div class="mkt-row"><div class="mico">&#x1F3AF;</div><div class="mkt-info"><div class="mkt-title">Alemanha +7 chutes ao gol</div><div class="mkt-desc">Curacao nao tem estrutura para segurar a Alemanha. Media alemã: 7.2 chutes ao gol vs times muito inferiores.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.60</div><div class="mkt-lbl">over 7 ALE</div></div></div>
+      <div class="mkt-row"><div class="mico">&#x1F3AF;</div><div class="mkt-info"><div class="mkt-title">Alemanha +7 chutes ao gol</div><div class="mkt-desc">Curacao nao tem estrutura para segurar a Alemanha. Media alemÃ£: 7.2 chutes ao gol vs times muito inferiores.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.60</div><div class="mkt-lbl">over 7 ALE</div></div></div>
       <div class="mkt-row"><div class="mico">&#x26BD;</div><div class="mkt-info"><div class="mkt-title">Mais de 3.5 gols no total</div><div class="mkt-desc">Alemanha vs times inferiores: media 4.1 gols. Curacao tem a pior defesa da Copa. Over e a aposta natural.</div><div class="vm"><div class="vm-track"><div class="vm-fill" style="width:72%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="vm-lbl">Valor +++</span></div></div><div class="mkt-right"><div class="mkt-odd">x1.65</div><div class="mkt-lbl">over 3.5</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ══ JOGADORES ══ -->
+<!-- â•â• JOGADORES â•â• -->
 <section id="tab-jogadores" class="tab">
   <div class="stitle">Favoritos a chuteira de ouro</div>
   <div class="plr-card">
@@ -548,7 +549,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
       <div><div class="plr-name">Vinicius Junior &#x1F1E7;&#x1F1F7;</div><div class="plr-sub">Brasil &middot; Grupo C &middot; Ballon d Or 2024</div></div>
       <div class="plr-odds"><span class="badge b-green">Brasil</span><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:800;color:var(--gold);margin-top:3px">x13</div></div>
     </div>
-    <div class="pstat-row"><div class="pstat"><div class="pstat-v">3.2</div><div class="pstat-l">chutes/jogo</div></div><div class="pstat"><div class="pstat-v">1.8</div><div class="pstat-l">dribles/90</div></div><div class="pstat"><div class="pstat-v">Gr. C</div><div class="pstat-l">Haiti+Escócia</div></div><div class="pstat"><div class="pstat-v">Alta</div><div class="pstat-l">forma 2026</div></div></div>
+    <div class="pstat-row"><div class="pstat"><div class="pstat-v">3.2</div><div class="pstat-l">chutes/jogo</div></div><div class="pstat"><div class="pstat-v">1.8</div><div class="pstat-l">dribles/90</div></div><div class="pstat"><div class="pstat-v">Gr. C</div><div class="pstat-l">Haiti+EscÃ³cia</div></div><div class="pstat"><div class="pstat-v">Alta</div><div class="pstat-l">forma 2026</div></div></div>
     <div class="plr-bets">
       <div class="plr-bet"><span class="badge b-green">Por jogo</span><span class="plr-pick">Marca ou assiste vs Marrocos</span><span class="plr-odd">x2.20</span><span class="plr-stars">+++</span></div>
       <div class="plr-bet"><span class="badge b-green">Chutes</span><span class="plr-pick">2+ chutes no alvo vs Marrocos</span><span class="plr-odd">x2.10</span><span class="plr-stars">+++</span></div>
@@ -593,20 +594,20 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   </div>
 </section>
 
-<!-- ══ MERCADOS ══ -->
+<!-- â•â• MERCADOS â•â• -->
 <section id="tab-mercados" class="tab">
   <div class="stitle">Guia de mercados alternativos</div>
   <div class="mkt-card">
     <div class="mkt-row"><div class="mico">&#x1F7E1;</div><div class="mkt-info"><div class="mkt-title">Cartoes amarelos e vermelhos</div><div class="mkt-desc">Total de cartoes, qual time leva mais, jogador amarelado. Copa 2022 media: 3.8 amarelos/jogo.</div><div class="mkt-tags"><span class="mtag" style="background:#f5c84220;color:var(--gold);border:1px solid #f5c84230">Over 3.5 amarelos: x1.80</span><span class="mtag" style="background:#f0305020;color:#ff8090;border:1px solid #f0305030">Jogador leva cartao: x3.50+</span></div></div></div>
     <div class="mkt-row"><div class="mico">&#x23F1;</div><div class="mkt-info"><div class="mkt-title">Minuto do primeiro gol</div><div class="mkt-desc">38% dos primeiros gols em Copa caem no 2T antes dos 75min. Favorito dominando: gol entre 25-55min.</div><div class="mkt-tags"><span class="mtag" style="background:#3b8ef820;color:#70b0ff;border:1px solid #3b8ef830">Gol 46-75min: x2.30</span><span class="mtag" style="background:#0fd97a20;color:var(--green);border:1px solid #0fd97a30">Sem gol 1T: x2.10</span></div></div></div>
-    <div class="mkt-row"><div class="mico">&#x1F3AF;</div><div class="mkt-info"><div class="mkt-title">Handicap asiatico — elimina o empate</div><div class="mkt-desc">Brasil -0.75 vs Haiti: ganha cheio se Brasil vencer por 2+, metade se vencer por 1 gol. Nunca perde tudo no empate.</div><div class="mkt-tags"><span class="mtag" style="background:#0fd97a20;color:var(--green);border:1px solid #0fd97a30">Brasil -0.75 vs Haiti: x1.75</span><span class="mtag" style="background:#f5c84220;color:var(--gold);border:1px solid #f5c84230">EUA -0.5 vs Par.: x1.90</span></div></div></div>
+    <div class="mkt-row"><div class="mico">&#x1F3AF;</div><div class="mkt-info"><div class="mkt-title">Handicap asiatico â€” elimina o empate</div><div class="mkt-desc">Brasil -0.75 vs Haiti: ganha cheio se Brasil vencer por 2+, metade se vencer por 1 gol. Nunca perde tudo no empate.</div><div class="mkt-tags"><span class="mtag" style="background:#0fd97a20;color:var(--green);border:1px solid #0fd97a30">Brasil -0.75 vs Haiti: x1.75</span><span class="mtag" style="background:#f5c84220;color:var(--gold);border:1px solid #f5c84230">EUA -0.5 vs Par.: x1.90</span></div></div></div>
     <div class="mkt-row"><div class="mico">&#x1F504;</div><div class="mkt-info"><div class="mkt-title">Intervalo / Final (HT/FT)</div><div class="mkt-desc">Aposta combinada: quem lidera no intervalo E quem vence. Favorito/Favorito e o cenario mais frequente para times dominantes.</div><div class="mkt-tags"><span class="mtag" style="background:#0fd97a20;color:var(--green);border:1px solid #0fd97a30">Brasil/Brasil: x2.40</span><span class="mtag" style="background:#f5c84220;color:var(--gold);border:1px solid #f5c84230">Empate/Brasil: x3.20</span></div></div></div>
     <div class="mkt-row"><div class="mico">&#x1F4CD;</div><div class="mkt-info"><div class="mkt-title">Marcador de gol anytime</div><div class="mkt-desc">Jogador marca em qualquer momento. Muito mais facil que primeiro a marcar. Atacantes em jogos faceis tem excelente valor.</div><div class="mkt-tags"><span class="mtag" style="background:#3b8ef820;color:#70b0ff;border:1px solid #3b8ef830">Mbappe vs Iraque: x1.65</span><span class="mtag" style="background:#0fd97a20;color:var(--green);border:1px solid #0fd97a30">Vini Jr. vs Haiti: x1.55</span></div></div></div>
     <div class="mkt-row"><div class="mico">&#x1F3C6;</div><div class="mkt-info"><div class="mkt-title">1 lugar do grupo</div><div class="mkt-desc">Empilhando liderancas de favoritos fortes em multiplas, voce consegue odds combinadas razoaveis com alta confiabilidade.</div><div class="mkt-tags"><span class="mtag" style="background:#0fd97a20;color:var(--green);border:1px solid #0fd97a30">Brasil 1 Gr.C: x1.40</span><span class="mtag" style="background:#3b8ef820;color:#70b0ff;border:1px solid #3b8ef830">Franca 1 Gr.I: x1.55</span><span class="mtag" style="background:#f5c84220;color:var(--gold);border:1px solid #f5c84230">Argentina 1 Gr.J: x1.35</span></div></div></div>
   </div>
 </section>
 
-<!-- ══ MULTIPLAS ══ -->
+<!-- â•â• MULTIPLAS â•â• -->
 <section id="tab-multiplas" class="tab">
   <div class="stitle">Multiplas com valor esperado</div>
   <div class="multi-card">
@@ -638,7 +639,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
     <div class="multi-foot"><div class="evbar-wrap"><div class="evbar-track"><div class="evbar-fill" style="width:68%;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div><span class="evbar-lbl">Valor +++</span></div><div class="multi-prob">Prob. real ~35% &middot; edge positivo</div></div>
   </div>
   <div class="multi-card">
-    <div class="multi-head"><div><div class="multi-title">Multipla mista — resultado + alternativo</div><div class="multi-sub">4 pernas &middot; risco moderado</div></div><div><div class="multi-odd-big">x9.17</div><div class="multi-odd-lbl">odd combinada</div></div></div>
+    <div class="multi-head"><div><div class="multi-title">Multipla mista â€” resultado + alternativo</div><div class="multi-sub">4 pernas &middot; risco moderado</div></div><div><div class="multi-odd-big">x9.17</div><div class="multi-odd-lbl">odd combinada</div></div></div>
     <div class="multi-legs">
       <div class="mleg"><span class="badge b-blue">Resultado</span><span class="mleg-pick">EUA vence Paraguai</span><span class="mleg-odd">x1.55</span></div>
       <div class="mleg"><span class="badge b-green">U/O</span><span class="mleg-pick">Brasil vs Marrocos menos 3.5 gols</span><span class="mleg-odd">x1.45</span></div>
@@ -650,7 +651,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
   <div class="disc">&#x26A0; Gestao de banca: Nunca aposte mais de 5% da banca em uma aposta. Multiplas conservadoras (x3-x6): ate 3%. Alto risco (x12+): maximo 1%. Aposte com responsabilidade.</div>
 </section>
 
-<!-- ══ IA ══ -->
+<!-- â•â• IA â•â• -->
 <section id="tab-ia" class="tab">
   <div class="ia-key-card" id="iakey-card">
     <div class="ia-key-head">
@@ -661,12 +662,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
       <input id="apikey-input" class="ia-key-in" type="password" placeholder="sk-ant-api03-..." />
       <button class="ia-save-btn" onclick="saveKey()">Salvar</button>
     </div>
-    <div class="ia-key-hint">Obtenha em <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> — Chaves de API — Criar chave</div>
+    <div class="ia-key-hint">Obtenha em <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> â€” Chaves de API â€” Criar chave</div>
     <div id="key-status" class="ia-key-status"></div>
   </div>
   <div class="ia-chat-card">
     <div class="ia-chat-title">Analise qualquer jogo, mercado ou aposta</div>
-    <div class="ia-chat-sub">Escanteios, chutes, cartoes, jogadores, handicap — analise baseada em dados</div>
+    <div class="ia-chat-sub">Escanteios, chutes, cartoes, jogadores, handicap â€” analise baseada em dados</div>
     <div class="ia-in-row">
       <input id="ai-in" class="ia-in" type="text" placeholder="Ex: Vale over 9 escanteios no Brasil vs Marrocos?" />
       <button class="ia-send" onclick="askAI()">Analisar</button>
@@ -695,16 +696,22 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 <div id="gtost"></div>
 
 <script>
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // CONSTANTES
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const FD_TOKEN = '14364ba10f754cf6bf11ec0779d82740';
 const FD_BASE  = 'https://api.football-data.org/v4';
 let pollTmr = null, lastHash = '';
+async function apiFetch(url, options={}, timeout=7000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeout);
+  try { return await fetch(url, {...options, signal:ctrl.signal}); }
+  finally { clearTimeout(t); }
+}
 
-// ══════════════════════════════════════════════
-// BANDEIRAS — ISO 2 letras para emoji
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// BANDEIRAS â€” ISO 2 letras para emoji
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const ISO = {
   'Mexico':'MX','Brazil':'BR','South Africa':'ZA','Korea Republic':'KR',
   'Czechia':'CZ','Canada':'CA','Bosnia-Herzegovina':'BA','Qatar':'QA',
@@ -731,9 +738,9 @@ function flagSm(iso) {
   return String.fromCodePoint(...[...iso].map(x => 0x1F1E6 + x.charCodeAt(0) - 65));
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // PROBABILIDADES
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const PWR = {
   'France':90,'Brazil':88,'Argentina':87,'Spain':86,'England':84,'Germany':83,
   'Portugal':82,'Netherlands':81,'Belgium':78,'Uruguay':75,'Croatia':74,
@@ -746,40 +753,97 @@ const PWR = {
   'Haiti':24,'Panama':23,'DR Congo':22,'Curacao':18,
   'Bosnia-Herzegovina':60,'Czechia':62,'Scotland':48
 };
-function probs(h, a) {
+function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+function normalizeProb(h, d, a) {
+  const total = h + d + a || 1;
+  let ph = Math.round(h / total * 100), pd = Math.round(d / total * 100), pa = Math.round(a / total * 100);
+  const diff = 100 - (ph + pd + pa);
+  if (ph >= pd && ph >= pa) ph += diff;
+  else if (pa >= pd) pa += diff;
+  else pd += diff;
+  return {h:clamp(ph,0,100), d:clamp(pd,0,100), a:clamp(pa,0,100)};
+}
+function matchMinute(utcStr, status) {
+  if (status === 'FINISHED') return 90;
+  if (!['IN_PLAY','PAUSED','FIRST_HALF','SECOND_HALF','HALFTIME'].includes(status)) return 0;
+  const start = new Date(utcStr).getTime();
+  if (!Number.isFinite(start)) return 1;
+  return clamp(Math.floor((Date.now() - start) / 60000), 1, status === 'HALFTIME' ? 45 : 90);
+}
+function probs(h, a, state={}) {
   const ph=PWR[h]||50, pa=PWR[a]||50, d=ph-pa;
   let hw=Math.max(.10,Math.min(.75,.38+d*.006));
   let aw=Math.max(.05,Math.min(.65,.28-d*.005));
   let dr=Math.max(.10,Math.min(.35,1-hw-aw));
-  const t=hw+dr+aw;
-  return {h:Math.round(hw/t*100),d:Math.round(dr/t*100),a:Math.round(aw/t*100)};
+  let base = normalizeProb(hw, dr, aw);
+
+  const sh = Number.isFinite(+state.sh) ? +state.sh : null;
+  const sa = Number.isFinite(+state.sa) ? +state.sa : null;
+  const isLive = ['IN_PLAY','PAUSED','FIRST_HALF','SECOND_HALF','HALFTIME'].includes(state.status);
+  const isDone = state.status === 'FINISHED';
+  if (sh === null || sa === null || (!isLive && !isDone)) return base;
+
+  if (isDone) {
+    if (sh > sa) return {h:100,d:0,a:0};
+    if (sa > sh) return {h:0,d:0,a:100};
+    return {h:0,d:100,a:0};
+  }
+
+  let hP=base.h/100, dP=base.d/100, aP=base.a/100;
+  const minute = clamp(state.minute || matchMinute(state.utcStr, state.status), 1, 90);
+  const late = minute / 90;
+  const gd = sh - sa;
+
+  if (gd !== 0) {
+    const lead = clamp(Math.abs(gd), 1, 4);
+    const swing = clamp((0.22 + late * 0.62) * lead, 0, .92);
+    if (gd > 0) { hP += swing; aP *= (1 - swing * .75); }
+    else { aP += swing; hP *= (1 - swing * .75); }
+    dP *= clamp(1 - (0.38 + late * .55) * lead, .03, .55);
+  } else {
+    const drawLift = .04 + late * .22;
+    dP += drawLift;
+    hP *= 1 - late * .10;
+    aP *= 1 - late * .10;
+  }
+  return normalizeProb(hP, dP, aP);
 }
-function bets(home, away) {
-  const p=probs(home,away), diff=Math.abs(p.h-p.a);
-  const fav=p.h>=p.a?home:away, und=p.h>=p.a?away:home;
+function fairOdd(prob) { return prob > 0 ? 'x' + (100 / prob).toFixed(2) : 'x--'; }
+function bets(home, away, state={}) {
+  const p=probs(home,away,state), diff=Math.abs(p.h-p.a);
+  const fav=p.h>=p.a?home:away, und=p.h>=p.a?away:home, favProb=Math.max(p.h,p.a);
+  const live = ['IN_PLAY','PAUSED','FIRST_HALF','SECOND_HALF','HALFTIME'].includes(state.status);
+  const minute = state.minute || matchMinute(state.utcStr, state.status);
+  const goals = (Number(state.sh)||0) + (Number(state.sa)||0);
+  if (live) return [
+    {c:'bc-res',l:'AO VIVO', t:`${fav} vence agora (${favProb}%)`, o:fairOdd(favProb),s:'+++'},
+    {c:'bc-res',l:'EMPATE', t:`Empate recalculado (${p.d}%)`, o:fairOdd(p.d),s:p.d>30?'+++':'++'},
+    {c:'bc-gol',l:'GOLS', t:goals>=2?'Mais de 2.5 gols em jogo aberto':'Próximo gol ajustado ao placar', o:goals>=2?'x1.55':'x1.85',s:'++'},
+    {c:'bc-hcp',l:'MINUTO', t:`Modelo ajustado aos ${minute}' e ao placar`, o:'live',s:'+++'},
+  ];
   if(diff>25) return [
-    {c:'bc-res',l:'RESULTADO', t:`${fav} vence`,          o:'x'+(1.15+diff*.005).toFixed(2),s:'+++'},
+    {c:'bc-res',l:'RESULTADO', t:`${fav} vence`,          o:fairOdd(favProb),s:'+++'},
     {c:'bc-gol',l:'GOLS',     t:'Mais de 2.5 gols',       o:'x1.65',s:'++'},
     {c:'bc-esc',l:'ESCANTEIOS',t:`${fav} +6 escanteios`,  o:'x1.75',s:'+++'},
     {c:'bc-chu',l:'CHUTES',   t:`${fav} +6.5 chutes`,     o:'x1.70',s:'+++'},
   ];
   if(diff>12) return [
-    {c:'bc-res',l:'RESULTADO', t:`${fav} vence`,           o:'x'+(1.55+diff*.008).toFixed(2),s:'+++'},
+    {c:'bc-res',l:'RESULTADO', t:`${fav} vence`,           o:fairOdd(favProb),s:'+++'},
     {c:'bc-gol',l:'U/O',      t:'Menos de 2.5 gols',      o:'x1.65',s:'+++'},
     {c:'bc-esc',l:'ESCANTEIOS',t:`${fav} +5 escanteios`,  o:'x1.85',s:'+++'},
     {c:'bc-car',l:'CARTOES',  t:`${und} 2+ amarelos`,     o:'x2.10',s:'++'},
   ];
   return [
-    {c:'bc-res',l:'1X2',      t:'Empate — equilibrio real',o:'x'+(2.4+diff*.02).toFixed(2),s:'+++'},
-    {c:'bc-btts',l:'BTTS',   t:'Ambas marcam — Nao',     o:'x1.65',s:'++'},
+    {c:'bc-res',l:'1X2',      t:'Empate - equilibrio real',o:fairOdd(p.d),s:'+++'},
+    {c:'bc-btts',l:'BTTS',   t:'Ambas marcam - Nao',     o:'x1.65',s:'++'},
     {c:'bc-esc',l:'ESCANTEIOS',t:'Menos de 9.5 total',   o:'x1.78',s:'++'},
     {c:'bc-hcp',l:'HANDICAP', t:`${fav} -0.5 handicap`,  o:'x1.90',s:'++'},
   ];
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // SCHEDULE COMPLETO
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const SCH = [
   {h:'Mexico',a:'South Africa',u:'2026-06-11T19:00:00Z',g:'Grupo A',v:'Cidade do Mexico',sh:2,sa:0,s:'FINISHED'},
   {h:'Korea Republic',a:'Czechia',u:'2026-06-12T02:00:00Z',g:'Grupo A',v:'Guadalajara',sh:2,sa:1,s:'FINISHED'},
@@ -831,9 +895,9 @@ const SCH = [
   {h:'Panama',a:'Croatia',u:'2026-06-25T02:00:00Z',g:'Grupo L',v:'Atlanta',sh:null,sa:null,s:'SCHEDULED'}
 ];
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // DATE HELPERS
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const BRms = -3*3600000;
 function brDs(utc) {
   const d=new Date(utc);
@@ -852,19 +916,23 @@ function dayHdr(ds, isToday) {
   return `<div class="daylabel"><div class="daysep"></div><span class="daylabel-text${isToday?' today':''}">${isToday?'HOJE &mdash; ':'AMANHA &mdash; '}${lbl}</span><div class="daysep"></div></div>`;
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // RENDER CARD COM BANDEIRAS GRANDES
-// ══════════════════════════════════════════════
-function renderCard(home, away, sh, sa, status, grp, venue, utcStr) {
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+function renderCard(home, away, sh, sa, status, grp, venue, utcStr, minuteFromApi) {
   const isLive = ['IN_PLAY','PAUSED','FIRST_HALF','SECOND_HALF','HALFTIME'].includes(status);
   const isDone = status === 'FINISHED';
   const hasScore = sh!==null && sh!==undefined && !['SCHEDULED','TIMED'].includes(status);
-  const p = probs(home, away);
-  const bs = bets(home, away);
+  const minute = minuteFromApi || matchMinute(utcStr, status);
+  const state = {sh,sa,status,utcStr,minute};
+  const p = probs(home, away, state);
+  const bs = bets(home, away, state);
   const isBR = home==='Brazil'||away==='Brazil';
   const time = brTime(utcStr);
+  const probMeta = isLive && hasScore
+    ? `Ao vivo: ajustado aos ${minute}' pelo placar ${sh} x ${sa}`
+    : isDone ? 'Resultado final confirmado' : 'Pre-jogo: forca dos times e equilibrio historico';
 
-  // Score block
   let scoreBlock;
   if (isLive && hasScore) {
     scoreBlock = `
@@ -872,7 +940,7 @@ function renderCard(home, away, sh, sa, status, grp, venue, utcStr) {
         <div class="score-live-wrap">
           <div class="score-live">${sh}<span class="score-sep">:</span>${sa}</div>
         </div>
-        <div class="score-status live">&#x1F534; AO VIVO</div>
+        <div class="score-status live">&#x1F534; ${minute}' AO VIVO</div>
       </div>`;
   } else if (isDone && hasScore) {
     scoreBlock = `
@@ -888,7 +956,7 @@ function renderCard(home, away, sh, sa, status, grp, venue, utcStr) {
   }
 
   const statusBadge = isLive
-    ? `<span class="st-live">&#x1F534; AO VIVO</span>`
+    ? `<span class="st-live">&#x1F534; ${minute}' AO VIVO</span>`
     : isDone ? `<span class="st-done">&#x2713; Encerrado</span>`
     : `<span class="st-soon">${time}</span>`;
 
@@ -927,6 +995,7 @@ function renderCard(home, away, sh, sa, status, grp, venue, utcStr) {
           <span>Empate ${p.d}%</span>
           <span>${p.a}% ${away.split(' ').slice(-1)[0]}</span>
         </div>
+        <div class="prob-meta">${probMeta}</div>
       </div>
       <div class="bet-section">${betsHTML}</div>
     </div>
@@ -935,7 +1004,7 @@ function renderCard(home, away, sh, sa, status, grp, venue, utcStr) {
 
 // ══════════════════════════════════════════════
 // LOAD GAMES
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 async function loadGames() {
   const box  = document.getElementById('games-box');
   const spin = document.getElementById('sp-games');
@@ -946,7 +1015,7 @@ async function loadGames() {
 
   // Tenta football-data.org
   try {
-    const r = await fetch(`${FD_BASE}/competitions/WC/matches?dateFrom=${today}&dateTo=${tmw}`,
+    const r = await apiFetch(`${FD_BASE}/competitions/WC/matches?dateFrom=${today}&dateTo=${tmw}`,
       {headers:{'X-Auth-Token':FD_TOKEN}});
     if (!r.ok) throw new Error(r.status);
     const data = await r.json();
@@ -967,12 +1036,12 @@ async function loadGames() {
         const sh=m.score?.fullTime?.home??m.score?.halfTime?.home??null;
         const sa=m.score?.fullTime?.away??m.score?.halfTime?.away??null;
         html += renderCard(m.homeTeam.name,m.awayTeam.name,sh,sa,m.status,
-          (m.stage||'').replace('GROUP_STAGE','Fase de Grupos'),m.area?.name||'',m.utcDate);
+          (m.stage||'').replace('GROUP_STAGE','Fase de Grupos'),m.area?.name||'',m.utcDate,m.minute);
       });
     });
     spin.style.display='none';
     box.innerHTML = html||'<div style="text-align:center;color:var(--text3);padding:2.5rem">Sem jogos hoje e amanha.</div>';
-    ind.innerHTML = `<div class="api-dot" style="background:var(--green)"></div><span>&#x1F4E1; ${ms.length} jogo(s) &middot; ${isLiveWin()?'15s':'60s'}</span>`;
+    ind.innerHTML = `<div class="api-dot" style="background:var(--green)"></div><span>&#x1F4E1; ${ms.length} jogo(s) &middot; ${isLiveWin()?'10s':'60s'}</span>`;
     return;
   } catch(e) {}
 
@@ -1001,9 +1070,9 @@ function groupBy(arr, fn) {
   return arr.reduce((a,x)=>{const k=fn(x);(a[k]||(a[k]=[])).push(x);return a;},{});
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // GOAL TOAST
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function detectGoal(matches, prev) {
   const pm={};
   prev.split('|').forEach(e=>{const[id,...r]=e.split(':');pm[id]=r.join(':');});
@@ -1019,9 +1088,9 @@ function toast(msg) {
   setTimeout(()=>t.style.display='none',5000);
 }
 
-// ══════════════════════════════════════════════
-// GROUPS — com bandeiras na tabela
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// GROUPS â€” com bandeiras na tabela
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const SG = [
   {n:'GRUPO A',t:[{n:'Mexico',f:'MX',pts:3,j:1,v:1,e:0,d:0,gf:2,gc:0},{n:'Korea Republic',f:'KR',pts:3,j:1,v:1,e:0,d:0,gf:2,gc:1},{n:'Czechia',f:'CZ',pts:0,j:1,v:0,e:0,d:1,gf:1,gc:2},{n:'South Africa',f:'ZA',pts:0,j:1,v:0,e:0,d:1,gf:0,gc:2}]},
   {n:'GRUPO B',t:[{n:'Canada',f:'CA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Bosnia-Herzegovina',f:'BA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Qatar',f:'QA',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0},{n:'Switzerland',f:'CH',pts:0,j:0,v:0,e:0,d:0,gf:0,gc:0}]},
@@ -1063,7 +1132,7 @@ async function loadGroups() {
   const sp=document.getElementById('sp-groups');
   sp.style.display='flex'; el.innerHTML='';
   try {
-    const r=await fetch(`${FD_BASE}/competitions/WC/standings`,{headers:{'X-Auth-Token':FD_TOKEN}});
+    const r=await apiFetch(`${FD_BASE}/competitions/WC/standings`,{headers:{'X-Auth-Token':FD_TOKEN}});
     if (!r.ok) throw new Error(r.status);
     const data=await r.json();
     const st=data.standings||[];
@@ -1079,19 +1148,19 @@ async function loadGroups() {
   }
 }
 
-// ══════════════════════════════════════════════
-// LIVE POLLING — 15s ao vivo, 60s normal
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// LIVE POLLING â€” 10s ao vivo, 60s normal
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function isLiveWin() {
   const now=Date.now();
   return SCH.some(m=>{const t=new Date(m.u).getTime();return now>=t-600000&&now<=t+7200000;});
 }
 function restartPoll() {
   if (pollTmr) clearInterval(pollTmr);
-  const iv=isLiveWin()?15000:60000;
+  const iv=isLiveWin()?10000:60000;
   pollTmr=setInterval(()=>{loadGames();if(getInterval()!==iv)restartPoll();},iv);
 }
-function getInterval(){return isLiveWin()?15000:60000;}
+function getInterval(){return isLiveWin()?10000:60000;}
 
 function updatePill() {
   const live=isLiveWin();
@@ -1102,9 +1171,9 @@ function updatePill() {
   if(live) restartPoll();
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // COUNTDOWN
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function startCD() {
   function tick() {
     const el=document.getElementById('cdtime');
@@ -1115,14 +1184,14 @@ function startCD() {
     if (!next){el.textContent='Sem mais jogos hoje';return;}
     const diff=new Date(next.u).getTime()-now;
     const h=Math.floor(diff/3600000),min=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-    el.textContent=h>0?`${h}h ${min}min — ${next.h} vs ${next.a}`:min>0?`${min}m ${s}s — ${next.h} vs ${next.a}`:'Comecando!';
+    el.textContent=h>0?`${h}h ${min}min â€” ${next.h} vs ${next.a}`:min>0?`${min}m ${s}s â€” ${next.h} vs ${next.a}`:'Comecando!';
   }
   tick(); setInterval(tick,1000);
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TABS & SHOT
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function showTab(name,btn) {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('active'));
@@ -1138,9 +1207,9 @@ function showShot(btn,id) {
   if(el){el.style.display='block';el.classList.add('active');}
 }
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // API KEY & AI
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function getKey(){return localStorage.getItem('copa2026_key')||'';}
 function saveKey(){
   const k=document.getElementById('apikey-input').value.trim();
@@ -1187,9 +1256,9 @@ async function pre(p){
 }
 document.getElementById('ai-in').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // INIT
-// ══════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 document.getElementById('hdr-date').textContent=
   new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'});
 loadGames();
@@ -1200,5 +1269,8 @@ initKey();
 </script>
 </body>
 </html>
-ENDOFFILE
-echo "OK: $(wc -l < /mnt/user-data/outputs/index.html) linhas | $(ls -lh /mnt/user-data/outputs/index.html | awk '{print $5}')"
+
+
+
+
+
