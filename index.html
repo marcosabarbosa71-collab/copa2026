@@ -436,7 +436,7 @@ body{
       <button class="btn-sm" onclick="forceRefresh()">↻ Atualizar</button>
     </div>
   </div>
-  <div class="srcnote"><b>📋 Dados reais até 17/06/2026</b> — toque em qualquer card para virar e ver as apostas sugeridas. Quando um jogo de hoje terminar, me envie o placar e eu atualizo na hora.</div>
+  <div class="srcnote"><b>📋 Dados reais atualizados até 20/06/2026</b> — toque em qualquer card para virar e ver as apostas sugeridas. Quando um jogo terminar, me envie o placar e eu atualizo na hora.</div>
   <div id="games-box"></div>
 </section>
 
@@ -786,7 +786,7 @@ const MATCHES=[
   {h:'Qatar',a:'Switzerland',date:'2026-06-13',timeBR:'16:00',g:'Grupo B',v:'San Francisco',sh:1,sa:1,done:true},
   {h:'Brazil',a:'Morocco',date:'2026-06-13',timeBR:'19:00',g:'Grupo C',v:'Nova York/NJ',sh:1,sa:1,done:true},
   {h:'Haiti',a:'Scotland',date:'2026-06-13',timeBR:'22:00',g:'Grupo C',v:'Boston',sh:0,sa:1,done:true},
-  {h:'Australia',a:'Turkiye',date:'2026-06-14',timeBR:'13:00',g:'Grupo D',v:'Vancouver',sh:2,sa:0,done:true},
+  {h:'Australia',a:'Turkiye',date:'2026-06-14',timeBR:'01:00',g:'Grupo D',v:'Vancouver',sh:2,sa:0,done:true},
   {h:'Germany',a:'Curacao',date:'2026-06-14',timeBR:'14:00',g:'Grupo E',v:'Houston',sh:7,sa:1,done:true},
   {h:'Ivory Coast',a:'Ecuador',date:'2026-06-14',timeBR:'20:00',g:'Grupo E',v:'Filadélfia',sh:1,sa:0,done:true},
   {h:'Netherlands',a:'Japan',date:'2026-06-14',timeBR:'17:00',g:'Grupo F',v:'Dallas',sh:2,sa:2,done:true},
@@ -800,17 +800,24 @@ const MATCHES=[
   {h:'Argentina',a:'Algeria',date:'2026-06-16',timeBR:'21:00',g:'Grupo J',v:'Kansas City',sh:3,sa:0,done:true},
   {h:'Austria',a:'Jordan',date:'2026-06-17',timeBR:'00:00',g:'Grupo J',v:'San Francisco',sh:3,sa:1,done:true},
   {h:'Portugal',a:'DR Congo',date:'2026-06-17',timeBR:'13:00',g:'Grupo K',v:'Houston',sh:1,sa:1,done:true},
-  {h:'England',a:'Croatia',date:'2026-06-17',timeBR:'17:00',g:'Grupo L',v:'Dallas',sh:null,sa:null,done:false,timeUndone:true},
-  {h:'Ghana',a:'Panama',date:'2026-06-17',timeBR:'20:00',g:'Grupo L',v:'Toronto',sh:null,sa:null,done:false,timeUndone:true},
-  {h:'Uzbekistan',a:'Colombia',date:'2026-06-17',timeBR:'23:00',g:'Grupo K',v:'Cidade do México',sh:null,sa:null,done:false,timeUndone:true},
-  {h:'Czechia',a:'South Africa',date:'2026-06-18',timeBR:'13:00',g:'Grupo A',v:'Guadalajara',sh:null,sa:null,done:false},
-  {h:'Switzerland',a:'Bosnia-Herzegovina',date:'2026-06-18',timeBR:'16:00',g:'Grupo B',v:'Los Angeles',sh:null,sa:null,done:false},
-  {h:'Canada',a:'Qatar',date:'2026-06-18',timeBR:'19:00',g:'Grupo B',v:'Vancouver',sh:null,sa:null,done:false},
-  {h:'Mexico',a:'Korea Republic',date:'2026-06-18',timeBR:'22:00',g:'Grupo A',v:'Monterrey',sh:null,sa:null,done:false},
-  {h:'United States',a:'Australia',date:'2026-06-19',timeBR:'16:00',g:'Grupo D',v:'Dallas',sh:null,sa:null,done:false},
-  {h:'Scotland',a:'Morocco',date:'2026-06-19',timeBR:'19:00',g:'Grupo C',v:'Boston',sh:null,sa:null,done:false},
-  {h:'Brazil',a:'Haiti',date:'2026-06-19',timeBR:'21:30',g:'Grupo C',v:'Filadélfia',sh:null,sa:null,done:false},
-  {h:'Turkiye',a:'Paraguay',date:'2026-06-20',timeBR:'00:00',g:'Grupo D',v:'Houston',sh:null,sa:null,done:false},
+  {h:'England',a:'Ghana',date:'2026-06-17',timeBR:'17:00',g:'Grupo L',v:'Foxborough',sh:1,sa:1,done:true},
+  {h:'Panama',a:'Croatia',date:'2026-06-17',timeBR:'20:00',g:'Grupo L',v:'Toronto',sh:1,sa:1,done:true},
+  {h:'Colombia',a:'DR Congo',date:'2026-06-17',timeBR:'23:00',g:'Grupo K',v:'Zapopan',sh:1,sa:1,done:true},
+  {h:'Mexico',a:'Czechia',date:'2026-06-18',timeBR:'22:00',g:'Grupo A',v:'Cidade do México',sh:1,sa:0,done:true},
+  {h:'Korea Republic',a:'Czechia',date:'2026-06-18',timeBR:'23:00',g:'Grupo A',v:'Guadalajara',sh:2,sa:1,done:true},
+  {h:'Switzerland',a:'Bosnia-Herzegovina',date:'2026-06-18',timeBR:'16:00',g:'Grupo B',v:'Los Angeles',sh:4,sa:1,done:true},
+  {h:'Canada',a:'Qatar',date:'2026-06-18',timeBR:'19:00',g:'Grupo B',v:'Vancouver',sh:6,sa:0,done:true},
+  {h:'Scotland',a:'Morocco',date:'2026-06-19',timeBR:'19:00',g:'Grupo C',v:'Foxborough',sh:0,sa:1,done:true},
+  {h:'Brazil',a:'Haiti',date:'2026-06-19',timeBR:'21:30',g:'Grupo C',v:'Filadélfia',sh:3,sa:0,done:true},
+  {h:'United States',a:'Australia',date:'2026-06-19',timeBR:'19:00',g:'Grupo D',v:'Seattle',sh:2,sa:0,done:true},
+  {h:'Turkiye',a:'Paraguay',date:'2026-06-20',timeBR:'00:00',g:'Grupo D',v:'San Francisco',sh:0,sa:1,done:true},
+  {h:'Switzerland',a:'Canada',date:'2026-06-22',timeBR:'16:00',g:'Grupo B',v:'Vancouver',sh:null,sa:null,done:false},
+  {h:'Bosnia-Herzegovina',a:'Qatar',date:'2026-06-22',timeBR:'16:00',g:'Grupo B',v:'Seattle',sh:null,sa:null,done:false},
+  {h:'Scotland',a:'Brazil',date:'2026-06-24',timeBR:'19:00',g:'Grupo C',v:'Miami',sh:null,sa:null,done:false},
+  {h:'Morocco',a:'Haiti',date:'2026-06-24',timeBR:'19:00',g:'Grupo C',v:'Atlanta',sh:null,sa:null,done:false},
+  {h:'Turkiye',a:'United States',date:'2026-06-25',timeBR:'00:00',g:'Grupo D',v:'Los Angeles',sh:null,sa:null,done:false},
+  {h:'Czechia',a:'Mexico',date:'2026-06-24',timeBR:'22:00',g:'Grupo A',v:'Cidade do México',sh:null,sa:null,done:false},
+  {h:'South Africa',a:'Korea Republic',date:'2026-06-24',timeBR:'22:00',g:'Grupo A',v:'Monterrey',sh:null,sa:null,done:false},
 ];
 
 const GROUP_TEAMS={
